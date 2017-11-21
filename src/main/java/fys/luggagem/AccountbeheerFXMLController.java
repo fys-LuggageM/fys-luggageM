@@ -103,8 +103,14 @@ public class AccountbeheerFXMLController implements Initializable {
     @FXML
     private void deactivateUser(ActionEvent event) {
         System.out.println("Gebruiker ge(de)activeerd.");
-        deactivateUsername.clear();
-        deactivateUserInfo.setText("Gebruiker ge(de)activeerd.");
+        if (deactivateUsername.getText() == null || deactivateUsername.getText().trim().isEmpty()) {
+            deactivateUsername.clear();
+            deactivateUserInfo.setTextFill(Paint.valueOf("d81e05"));
+            deactivateUserInfo.setText("Voer een gebruiker in.");
+        } else {
+            deactivateUserInfo.setTextFill(Paint.valueOf("green"));
+            deactivateUserInfo.setText("Gebruiker ge(de)activeerd.");
+        }
     }
 
     @Override
