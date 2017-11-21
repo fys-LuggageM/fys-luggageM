@@ -9,9 +9,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 
 public class AccountbeheerFXMLController implements Initializable {
 
@@ -25,6 +27,9 @@ public class AccountbeheerFXMLController implements Initializable {
 
     @FXML
     private TextField resetPassword;
+    
+    @FXML
+    private Label resetPasswordInfo;
 
     @FXML
     private TextField createUsername;
@@ -34,9 +39,15 @@ public class AccountbeheerFXMLController implements Initializable {
 
     @FXML
     private TextField createUserPassword;
+    
+    @FXML
+    private Label createUserInfo;
 
     @FXML
     private TextField deactivateUsername;
+    
+    @FXML
+    private Label deactivateUserInfo;
 
     @FXML
     private RadioButton roleAdmin;
@@ -46,7 +57,10 @@ public class AccountbeheerFXMLController implements Initializable {
 
     @FXML
     private RadioButton roleEmployee;
-
+    
+    @FXML
+    private final ToggleGroup accountButtons = new ToggleGroup();
+    
     @FXML
     private void handleCloseAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
@@ -61,6 +75,7 @@ public class AccountbeheerFXMLController implements Initializable {
         System.out.println("Wachtwoord gereset.");
         resetUser.clear();
         resetPassword.clear();
+        resetPasswordInfo.setText("Wachtwoord Gereset.");
     }
 
     @FXML
@@ -72,17 +87,21 @@ public class AccountbeheerFXMLController implements Initializable {
         roleAdmin.setSelected(false);
         roleManager.setSelected(false);
         roleEmployee.setSelected(false);
+        createUserInfo.setText("Account Aangemaakt");
     }
 
     @FXML
     private void deactivateUser(ActionEvent event) {
         System.out.println("Gebruiker ge(de)activeerd.");
         deactivateUsername.clear();
+        deactivateUserInfo.setText("Gebruiker ge(de)activeerd.");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        roleAdmin.setToggleGroup(accountButtons);
+        roleEmployee.setToggleGroup(accountButtons);
+        roleManager.setToggleGroup(accountButtons);
     }
 
     public void initData(Data mainData) {

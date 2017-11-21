@@ -90,6 +90,7 @@
                               <Font size="32.0" />
                            </font>
                         </Text>
+                        <Label fx:id="resetPasswordInfo" prefHeight="17.0" prefWidth="428.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                   <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
@@ -124,6 +125,7 @@
                            </children>
                         </HBox>
                         <TextField fx:id="createUserPassword" prefHeight="25.0" prefWidth="617.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="createUserInfo" prefHeight="17.0" prefWidth="435.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <Label text="Wachtwoord:" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
@@ -147,6 +149,7 @@
                               <Font size="32.0" />
                            </font>
                         </Text>
+                        <Label fx:id="deactivateUserInfo" prefHeight="17.0" prefWidth="495.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                   <GridPane GridPane.columnIndex="1" GridPane.rowIndex="5">
