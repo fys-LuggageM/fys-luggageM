@@ -1,5 +1,6 @@
 package fys.luggagem;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 
 public class AccountbeheerFXMLController implements Initializable {
 
@@ -25,7 +28,7 @@ public class AccountbeheerFXMLController implements Initializable {
 
     @FXML
     private TextField resetPassword;
-    
+
     @FXML
     private Label resetPasswordInfo;
 
@@ -37,13 +40,13 @@ public class AccountbeheerFXMLController implements Initializable {
 
     @FXML
     private TextField createUserPassword;
-    
+
     @FXML
     private Label createUserInfo;
 
     @FXML
     private TextField deactivateUsername;
-    
+
     @FXML
     private Label deactivateUserInfo;
 
@@ -55,10 +58,10 @@ public class AccountbeheerFXMLController implements Initializable {
 
     @FXML
     private RadioButton roleEmployee;
-    
+
     @FXML
     private final ToggleGroup accountButtons = new ToggleGroup();
-    
+
     @FXML
     private void handleCloseAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
@@ -73,19 +76,28 @@ public class AccountbeheerFXMLController implements Initializable {
         System.out.println("Wachtwoord gereset.");
         resetUser.clear();
         resetPassword.clear();
-        resetPasswordInfo.setText("Wachtwoord Gereset.");
+        resetPasswordInfo.setText("Wachtwoord gereset.");
     }
 
     @FXML
     private void createAccount(ActionEvent event) {
         System.out.println("Account aangemaakt.");
-        createUserPassword.clear();
-        createUserRealname.clear();
-        createUsername.clear();
-        roleAdmin.setSelected(false);
-        roleManager.setSelected(false);
-        roleEmployee.setSelected(false);
-        createUserInfo.setText("Account Aangemaakt");
+        if ((createUserPassword.getText() == null || createUserPassword.getText().trim().isEmpty()) || (createUsername.getText() == null || createUsername.getText().trim().isEmpty()) || (createUserRealname.getText() == null || createUserRealname.getText().trim().isEmpty())) {
+            createUserInfo.setTextFill(Paint.valueOf("d81e05"));
+            createUserInfo.setFont(Font.font(10));
+            createUserInfo.setText("Account niet aangemaakt. Een of meerdere velden zijn leeg.");
+        } else {
+            createUserInfo.setTextFill(Paint.valueOf("green"));
+            createUserInfo.setFont(Font.font(12));
+            createUserInfo.setText("Account Aangemaakt.");
+            // Empty everything
+            createUserPassword.clear();
+            createUserRealname.clear();
+            createUsername.clear();
+            roleAdmin.setSelected(false);
+            roleManager.setSelected(false);
+            roleEmployee.setSelected(false);
+        }
     }
 
     @FXML

@@ -104,7 +104,7 @@
                            </rowConstraints>
                            <children>
                               <Button mnemonicParsing="false" onAction="#resetPasswordAction" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Wachtwoord Resetten" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-                              <Label fx:id="resetPasswordInfo" prefHeight="17.0" prefWidth="252.0" />
+                              <Label fx:id="resetPasswordInfo" prefHeight="17.0" prefWidth="281.0" />
                            </children>
                         </GridPane>
                      </children>
@@ -163,8 +163,11 @@
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label fx:id="createUserInfo" prefHeight="17.0" prefWidth="264.0" />
-                              <Button mnemonicParsing="false" onAction="#createAccount" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Account Aanmaken" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                              <Label fx:id="createUserInfo" prefHeight="17.0" prefWidth="288.0">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font></Label>
+                              <Button mnemonicParsing="false" onAction="#createAccount" prefWidth="150.0" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Account Aanmaken" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
                            </children>
                         </GridPane>
                         <Label text="Wachtwoord:" GridPane.rowIndex="3">
