@@ -97,6 +97,7 @@
                         <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -136,7 +137,7 @@
                               <Font size="32.0" />
                            </font>
                         </Text>
-                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.rowIndex="4">
                            <children>
                               <RadioButton fx:id="roleAdmin" mnemonicParsing="false" style="-fx-selected-color: d81e05;" text="Admin">
                                  <font>
@@ -197,6 +198,7 @@
                         <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -207,6 +209,9 @@
                            </children>
                         </GridPane>
                      </children>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" />
+                     </GridPane.margin>
                   </GridPane>
                   <GridPane GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <columnConstraints>
