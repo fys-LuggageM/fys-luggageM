@@ -90,7 +90,10 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <TextField fx:id="resetUser" prefHeight="25.0" prefWidth="617.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="resetUser" prefHeight="25.0" prefWidth="617.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor></TextField>
                         <Label text="Gebruikersnaam:" GridPane.rowIndex="1">
                            <font>
                               <Font size="16.0" />
@@ -99,7 +102,10 @@
                            <font>
                               <Font size="16.0" />
                            </font></Label>
-                        <TextField fx:id="resetPassword" prefHeight="25.0" prefWidth="617.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="resetPassword" prefHeight="25.0" prefWidth="617.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor></TextField>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Wachtwoord Resetten" wrappingWidth="335.4700622558594">
                            <font>
                               <Font size="32.0" />
@@ -114,7 +120,10 @@
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Button mnemonicParsing="false" onAction="#resetPasswordAction" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Wachtwoord Resetten" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                              <Button mnemonicParsing="false" onAction="#resetPasswordAction" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Wachtwoord Resetten" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></Button>
                               <Label fx:id="resetPasswordInfo" prefHeight="17.0" prefWidth="281.0" />
                            </children>
                         </GridPane>
@@ -133,7 +142,10 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <TextField fx:id="createUsername" prefHeight="25.0" prefWidth="617.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="createUsername" prefHeight="25.0" prefWidth="617.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor></TextField>
                         <Label text="Gebruikersnaam:" GridPane.rowIndex="1">
                            <font>
                               <Font size="16.0" />
@@ -142,7 +154,10 @@
                            <font>
                               <Font size="16.0" />
                            </font></Label>
-                        <TextField fx:id="createUserRealname" prefHeight="25.0" prefWidth="617.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="createUserRealname" prefHeight="25.0" prefWidth="617.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor></TextField>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Account Aanmaken" wrappingWidth="335.4700622558594">
                            <font>
                               <Font size="32.0" />
@@ -164,7 +179,10 @@
                                  </font></RadioButton>
                            </children>
                         </HBox>
-                        <TextField fx:id="createUserPassword" prefHeight="25.0" prefWidth="617.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="createUserPassword" prefHeight="25.0" prefWidth="617.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor></TextField>
                         <GridPane GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -178,7 +196,10 @@
                                  <font>
                                     <Font size="10.0" />
                                  </font></Label>
-                              <Button mnemonicParsing="false" onAction="#createAccount" prefWidth="150.0" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Account Aanmaken" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                              <Button mnemonicParsing="false" onAction="#createAccount" prefWidth="150.0" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Account Aanmaken" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></Button>
                            </children>
                         </GridPane>
                         <Label text="Wachtwoord:" GridPane.rowIndex="3">
@@ -199,7 +220,10 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <TextField fx:id="deactivateUsername" prefHeight="25.0" prefWidth="617.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="deactivateUsername" prefHeight="25.0" prefWidth="617.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor></TextField>
                         <Label text="Gebruikersnaam:" GridPane.rowIndex="1">
                            <font>
                               <Font size="16.0" />
@@ -219,7 +243,10 @@
                            </rowConstraints>
                            <children>
                               <Label fx:id="deactivateUserInfo" prefHeight="17.0" prefWidth="280.0" />
-                              <Button mnemonicParsing="false" onAction="#deactivateUser" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Account (de)activeren" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                              <Button mnemonicParsing="false" onAction="#deactivateUser" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Account (de)activeren" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></Button>
                            </children>
                         </GridPane>
                      </children>
@@ -245,7 +272,10 @@
                               <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <TextField GridPane.columnIndex="1" />
+                              <TextField GridPane.columnIndex="1">
+                                 <cursor>
+                                    <Cursor fx:constant="TEXT" />
+                                 </cursor></TextField>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Zoeken" />
                            </children>
                         </GridPane>

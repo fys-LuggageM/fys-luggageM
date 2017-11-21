@@ -162,17 +162,35 @@
                                           <Insets top="10.0" />
                                        </VBox.margin>
                                     </Text>
-                                    <DatePicker promptText="Datum:" />
+                                    <DatePicker promptText="Datum:">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></DatePicker>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16;" text="Tijd:" />
-                                    <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="50.0" />
+                                    <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="50.0">
+                                       <cursor>
+                                          <Cursor fx:constant="TEXT" />
+                                       </cursor></TextField>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16;" text="Luchthaven:" />
-                                    <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" />
+                                    <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                       <cursor>
+                                          <Cursor fx:constant="TEXT" />
+                                       </cursor></TextField>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16;" text="Type:" />
-                                    <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" />
+                                    <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                       <cursor>
+                                          <Cursor fx:constant="TEXT" />
+                                       </cursor></TextField>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16;" text="Merk:" />
-                                    <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" />
+                                    <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                       <cursor>
+                                          <Cursor fx:constant="TEXT" />
+                                       </cursor></TextField>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16;" text="Kleur:" />
-                                    <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" />
+                                    <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                       <cursor>
+                                          <Cursor fx:constant="TEXT" />
+                                       </cursor></TextField>
                                  </children>
                               </VBox>
                               <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="445.0" style="-fx-border-color: black; -fx-background-color: #e1e6ef;" GridPane.columnIndex="2" GridPane.valignment="TOP">
@@ -184,7 +202,10 @@
                                                 <Insets top="3.0" />
                                              </VBox.margin>
                                           </Text>
-                                          <TextArea maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="415.0" style="-fx-background-color: #eaecef;" />
+                                          <TextArea maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="415.0" style="-fx-background-color: #eaecef;">
+                                             <cursor>
+                                                <Cursor fx:constant="TEXT" />
+                                             </cursor></TextArea>
                                        </children>
                                        <padding>
                                           <Insets left="10.0" />

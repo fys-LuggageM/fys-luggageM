@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -20,7 +21,7 @@
     <children>
       <BorderPane layoutX="75.0" layoutY="33.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 0 0 1 0;" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 1 0 1 0;" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -36,10 +37,13 @@
                            <graphic>
                               <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/user_male2-512.png" />
+                                    <Image url="@../images/back_button.png" />
                                  </image>
                               </ImageView>
                            </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                         <Label fx:id="nameLabel">
                            <HBox.margin>
@@ -77,6 +81,9 @@
                      <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" />
                      </GridPane.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                     <Button fx:id="verlorenBagageButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleVerlorenButtonAction" style="-fx-border-color: black;" text="Verloren Bagage" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
@@ -85,6 +92,9 @@
                      <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" />
                      </GridPane.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button fx:id="gevondenBagageBeschadigde" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleGevondenButtonAction" style="-fx-border-color: black;" text="Gevonden Bagage" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                      <font>
@@ -93,6 +103,9 @@
                      <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" />
                      </GridPane.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </GridPane>
@@ -133,6 +146,9 @@
                      <GridPane.margin>
                         <Insets bottom="10.0" />
                      </GridPane.margin>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
                   </TextField>
                </children>
                <BorderPane.margin>

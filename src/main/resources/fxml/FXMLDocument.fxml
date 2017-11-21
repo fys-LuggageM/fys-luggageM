@@ -84,7 +84,10 @@
                               <TextField fx:id="username" promptText="Gebruikersnaam">
                                  <font>
                                     <Font size="16.0" />
-                                 </font></TextField>
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="TEXT" />
+                                 </cursor></TextField>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefWidth="200.0">
@@ -97,7 +100,10 @@
                               <PasswordField fx:id="password" onAction="#handleLogInAction" promptText="Wachtwoord">
                                  <font>
                                     <Font size="16.0" />
-                                 </font></PasswordField>
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="TEXT" />
+                                 </cursor></PasswordField>
                            </children>
                            <VBox.margin>
                               <Insets />

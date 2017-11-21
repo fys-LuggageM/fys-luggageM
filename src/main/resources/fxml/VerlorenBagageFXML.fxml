@@ -36,10 +36,13 @@
                            <graphic>
                               <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/user_male2-512.png" />
+                                    <Image url="@../images/back_button.png" />
                                  </image>
                               </ImageView>
                            </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                         <Label fx:id="nameLabel">
                            <HBox.margin>
@@ -66,6 +69,9 @@
                      <font>
                         <Font size="16.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
                <opaqueInsets>
