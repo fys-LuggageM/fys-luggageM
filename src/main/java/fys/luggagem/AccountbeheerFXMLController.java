@@ -74,9 +74,15 @@ public class AccountbeheerFXMLController implements Initializable {
     @FXML
     private void resetPasswordAction(ActionEvent event) {
         System.out.println("Wachtwoord gereset.");
-        resetUser.clear();
-        resetPassword.clear();
-        resetPasswordInfo.setText("Wachtwoord gereset.");
+        if ((resetUser.getText() == null || resetUser.getText().trim().isEmpty()) || (resetPassword.getText().trim().isEmpty())) {
+            resetPasswordInfo.setTextFill(Paint.valueOf("d81e05"));
+            resetPasswordInfo.setText("Wachtwoord niet gereset. Een of meerdere velden zijn leeg.");
+        } else {
+            resetPasswordInfo.setTextFill(Paint.valueOf("green"));
+            resetPasswordInfo.setText("Wachtwoord gereset.");
+            resetUser.clear();
+            resetPassword.clear();
+        }
     }
 
     @FXML
