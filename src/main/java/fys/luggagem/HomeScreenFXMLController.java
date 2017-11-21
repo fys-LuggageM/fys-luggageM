@@ -88,12 +88,34 @@ public class HomeScreenFXMLController implements Initializable {
     }
     
     @FXML
+    private void handleDatabaseAction(ActionEvent event) throws IOException {
+        t.stop();
+        Scene window = data.getScene();
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/DatabaseFXML.fxml"));
+        Parent root = (Parent) loader.load();
+        DatabaseController controller = loader.getController();
+        controller.initData(data);
+        data.getScene().setRoot(root);
+    }
+    
+    @FXML
     private void handleVerlorenBagageAction(ActionEvent event) throws IOException {
         t.stop();
         Scene window = data.getScene();
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/VerlorenBagageFXML.fxml"));
         Parent root = (Parent) loader.load();
         VerlorenBagageController controller = loader.getController();
+        controller.initData(data);
+        data.getScene().setRoot(root);
+    }
+    
+    @FXML
+    private void handleGevondenBagageAction(ActionEvent event) throws IOException {
+        t.stop();
+        Scene window = data.getScene();
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/GevondenBagageFXML.fxml"));
+        Parent root = (Parent) loader.load();
+        GevondenBagageController controller = loader.getController();
         controller.initData(data);
         data.getScene().setRoot(root);
     }
