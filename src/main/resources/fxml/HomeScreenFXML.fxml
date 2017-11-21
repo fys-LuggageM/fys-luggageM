@@ -45,7 +45,7 @@
                               <Insets left="5.0" right="50.0" />
                            </HBox.margin>
                            <font>
-                              <Font name="Arial" size="24.0" />
+                              <Font size="24.0" />
                            </font>
                         </Label>
                         <Button mnemonicParsing="false" onAction="#handleLogOutAction" style="-fx-background-color: white;">
@@ -62,6 +62,9 @@
                                  </cursor>
                               </ImageView>
                            </graphic>
+                           <font>
+                              <Font size="16.0" />
+                           </font>
                         </Button>
                      </children>
                   </HBox>
@@ -84,6 +87,9 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <font>
+                              <Font size="16.0" />
+                           </font>
                         </Button>
                      </children>
                   </VBox>
@@ -100,6 +106,9 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <font>
+                              <Font size="16.0" />
+                           </font>
                         </Button>
                      </children>
                   </VBox>
@@ -116,6 +125,9 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <font>
+                              <Font size="16.0" />
+                           </font>
                         </Button>
                      </children>
                   </VBox>
@@ -132,6 +144,9 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <font>
+                              <Font size="16.0" />
+                           </font>
                         </Button>
                      </children>
                   </VBox>
@@ -148,6 +163,9 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <font>
+                              <Font size="16.0" />
+                           </font>
                         </Button>
                      </children>
                   </VBox>
@@ -164,12 +182,15 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <font>
+                              <Font size="16.0" />
+                           </font>
                         </Button>
                      </children>
                   </VBox>
                </children>
                <padding>
-                  <Insets bottom="25.0" top="25.0" />
+                  <Insets bottom="15.0" top="15.0" />
                </padding>
                <BorderPane.margin>
                   <Insets />
@@ -181,17 +202,17 @@
                <children>
                   <Label fx:id="timeLabel">
                      <font>
-                        <Font name="Arial Bold" size="72.0" />
+                        <Font name="System Bold" size="72.0" />
                      </font>
                   </Label>
                   <Label fx:id="greetingLabel">
                      <font>
-                        <Font name="Arial" size="48.0" />
+                        <Font size="48.0" />
                      </font>
                   </Label>
                   <Label fx:id="dateLabel" style="-fx-border-color: black; -fx-border-width: 0 0 1 0;">
                      <font>
-                        <Font name="Arial" size="24.0" />
+                        <Font size="24.0" />
                      </font>
                      <VBox.margin>
                         <Insets top="50.0" />

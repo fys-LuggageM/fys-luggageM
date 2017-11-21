@@ -51,6 +51,9 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <font>
+                              <Font size="16.0" />
+                           </font>
                         </Button>
                      </children>
                   </HBox>
@@ -78,7 +81,10 @@
                                     <Image url="@../images/gender_neutral_user1600.png" />
                                  </image>
                               </ImageView>
-                              <TextField fx:id="username" promptText="Gebruikersnaam" />
+                              <TextField fx:id="username" promptText="Gebruikersnaam">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font></TextField>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefWidth="200.0">
@@ -88,7 +94,10 @@
                                     <Image url="@../images/key1600.png" />
                                  </image>
                               </ImageView>
-                              <PasswordField fx:id="password" onAction="#handleLogInAction" promptText="Wachtwoord" />
+                              <PasswordField fx:id="password" onAction="#handleLogInAction" promptText="Wachtwoord">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font></PasswordField>
                            </children>
                            <VBox.margin>
                               <Insets />
