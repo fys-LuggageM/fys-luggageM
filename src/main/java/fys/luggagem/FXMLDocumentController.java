@@ -23,7 +23,7 @@ public class FXMLDocumentController implements Initializable {
     private Stage prevStage;
     private boolean loginSuccesvol = false;
     private int index = 0;
-    private final String[] usernames = {"Jordan van Beijnhem", "Tabish Nanhekhan", "Joris Ebbelaar", "Valentijn Vermeij", "Pathe Dude", "Ayoub El Gris", "test gebruiker"};
+    private final String[] usernames = {"Jordan van Beijnhem", "Tabish Nanhekhan", "Joris Ebbelaar", "Valentijn Vermeij", "Pathe Dude", "Ayoub El Gris"};
     Scene window;
     Data data;
 
@@ -53,7 +53,7 @@ public class FXMLDocumentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        statusMessage.setText("Log in met gebruikersnaam: \"test gebruiker\" en wachtwoord: \"test\"");
+        
     }
 
     private void userCheck(String username, String password, ActionEvent event) throws IOException {
