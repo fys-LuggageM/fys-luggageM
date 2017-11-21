@@ -23,58 +23,58 @@ import javafx.scene.control.TabPane;
 public class RapportageController implements Initializable {
 
     Data data;
-    
+
     @FXML
     private Label label;
-    
+
     @FXML
     private Button close;
-    
+
     @FXML
     private Button button;
-    
+
     @FXML
     private ComboBox<String> comboYear;
-    
+
     @FXML
     private ComboBox<String> comboDay;
-    
+
     @FXML
     private ComboBox<String> comboMonth;
-    
+
     @FXML
     private TabPane tabel;
-    
+
     @FXML
     private Tab tabVerloren;
-    
+
     @FXML
     private Tab tabGevonden;
-    
+
     @FXML
     private Tab tabBeschadigd;
-    
+
     @FXML
     private Label tabLabelData;
-    
+
     @FXML
     private Button exportButton;
-    
+
     @FXML
     private Label exportLabel;
-    
+
     @FXML
     private Label tabJoke;
-    
+
     @FXML
     private Label tabJoke3;
-    
+
     @FXML
     private Label tabLabelData3;
-    
+
     @FXML
     private Label tabJoke2;
-    
+
     @FXML
     private Label tabLabelData2;
 
@@ -109,7 +109,7 @@ public class RapportageController implements Initializable {
     }
 
     @FXML
-    private void closeButton(ActionEvent event) throws IOException {
+    private void handleCloseAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
         Parent root = (Parent) loader.load();
         HomeScreenFXMLController controller = loader.getController();

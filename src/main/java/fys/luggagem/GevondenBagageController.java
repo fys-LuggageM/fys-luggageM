@@ -20,7 +20,7 @@ import javafx.scene.layout.AnchorPane;
 public class GevondenBagageController implements Initializable {
 
     Data data;
-    
+
     @FXML
     private Label statusMessage;
 
@@ -46,9 +46,18 @@ public class GevondenBagageController implements Initializable {
     private Label nameLabel;
 
     @FXML
-    private void opslaan(ActionEvent event) {
+    private void handleSaveAction(ActionEvent event) {
         statusMessage.setText("Succesvol opgeslagen naar database");
         System.out.println("GELUKT!");
+    }
+
+    @FXML
+    private void handleCloseAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
+        Parent root = (Parent) loader.load();
+        HomeScreenFXMLController controller = loader.getController();
+        controller.initData(data);
+        data.getScene().setRoot(root);
     }
 
     @Override
@@ -64,15 +73,6 @@ public class GevondenBagageController implements Initializable {
         TijdUur.setText(timeFormatUur.format(new Date()));
         SimpleDateFormat timeFormatMinuut = new SimpleDateFormat("mm");
         TijdMinuut.setText(timeFormatMinuut.format(new Date()));
-    }
-    
-    @FXML
-    private void handleCloseAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
-        Parent root = (Parent) loader.load();
-        HomeScreenFXMLController controller = loader.getController();
-        controller.initData(data);
-        data.getScene().setRoot(root);
     }
 
     public void initData(Data mainData) {
