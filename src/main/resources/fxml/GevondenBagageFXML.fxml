@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" maxHeight="768.0" maxWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" style="-fx-border-color: black; -fx-border-width: 1 0 0 0;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.luggagem.FXMLDocumentController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" maxHeight="768.0" maxWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" style="-fx-border-color: black; -fx-border-width: 1 0 0 0;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.luggagem.GevondenBagageController">
    <children>
       <BorderPane layoutX="341.0" layoutY="92.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -23,7 +23,7 @@
                <children>
                   <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../images/Naamloos-2.png../../../images/Naamloos-2.png" />
+                        <Image url="@../images/Naamloos-2.png" />
                      </image>
                      <HBox.margin>
                         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
@@ -31,11 +31,11 @@
                   </ImageView>
                   <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: white;">
+                        <Button mnemonicParsing="false" onAction="#handleCloseAction" style="-fx-background-color: white;">
                            <graphic>
                               <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../images/user_male2-512.png../../../images/user_male2-512.png" />
+                                    <Image url="@../images/user_male2-512.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -61,7 +61,7 @@
                         <Font name="System Italic" size="36.0" />
                      </font>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#opslaan" prefHeight="28.0" prefWidth="98.0" text="Opslaan">
+                  <Button mnemonicParsing="false" onAction="#handleSaveAction" prefHeight="28.0" prefWidth="98.0" text="Opslaan">
                      <font>
                         <Font size="16.0" />
                      </font>
