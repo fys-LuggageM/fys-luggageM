@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -43,6 +44,9 @@
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                                 </Button>
                             </children>
                             <padding>
@@ -80,10 +84,22 @@
                                     <GridPane.margin>
                                         <Insets />
                                     </GridPane.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                                 </Button>
-                                <ComboBox fx:id="comboYear" editable="true" prefHeight="40.0" prefWidth="200.0" GridPane.halignment="CENTER" />
-                                <ComboBox fx:id="comboDay" editable="true" prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                                <ComboBox fx:id="comboMonth" editable="true" prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                <ComboBox fx:id="comboYear" editable="true" prefHeight="40.0" prefWidth="200.0" GridPane.halignment="CENTER">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></ComboBox>
+                                <ComboBox fx:id="comboDay" editable="true" prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></ComboBox>
+                                <ComboBox fx:id="comboMonth" editable="true" prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></ComboBox>
                                 <Label alignment="TOP_LEFT" text="Vul het jaar in:" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                                     <font>
                                         <Font size="24.0" />
@@ -242,11 +258,17 @@
                             <GridPane.margin>
                                 <Insets />
                             </GridPane.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                         </Button>
                         <Button fx:id="exportButton" mnemonicParsing="false" onAction="#exportButton" prefHeight="40.0" prefWidth="200.0" text="Exporteren" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                             <font>
                                 <Font size="18.0" />
                             </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                         </Button>
                         <Label fx:id="exportLabel" GridPane.columnIndex="1">
                             <font>
