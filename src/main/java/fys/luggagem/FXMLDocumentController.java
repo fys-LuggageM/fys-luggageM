@@ -25,7 +25,6 @@ public class FXMLDocumentController implements Initializable {
     private int index = 0;
     private final String[] usernames = {"Jordan van Beijnhem", "Tabish Nanhekhan", "Joris Ebbelaar", "Valentijn Vermeij", "Pathe Dude", "Ayoub El Gris"};
     Scene window;
-    Data data;
 
     @FXML
     private AnchorPane rootPane;
@@ -60,12 +59,11 @@ public class FXMLDocumentController implements Initializable {
         while (!loginSuccesvol && index < usernames.length) {
             if (username.equals(usernames[index]) && password.equals("test")) {
                 loginSuccesvol = true;
-                data.setName(usernames[index]);
+                Data.setName(usernames[index]);
                 FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
                 Parent root = (Parent) loader.load();
                 HomeScreenFXMLController controller = loader.getController();
-                controller.initData(data);
-                window = data.getScene();
+                window = Data.getScene();
                 window.setRoot(root);
             }
             index++;
@@ -76,9 +74,5 @@ public class FXMLDocumentController implements Initializable {
         }
         index = 0;
         loginSuccesvol = false;
-    }
-
-    public void setData(Data mainData) {
-        data = mainData;
     }
 }
