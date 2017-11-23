@@ -1,6 +1,8 @@
 package fys.luggagem;
 
 import java.io.File;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -10,21 +12,23 @@ import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class MainApp extends Application {
+public class MainApp extends Application{
 
+    String standardLanguage = "en";
+    String standardCountry = "US";
+    Locale l = new Locale(standardLanguage, standardCountry);
     Scene window;
-    Data data = new Data();
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/FXMLDocument.fxml"));
+        loader.setResources(ResourceBundle.getBundle("bundles.Bundle", l));
         Parent root = (Parent) loader.load();
         FXMLDocumentController controller = loader.getController();
 
         Scene scene = new Scene(root);
         window = scene;
-        data.setScene(scene);
-        controller.setData(data);
+        Data.setScene(scene);
         stage.setScene(scene);
         stage.setFullScreen(true);
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);

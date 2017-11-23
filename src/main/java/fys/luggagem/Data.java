@@ -13,22 +13,22 @@ import javafx.scene.Scene;
  */
 public class Data {
     
-    String name;
-    Scene window;
+    static String name;
+    static Scene window;
     
-    public void setName(String n) {
+    public static void setName(String n) {
         name = n;
     }
     
-    public String getName() {
+    public static String getName() {
         return name;
     }
     
-    public void setScene(Scene scene) {
+    public static void setScene(Scene scene) {
         window = scene;
     }
     
-    public Scene getScene() {
+    public static Scene getScene() {
         return window;
     }
 }

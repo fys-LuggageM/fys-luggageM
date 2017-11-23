@@ -24,7 +24,6 @@ import javax.swing.Timer;
  */
 public class HomeScreenFXMLController implements Initializable {
 
-    Data data;
     private Timer t;   
     String name;
 
@@ -46,78 +45,72 @@ public class HomeScreenFXMLController implements Initializable {
     @FXML
     private void handleLogOutAction(ActionEvent event) throws IOException {
         t.stop();
-        Scene window = data.getScene();
+        Scene window = Data.getScene();
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/FXMLDocument.fxml"));
+        loader.setResources(ResourceBundle.getBundle("bundles.Bundle"));
         Parent root = (Parent) loader.load();
         FXMLDocumentController controller = loader.getController();
-        controller.setData(data);
-        data.getScene().setRoot(root);
+        Data.getScene().setRoot(root);
     }
 
     @FXML
     private void handleGebruikersbeheerAction(ActionEvent event) throws IOException {
         t.stop();
-        Scene window = data.getScene();
+        Scene window = Data.getScene();
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/AccountbeheerFXML.fxml"));
         Parent root = (Parent) loader.load();
         AccountbeheerFXMLController controller = loader.getController();
-        controller.initData(data);
-        data.getScene().setRoot(root);
+        Data.getScene().setRoot(root);
     }
 
     @FXML
     private void handleBeschadigdeBagageAction(ActionEvent event) throws IOException {
         t.stop();
-        Scene window = data.getScene();
+        Scene window = Data.getScene();
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/BeschadigdeBagageFXML.fxml"));
         Parent root = (Parent) loader.load();
         BeschadigdeBagageController controller = loader.getController();
-        controller.initData(data);
-        data.getScene().setRoot(root);
+        Data.getScene().setRoot(root);
     }
 
     @FXML
     private void handleRapportageAction(ActionEvent event) throws IOException {
         t.stop();
-        Scene window = data.getScene();
+        Scene window = Data.getScene();
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/RapportageFXML.fxml"));
         Parent root = (Parent) loader.load();
         RapportageController controller = loader.getController();
-        controller.initData(data);
-        data.getScene().setRoot(root);
+        Data.getScene().setRoot(root);
     }
     
     @FXML
     private void handleDatabaseAction(ActionEvent event) throws IOException {
         t.stop();
-        Scene window = data.getScene();
+        Scene window = Data.getScene();
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/DatabaseFXML.fxml"));
         Parent root = (Parent) loader.load();
         DatabaseController controller = loader.getController();
-        controller.initData(data);
-        data.getScene().setRoot(root);
+        Data.getScene().setRoot(root);
     }
     
     @FXML
     private void handleVerlorenBagageAction(ActionEvent event) throws IOException {
         t.stop();
-        Scene window = data.getScene();
+        Scene window = Data.getScene();
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/VerlorenBagageFXML.fxml"));
         Parent root = (Parent) loader.load();
         VerlorenBagageController controller = loader.getController();
-        controller.initData(data);
-        data.getScene().setRoot(root);
+        Data.getScene().setRoot(root);
     }
     
     @FXML
     private void handleGevondenBagageAction(ActionEvent event) throws IOException {
         t.stop();
-        Scene window = data.getScene();
+        Scene window = Data.getScene();
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/GevondenBagageFXML.fxml"));
         Parent root = (Parent) loader.load();
         GevondenBagageController controller = loader.getController();
-        controller.initData(data);
-        data.getScene().setRoot(root);
+        Data.getScene().setRoot(root);
     }
 
     @Override
@@ -133,13 +126,13 @@ public class HomeScreenFXMLController implements Initializable {
                         Calendar rightNow = Calendar.getInstance();
                         int hour = rightNow.get(Calendar.HOUR_OF_DAY);
                         if (hour >= 0 && hour < 6) {
-                            greetingLabel.setText("Goedennacht, " + name.substring(0, name.indexOf(" ")));
+                            greetingLabel.setText("Goedennacht, " + Data.getName().substring(0, Data.name.indexOf(" ")));
                         } else if (hour >= 6 && hour < 12) {
-                            greetingLabel.setText("Goedemorgen, " + name.substring(0, name.indexOf(" ")));
+                            greetingLabel.setText("Goedemorgen, " + Data.getName().substring(0, Data.name.indexOf(" ")));
                         } else if (hour >= 12 && hour < 18) {
-                            greetingLabel.setText("Goedemiddag, " + name.substring(0, name.indexOf(" ")));
+                            greetingLabel.setText("Goedemiddag, " + Data.getName().substring(0, Data.name.indexOf(" ")));
                         } else if (hour >= 18 && hour < 24) {
-                            greetingLabel.setText("Goedenavond, " + name.substring(0, name.indexOf(" ")));
+                            greetingLabel.setText("Goedenavond, " + Data.getName().substring(0, Data.name.indexOf(" ")));
                         }
                     }
                 });
@@ -148,11 +141,5 @@ public class HomeScreenFXMLController implements Initializable {
         t.start();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         dateLabel.setText(dateFormat.format(new Date()));
-    }
-
-    public void initData(Data mainData) {
-        data = mainData;
-        name = data.getName();
-        nameLabel.setText(name);
     }
 }

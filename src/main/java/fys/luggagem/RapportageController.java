@@ -22,8 +22,6 @@ import javafx.scene.control.TabPane;
  */
 public class RapportageController implements Initializable {
 
-    Data data;
-
     @FXML
     private Label label;
 
@@ -113,8 +111,7 @@ public class RapportageController implements Initializable {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
         Parent root = (Parent) loader.load();
         HomeScreenFXMLController controller = loader.getController();
-        controller.initData(data);
-        data.getScene().setRoot(root);
+        Data.getScene().setRoot(root);
     }
 
     @Override
@@ -174,9 +171,5 @@ public class RapportageController implements Initializable {
                 "31"
         );
         comboDay.getEditor().getText();
-    }
-
-    public void initData(Data mainData) {
-        data = mainData;
     }
 }
