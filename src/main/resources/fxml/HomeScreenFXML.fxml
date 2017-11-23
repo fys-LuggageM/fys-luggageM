@@ -53,10 +53,10 @@
                         </Label>
                         <Button mnemonicParsing="false" onAction="#handleLogOutAction" style="-fx-background-color: white;">
                            <HBox.margin>
-                              <Insets right="50.0" />
+                              <Insets right="43.0" />
                            </HBox.margin>
                            <graphic>
-                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/logout_button.png" />
                                  </image>

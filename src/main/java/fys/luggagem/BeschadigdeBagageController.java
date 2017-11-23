@@ -39,19 +39,21 @@ public class BeschadigdeBagageController implements Initializable {
         controller.initData(data);
         data.getScene().setRoot(root);
     }
-    
+
     @FXML
     private void loadImage01(ActionEvent event) throws MalformedURLException {
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Selecteer de foto");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
 
         File file = fileChooser.showOpenDialog(stage);
 
         if (file != null) {
             imageURL = file.toURI().toURL().toString();
 
-            Image image = new Image(imageURL);
+            Image image = new Image(imageURL, 384, 216, false, false);
             image01.setImage(image);
         }
     }
@@ -61,13 +63,15 @@ public class BeschadigdeBagageController implements Initializable {
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Selecteer de foto");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
 
         File file = fileChooser.showOpenDialog(stage);
 
         if (file != null) {
             imageURL = file.toURI().toURL().toString();
 
-            Image image = new Image(imageURL);
+            Image image = new Image(imageURL, 384, 216, false, false);
             image02.setImage(image);
         }
     }
@@ -77,13 +81,15 @@ public class BeschadigdeBagageController implements Initializable {
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Selecteer de foto");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
 
         File file = fileChooser.showOpenDialog(stage);
 
         if (file != null) {
             imageURL = file.toURI().toURL().toString();
 
-            Image image = new Image(imageURL);
+            Image image = new Image(imageURL, 384, 216, false, false);
             image03.setImage(image);
         }
     }
@@ -92,7 +98,7 @@ public class BeschadigdeBagageController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-    
+
     public void initData(Data mainData) {
         data = mainData;
     }
