@@ -17,8 +17,6 @@ import javafx.scene.text.Font;
 
 public class AccountbeheerFXMLController implements Initializable {
 
-    Data data;
-
     @FXML
     private Label label;
 
@@ -66,8 +64,7 @@ public class AccountbeheerFXMLController implements Initializable {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
         Parent root = (Parent) loader.load();
         HomeScreenFXMLController controller = loader.getController();
-        controller.initData(data);
-        data.getScene().setRoot(root);
+        Data.getScene().setRoot(root);
     }
 
     @FXML
@@ -123,9 +120,5 @@ public class AccountbeheerFXMLController implements Initializable {
         roleAdmin.setToggleGroup(accountButtons);
         roleEmployee.setToggleGroup(accountButtons);
         roleManager.setToggleGroup(accountButtons);
-    }
-
-    public void initData(Data mainData) {
-        data = mainData;
     }
 }

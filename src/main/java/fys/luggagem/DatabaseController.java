@@ -12,8 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class DatabaseController implements Initializable {
-
-    Data data;
     
     @FXML
     private Label label;
@@ -49,16 +47,11 @@ public class DatabaseController implements Initializable {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
         Parent root = (Parent) loader.load();
         HomeScreenFXMLController controller = loader.getController();
-        controller.initData(data);
-        data.getScene().setRoot(root);
+        Data.getScene().setRoot(root);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }
-
-    public void initData(Data mainData) {
-        data = mainData;
     }
 }

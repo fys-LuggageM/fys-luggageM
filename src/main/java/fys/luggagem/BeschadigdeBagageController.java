@@ -18,8 +18,6 @@ import javafx.stage.Stage;
 
 public class BeschadigdeBagageController implements Initializable {
 
-    Data data;
-
     @FXML
     private ImageView image01;
 
@@ -36,8 +34,7 @@ public class BeschadigdeBagageController implements Initializable {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
         Parent root = (Parent) loader.load();
         HomeScreenFXMLController controller = loader.getController();
-        controller.initData(data);
-        data.getScene().setRoot(root);
+        Data.getScene().setRoot(root);
     }
 
     @FXML
@@ -99,7 +96,4 @@ public class BeschadigdeBagageController implements Initializable {
         // TODO
     }
 
-    public void initData(Data mainData) {
-        data = mainData;
-    }
 }

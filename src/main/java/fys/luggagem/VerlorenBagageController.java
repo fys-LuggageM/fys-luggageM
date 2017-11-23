@@ -20,8 +20,6 @@ import javafx.scene.layout.AnchorPane;
  */
 public class VerlorenBagageController implements Initializable {  
     
-    Data data;
-    
     @FXML
     private Label statusMessage;       
             
@@ -57,8 +55,7 @@ public class VerlorenBagageController implements Initializable {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
         Parent root = (Parent) loader.load();
         HomeScreenFXMLController controller = loader.getController();
-        controller.initData(data);
-        data.getScene().setRoot(root);
+        Data.getScene().setRoot(root);
     }
     
     @Override
@@ -75,8 +72,4 @@ public class VerlorenBagageController implements Initializable {
         SimpleDateFormat timeFormatMinuut = new SimpleDateFormat("mm");
         TijdMinuut.setText(timeFormatMinuut.format(new Date()));
     }    
-    
-    public void initData(Data mainData) {
-        data = mainData;
-    }
 }
