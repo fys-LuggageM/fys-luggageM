@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Button;
@@ -22,6 +21,8 @@ import javafx.scene.control.TabPane;
  */
 public class RapportageController implements Initializable {
 
+    Data data = MainApp.getData();
+    
     @FXML
     private Label label;
 
@@ -53,7 +54,7 @@ public class RapportageController implements Initializable {
     private Tab tabBeschadigd;
 
     @FXML
-    private Label tabLabelData;
+    private Label tabLabeldata;
 
     @FXML
     private Button exportButton;
@@ -68,28 +69,28 @@ public class RapportageController implements Initializable {
     private Label tabJoke3;
 
     @FXML
-    private Label tabLabelData3;
+    private Label tabLabeldata3;
 
     @FXML
     private Label tabJoke2;
 
     @FXML
-    private Label tabLabelData2;
+    private Label tabLabeldata2;
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
-        System.out.println("Data geladen!");
+        System.out.println("data geladen!");
         label.setText("Wil je data exporteren van " + comboDay.getValue() + " "
                 + comboMonth.getValue() + " " + comboYear.getValue() + "?");
 
         tabJoke.setText("Hier komt iets");
-        tabLabelData.setText("Hier komt ook iets");
+        tabLabeldata.setText("Hier komt ook iets");
 
         tabJoke2.setText("Hier komt iets");
-        tabLabelData2.setText("Hier komt ook iets");
+        tabLabeldata2.setText("Hier komt ook iets");
 
         tabJoke3.setText("Hier komt iets");
-        tabLabelData3.setText("Hier komt ook iets");
+        tabLabeldata3.setText("Hier komt ook iets");
 
     }
 
@@ -108,10 +109,7 @@ public class RapportageController implements Initializable {
 
     @FXML
     private void handleCloseAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
-        Parent root = (Parent) loader.load();
-        HomeScreenFXMLController controller = loader.getController();
-        Data.getScene().setRoot(root);
+        MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
     }
 
     @Override

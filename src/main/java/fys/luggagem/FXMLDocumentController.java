@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -23,12 +24,29 @@ public class FXMLDocumentController implements Initializable {
     private Stage prevStage;
     private boolean loginSuccesvol = false;
     private int index = 0;
-    private final String[] usernames = {"Jordan van Beijnhem", "Tabish Nanhekhan", "Joris Ebbelaar", "Valentijn Vermeij", "Pathe Dude", "Ayoub El Gris"};
+    private final String[] usernames = {"Jordan van Beijnhem", "Tabish Nanhekhan", "Joris Ebbelaar",
+        "Valentijn Vermeij", "Pathe Dude", "Ayoub El Gris"};
+    private Data data = MainApp.getData();
     Scene window;
 
     @FXML
     private AnchorPane rootPane;
 
+    @FXML
+    private Label logInLabel;
+
+    @FXML
+    private Button exitButton;
+
+    @FXML
+    private Button logInButton;
+
+    @FXML
+    private Button dutchButton;
+    
+    @FXML
+    private Button englishButton;
+    
     @FXML
     private TextField username;
 
@@ -50,21 +68,47 @@ public class FXMLDocumentController implements Initializable {
         System.exit(0);
     }
 
+    @FXML
+    private void handleEnglishAction(ActionEvent event) {
+        if (!data.getLanguage().equals("en") && !data.getCountry().equals("US")) {
+            data.setLanguage("en");
+            data.setCountry("US");
+            data.setLocale();
+            dutchButton.setStyle("-fx-background-color: white");
+            englishButton.setStyle("-fx-background-color: grey");
+            refreshText();
+        }
+    }
+
+    @FXML
+    private void handleDutchAction(ActionEvent event) {
+        if (!data.getLanguage().equals("nl") && !data.getCountry().equals("NL")) {
+            data.setLanguage("nl");
+            data.setCountry("NL");
+            data.setLocale();
+            dutchButton.setStyle("-fx-background-color: grey");
+            englishButton.setStyle("-fx-background-color: white");
+            refreshText();
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        if (data.getLanguage().equals("en") && data.getCountry().equals("US")) {
+            dutchButton.setStyle("-fx-background-color: white");
+            englishButton.setStyle("-fx-background-color: grey");
+        } else {
+            dutchButton.setStyle("-fx-background-color: grey");
+            englishButton.setStyle("-fx-background-color: white");
+        }
     }
 
     private void userCheck(String username, String password, ActionEvent event) throws IOException {
         while (!loginSuccesvol && index < usernames.length) {
             if (username.equals(usernames[index]) && password.equals("test")) {
                 loginSuccesvol = true;
-                Data.setName(usernames[index]);
-                FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
-                Parent root = (Parent) loader.load();
-                HomeScreenFXMLController controller = loader.getController();
-                window = Data.getScene();
-                window.setRoot(root);
+                data.setName(usernames[index]);
+                MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
             }
             index++;
         }
@@ -74,5 +118,13 @@ public class FXMLDocumentController implements Initializable {
         }
         index = 0;
         loginSuccesvol = false;
+    }
+
+    private void refreshText() {
+        logInLabel.setText(data.getResourceBundle().getString("logIn"));
+        logInButton.setText(data.getResourceBundle().getString("logIn"));
+        exitButton.setText(data.getResourceBundle().getString("exit"));
+        username.setPromptText(data.getResourceBundle().getString("username"));
+        password.setPromptText(data.getResourceBundle().getString("password"));
     }
 }

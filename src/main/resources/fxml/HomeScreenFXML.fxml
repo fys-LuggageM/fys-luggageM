@@ -82,7 +82,7 @@
                <children>
                   <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleGevondenBagageAction" style="-fx-background-color: white;" text="Bagage Gevonden">
+                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleGevondenBagageAction" style="-fx-background-color: white;" text="%luggageFound">
                            <graphic>
                               <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -101,7 +101,7 @@
                   </VBox>
                   <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleVerlorenBagageAction" style="-fx-background-color: white;" text="Bagage Verloren">
+                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleVerlorenBagageAction" style="-fx-background-color: white;" text="%luggageLost">
                            <graphic>
                               <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -120,7 +120,7 @@
                   </VBox>
                   <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleBeschadigdeBagageAction" style="-fx-background-color: white;" text="Bagage Beschadigd">
+                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleBeschadigdeBagageAction" style="-fx-background-color: white;" text="%luggageDamaged">
                            <graphic>
                               <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -139,7 +139,7 @@
                   </VBox>
                   <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleDatabaseAction" style="-fx-background-color: white;" text="Database">
+                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleDatabaseAction" style="-fx-background-color: white;" text="%database">
                            <graphic>
                               <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -158,7 +158,7 @@
                   </VBox>
                   <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleRapportageAction" style="-fx-background-color: white;" text="Rapportage">
+                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleRapportageAction" style="-fx-background-color: white;" text="%reports">
                            <graphic>
                               <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -177,7 +177,7 @@
                   </VBox>
                   <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleGebruikersbeheerAction" style="-fx-background-color: white;" text="Gebruikersbeheer">
+                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleGebruikersbeheerAction" style="-fx-background-color: white;" text="%adminPanel">
                            <graphic>
                               <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

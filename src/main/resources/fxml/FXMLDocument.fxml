@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="768.0" prefWidth="1024.0" stylesheets="@../styles/LoginLayout.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.luggagem.FXMLDocumentController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.luggagem.FXMLDocumentController">
    <children>
       <GridPane layoutX="33.0" layoutY="132.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -44,7 +44,7 @@
                               <Image url="@../images/exit1600.png" />
                            </image>
                         </ImageView>
-                        <Button mnemonicParsing="false" onAction="#handleExitAction" text="%exit">
+                        <Button fx:id="exitButton" mnemonicParsing="false" onAction="#handleExitAction" prefWidth="100.0" style="-fx-background-color: d81e05; -fx-text-fill: white; -fx-border-color: black;" text="%exit">
                            <HBox.margin>
                               <Insets right="25.0" />
                            </HBox.margin>
@@ -66,7 +66,38 @@
                         <Insets bottom="75.0" left="200.0" right="200.0" top="75.0" />
                      </HBox.margin>
                      <children>
-                        <Label text="%logIn" textFill="#d81e05">
+                        <HBox prefWidth="200.0" VBox.vgrow="NEVER">
+                           <children>
+                              <Button fx:id="englishButton" mnemonicParsing="false" onAction="#handleEnglishAction" style="-fx-background-color: white;">
+                                 <graphic>
+                                    <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/uk_flag.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="5.0" />
+                                 </HBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button fx:id="dutchButton" mnemonicParsing="false" onAction="#handleDutchAction" style="-fx-background-color: white;">
+                                 <graphic>
+                                    <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/dutch_flag.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <Label fx:id="logInLabel" text="%logIn" textFill="#d81e05">
                            <font>
                               <Font size="36.0" />
                            </font>
@@ -81,7 +112,7 @@
                                     <Image url="@../images/gender_neutral_user1600.png" />
                                  </image>
                               </ImageView>
-                              <TextField fx:id="username" promptText="%username">
+                              <TextField fx:id="username" promptText="%username" style="-fx-background-color: ffc61f; -fx-prompt-text-fill: white; -fx-text-fill: black; -fx-border-color: deaa13;">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -97,7 +128,7 @@
                                     <Image url="@../images/key1600.png" />
                                  </image>
                               </ImageView>
-                              <PasswordField fx:id="password" onAction="#handleLogInAction" promptText="%password">
+                              <PasswordField fx:id="password" onAction="#handleLogInAction" promptText="%password" style="-fx-prompt-text-fill: white; -fx-background-color: ffc61f; -fx-text-fill: black; -fx-border-color: deaa13;">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -115,7 +146,7 @@
                               <Insets />
                            </VBox.margin>
                            <children>
-                              <Button mnemonicParsing="false" onAction="#handleLogInAction" prefHeight="43.0" prefWidth="291.0" text="%logIn">
+                              <Button fx:id="logInButton" mnemonicParsing="false" onAction="#handleLogInAction" prefHeight="43.0" prefWidth="291.0" style="-fx-background-color: d81e05; -fx-text-fill: white; -fx-border-color: black;" text="%logIn">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>

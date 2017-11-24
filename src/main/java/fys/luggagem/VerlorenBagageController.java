@@ -20,6 +20,8 @@ import javafx.scene.layout.AnchorPane;
  */
 public class VerlorenBagageController implements Initializable {  
     
+    private Data data = MainApp.getData();
+    
     @FXML
     private Label statusMessage;       
             
@@ -52,10 +54,7 @@ public class VerlorenBagageController implements Initializable {
     
     @FXML
     private void handleCloseAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
-        Parent root = (Parent) loader.load();
-        HomeScreenFXMLController controller = loader.getController();
-        Data.getScene().setRoot(root);
+        MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
     }
     
     @Override
