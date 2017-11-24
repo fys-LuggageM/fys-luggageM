@@ -17,6 +17,8 @@ import javafx.scene.text.Font;
 
 public class AccountbeheerFXMLController implements Initializable {
 
+    private Data data = MainApp.getData();
+    
     @FXML
     private Label label;
 
@@ -61,10 +63,7 @@ public class AccountbeheerFXMLController implements Initializable {
 
     @FXML
     private void handleCloseAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
-        Parent root = (Parent) loader.load();
-        HomeScreenFXMLController controller = loader.getController();
-        Data.getScene().setRoot(root);
+        MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
     }
 
     @FXML

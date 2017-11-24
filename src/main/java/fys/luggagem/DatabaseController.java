@@ -13,6 +13,8 @@ import javafx.scene.control.Label;
 
 public class DatabaseController implements Initializable {
     
+    private Data data = MainApp.getData();
+    
     @FXML
     private Label label;
     @FXML
@@ -27,27 +29,24 @@ public class DatabaseController implements Initializable {
     @FXML
     private void handleBeschadigdeButtonAction(ActionEvent event) {
         System.out.println("Beschadigde bagage");
-        label.setText("Data van Beschadigde Bagage");
+        label.setText("data van Beschadigde Bagage");
     }
 
     @FXML
     private void handleVerlorenButtonAction(ActionEvent event) {
         System.out.println("Verloren bagage");
-        label.setText("Data van Verloren Bagage");
+        label.setText("data van Verloren Bagage");
     }
 
     @FXML
     private void handleGevondenButtonAction(ActionEvent event) {
         System.out.println("Gevonden bagage");
-        label.setText("Data van Gevonden Bagage");
+        label.setText("data van Gevonden Bagage");
     }
     
     @FXML
     private void handleCloseAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
-        Parent root = (Parent) loader.load();
-        HomeScreenFXMLController controller = loader.getController();
-        Data.getScene().setRoot(root);
+        MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
     }
 
     @Override
