@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
@@ -18,6 +17,9 @@ import javafx.stage.Stage;
 
 public class BeschadigdeBagageController implements Initializable {
 
+    private Data data = MainApp.getData();
+    private String imageURL;
+    
     @FXML
     private ImageView image01;
 
@@ -27,14 +29,9 @@ public class BeschadigdeBagageController implements Initializable {
     @FXML
     private ImageView image03;
 
-    private String imageURL;
-
     @FXML
     private void handleCloseAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
-        Parent root = (Parent) loader.load();
-        HomeScreenFXMLController controller = loader.getController();
-        Data.getScene().setRoot(root);
+        MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
     }
 
     @FXML
@@ -93,7 +90,7 @@ public class BeschadigdeBagageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }
 
 }
