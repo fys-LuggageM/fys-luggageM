@@ -7,9 +7,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -19,25 +17,59 @@ import javafx.scene.layout.AnchorPane;
  */
 public class GevondenBagageController implements Initializable {
 
-    private Data data = MainApp.getData();
-    
     @FXML
     private Label statusMessage;
 
     @FXML
-    private TextField DatumDag;
+    private TextField datumDag;
 
     @FXML
-    private TextField DatumMaand;
+    private TextField datumMaand;
 
     @FXML
-    private TextField DatumJaar;
+    private TextField datumJaar;
 
     @FXML
-    private TextField TijdUur;
+    private TextField tijdUur;
 
     @FXML
-    private TextField TijdMinuut;
+    private TextField tijdMinuut;
+
+    @FXML
+    private TextField labelNummer;
+
+    @FXML
+    private TextField vluchtNummer;
+
+    @FXML
+    private TextField bestemming;
+
+    @FXML
+    private TextField voorNaam;
+
+    @FXML
+    private TextField tussenvoegsel;
+
+    @FXML
+    private TextField achterNaam;
+
+    @FXML
+    private TextField luchthaven;
+
+    @FXML
+    private TextField lostAndFoundId;
+
+    @FXML
+    private TextField bagageType;
+
+    @FXML
+    private TextField bagageMerk;
+
+    @FXML
+    private TextField bagageKleur;
+
+    @FXML
+    private TextField bagageBijzondereKenmerken;
 
     @FXML
     private AnchorPane rootPane;
@@ -46,28 +78,29 @@ public class GevondenBagageController implements Initializable {
     private Label nameLabel;
 
     @FXML
-    private void handleSaveAction(ActionEvent event) {
-        statusMessage.setText("Succesvol opgeslagen naar database");
-        System.out.println("GELUKT!");
+    private void handleCloseAction(ActionEvent event) throws IOException {
+        MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
     }
 
     @FXML
-    private void handleCloseAction(ActionEvent event) throws IOException {
-        MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
+    private void opslaan(ActionEvent event) {
+        statusMessage.setText("Succesvol opgeslagen naar database");
+        System.out.println("GELUKT!");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         SimpleDateFormat dateFormatDag = new SimpleDateFormat("dd");
-        DatumDag.setText(dateFormatDag.format(new Date()));
+        datumDag.setText(dateFormatDag.format(new Date()));
         SimpleDateFormat dateFormatMaand = new SimpleDateFormat("MM");
-        DatumMaand.setText(dateFormatMaand.format(new Date()));
+        datumMaand.setText(dateFormatMaand.format(new Date()));
         SimpleDateFormat dateFormatJaar = new SimpleDateFormat("yyyy");
-        DatumJaar.setText(dateFormatJaar.format(new Date()));
+        datumJaar.setText(dateFormatJaar.format(new Date()));
 
         SimpleDateFormat timeFormatUur = new SimpleDateFormat("HH");
-        TijdUur.setText(timeFormatUur.format(new Date()));
+        tijdUur.setText(timeFormatUur.format(new Date()));
         SimpleDateFormat timeFormatMinuut = new SimpleDateFormat("mm");
-        TijdMinuut.setText(timeFormatMinuut.format(new Date()));
+        tijdMinuut.setText(timeFormatMinuut.format(new Date()));
     }
+
 }
