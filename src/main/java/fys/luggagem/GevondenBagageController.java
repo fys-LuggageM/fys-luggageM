@@ -16,6 +16,8 @@ import javafx.scene.layout.AnchorPane;
  * @author Mees Sour
  */
 public class GevondenBagageController implements Initializable {
+    
+    private Data data = MainApp.getData();
 
     @FXML
     private Label statusMessage;
