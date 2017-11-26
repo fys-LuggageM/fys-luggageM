@@ -8,19 +8,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class AccountbeheerFXMLController implements Initializable {
 
     private Data data = MainApp.getData();
-    
-    @FXML
-    private Label label;
 
     @FXML
     private TextField resetUser;
@@ -58,8 +60,48 @@ public class AccountbeheerFXMLController implements Initializable {
     @FXML
     private RadioButton roleEmployee;
 
-    @FXML
     private final ToggleGroup accountButtons = new ToggleGroup();
+
+    @FXML
+    private AnchorPane rootPane;
+
+    @FXML
+    private GridPane accountbeheer;
+
+    @FXML
+    private Label resetUserLabel;
+    @FXML
+    private Label resetPasswordLabel;
+    @FXML
+    private Text resetPasswordHeader;
+    @FXML
+    private Button resetPasswordButton;
+    @FXML
+    private Label createUsernameLabel;
+    @FXML
+    private Label createUserRealNameLabel;
+    @FXML
+    private Button createAccountButton;
+    @FXML
+    private Label createUserPasswordLabel;
+    @FXML
+    private Text createAccountHeader;
+    @FXML
+    private Label deactivateUserLabel;
+    @FXML
+    private Text deactivateUserHeader;
+    @FXML
+    private Button deactivateUserButton;
+    @FXML
+    private Text searchLabel;
+    @FXML
+    private TableColumn<?, ?> tableColumnUsername;
+    @FXML
+    private TableColumn<?, ?> tableColumnRealName;
+    @FXML
+    private TableColumn<?, ?> tableColumnPermissions;
+    @FXML
+    private TableColumn<?, ?> tableColumnActive;
 
     @FXML
     private void handleCloseAction(ActionEvent event) throws IOException {
@@ -116,8 +158,38 @@ public class AccountbeheerFXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // Set toggleGroup for roleAdmin
         roleAdmin.setToggleGroup(accountButtons);
         roleEmployee.setToggleGroup(accountButtons);
         roleManager.setToggleGroup(accountButtons);
+
+        //i18n
+        // RESET PASSWORD
+        resetPasswordHeader.setText(data.getResourceBundle().getString("resetPassword"));
+        resetUserLabel.setText(data.getResourceBundle().getString("username") + ":");
+        resetPasswordLabel.setText(data.getResourceBundle().getString("newPassword") + ":");
+        resetPasswordButton.setText(data.getResourceBundle().getString("resetPassword"));
+        
+        // CREATE ACCOUNT
+        createAccountHeader.setText(data.getResourceBundle().getString("createAccount"));
+        createUsernameLabel.setText(data.getResourceBundle().getString("username") + ":");
+        createUserRealNameLabel.setText(data.getResourceBundle().getString("realName") + ":");
+        createUserPasswordLabel.setText(data.getResourceBundle().getString("password") + ":");
+        roleAdmin.setText(data.getResourceBundle().getString("admin"));
+        roleEmployee.setText(data.getResourceBundle().getString("deskEmployee"));
+        roleManager.setText(data.getResourceBundle().getString("manager"));
+        createAccountButton.setText(data.getResourceBundle().getString("createAccount"));
+        
+        // DEACTIVATE ACCOUNT
+        deactivateUserHeader.setText(data.getResourceBundle().getString("deactivateUser"));
+        deactivateUserLabel.setText(data.getResourceBundle().getString("username") + ":");
+        deactivateUserButton.setText(data.getResourceBundle().getString("deactivateUser"));
+        
+        // SEARCH ACCOUNT
+        searchLabel.setText(data.getResourceBundle().getString("search"));
+        tableColumnUsername.setText(data.getResourceBundle().getString("username"));
+        tableColumnRealName.setText(data.getResourceBundle().getString("realName"));
+        tableColumnPermissions.setText(data.getResourceBundle().getString("permissions"));
+        tableColumnActive.setText(data.getResourceBundle().getString("active"));
     }
 }
