@@ -115,6 +115,11 @@ public class AccountbeheerFXMLController implements Initializable {
             resetPasswordInfo.setTextFill(Paint.valueOf("d81e05"));
             resetPasswordInfo.setText("Wachtwoord niet gereset. Een of meerdere velden zijn leeg.");
         } else {
+            String userToReset = resetUser.getText();
+            String newPassword = resetPassword.getText();
+            
+            //TODO: Password hashing and write SQL query
+            
             resetPasswordInfo.setTextFill(Paint.valueOf("green"));
             resetPasswordInfo.setText("Wachtwoord gereset.");
             resetUser.clear();
@@ -130,6 +135,31 @@ public class AccountbeheerFXMLController implements Initializable {
             createUserInfo.setFont(Font.font(10));
             createUserInfo.setText("Account niet aangemaakt. Een of meerdere velden zijn leeg.");
         } else {
+            // Store username, password, permissions and real name in variables.
+            String username = createUsername.getText();
+            String realName = createUserRealname.getText();
+            String password = createUserPassword.getText();
+            String permissions;
+            
+            // Note: kinda ugly workaround for i18n, since getText returns incorrect
+            // variables for internationalization. This if block basically checks
+            // if the getText is equal to one of the three options and gives
+            // permissions a reusable value to work with.
+            RadioButton selectedPermissions = (RadioButton) accountButtons.getSelectedToggle();
+            String un18perms = selectedPermissions.getText();
+            if (un18perms.equals(data.getResourceBundle().getString("admin"))) {
+                permissions = "admin";
+            } else if (un18perms.equals(data.getResourceBundle().getString("manager"))){
+                permissions = "manager";
+            } else if (un18perms.equals(data.getResourceBundle().getString("deskEmployee"))){
+                permissions = "employee";
+            } else {
+                createUserInfo.setText("Something went really wrong...");
+            }
+            
+            //TODO: Hash password and write SQL query
+
+            // Confirm to the user that the account was succesfully created
             createUserInfo.setTextFill(Paint.valueOf("green"));
             createUserInfo.setFont(Font.font(12));
             createUserInfo.setText("Account Aangemaakt.");
@@ -151,6 +181,10 @@ public class AccountbeheerFXMLController implements Initializable {
             deactivateUserInfo.setTextFill(Paint.valueOf("d81e05"));
             deactivateUserInfo.setText("Voer een gebruiker in.");
         } else {
+            String userToDeactivate = deactivateUsername.getText();
+            
+            //TODO: Write SQL Query
+            
             deactivateUserInfo.setTextFill(Paint.valueOf("green"));
             deactivateUserInfo.setText("Gebruiker ge(de)activeerd.");
         }
@@ -169,7 +203,7 @@ public class AccountbeheerFXMLController implements Initializable {
         resetUserLabel.setText(data.getResourceBundle().getString("username") + ":");
         resetPasswordLabel.setText(data.getResourceBundle().getString("newPassword") + ":");
         resetPasswordButton.setText(data.getResourceBundle().getString("resetPassword"));
-        
+
         // CREATE ACCOUNT
         createAccountHeader.setText(data.getResourceBundle().getString("createAccount"));
         createUsernameLabel.setText(data.getResourceBundle().getString("username") + ":");
@@ -179,12 +213,12 @@ public class AccountbeheerFXMLController implements Initializable {
         roleEmployee.setText(data.getResourceBundle().getString("deskEmployee"));
         roleManager.setText(data.getResourceBundle().getString("manager"));
         createAccountButton.setText(data.getResourceBundle().getString("createAccount"));
-        
+
         // DEACTIVATE ACCOUNT
         deactivateUserHeader.setText(data.getResourceBundle().getString("deactivateUser"));
         deactivateUserLabel.setText(data.getResourceBundle().getString("username") + ":");
         deactivateUserButton.setText(data.getResourceBundle().getString("deactivateUser"));
-        
+
         // SEARCH ACCOUNT
         searchLabel.setText(data.getResourceBundle().getString("search"));
         tableColumnUsername.setText(data.getResourceBundle().getString("username"));
