@@ -34,9 +34,7 @@ public class HomeScreenFXMLController implements Initializable {
 
     @FXML
     private void handleGebruikersbeheerAction(ActionEvent event) throws IOException {
-        workspace.getChildren().clear();
-        Parent pane = loadFXMLFile("/fxml/AccountbeheerFXML.fxml");
-        workspace.getChildren().add(pane);
+        loadFXMLFile(this.getClass().getResource("/fxml/AccountbeheerFXML.fxml"));
     }
 
     @FXML
@@ -61,39 +59,29 @@ public class HomeScreenFXMLController implements Initializable {
 
     @FXML
     private void handleHomeAction(ActionEvent event) {
-        workspace.getChildren().clear();
-        Parent pane = loadFXMLFile("/fxml/HomeScreenContentFXML.fxml");
-        workspace.getChildren().add(pane);
+        loadFXMLFile(this.getClass().getResource("/fxml/HomeScreenContentFXML.fxml"));
     }
 
     @FXML
     private void handleGevondenBagageAction(ActionEvent event) throws IOException {
-        System.out.println("Registreer vermissing clicked!");
-        workspace.getChildren().clear();
-        Parent pane = loadFXMLFile("/fxml/GevondenBagageFXML.fxml");
-        workspace.getChildren().add(pane);
+        loadFXMLFile(this.getClass().getResource("/fxml/GevondenBagageFXML.fxml"));
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Parent pane = loadFXMLFile("/fxml/HomeScreenContentFXML.fxml");
-        workspace.getChildren().add(pane);
+        loadFXMLFile(this.getClass().getResource("/fxml/HomeScreenContentFXML.fxml"));
         nameLabel.setText(data.getName());
     }
-    
-    public void initHomeScreen() {
-        Parent pane = loadFXMLFile("/fxml/HomeScreenContentFXML.fxml");
-        workspace.getChildren().add(pane);
-    }
 
-    private Parent loadFXMLFile(String fxmlFileName) {
+    private void loadFXMLFile(URL fxmlFileName) {
         try {
-            FXMLLoader loader = new FXMLLoader();
+            FXMLLoader loader = new FXMLLoader(fxmlFileName);
             loader.setResources(data.getResourceBundle());
-            return loader.load(this.getClass().getResource(fxmlFileName));
+            Parent root = (Parent) loader.load();      
+            workspace.getChildren().clear();
+            workspace.getChildren().add(root);
         } catch (IOException ex) {
             System.out.println(ex.getClass().getName() + ": " + ex.getMessage());
-            return null;
         }
     }
 }
