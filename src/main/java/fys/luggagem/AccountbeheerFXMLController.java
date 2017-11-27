@@ -5,9 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -113,7 +111,7 @@ public class AccountbeheerFXMLController implements Initializable {
         System.out.println("Wachtwoord gereset.");
         if ((resetUser.getText() == null || resetUser.getText().trim().isEmpty()) || (resetPassword.getText().trim().isEmpty())) {
             resetPasswordInfo.setTextFill(Paint.valueOf("d81e05"));
-            resetPasswordInfo.setText("Wachtwoord niet gereset. Een of meerdere velden zijn leeg.");
+            resetPasswordInfo.setText(data.getResourceBundle().getString("passwordResetInfo"));
         } else {
             String userToReset = resetUser.getText();
             String newPassword = resetPassword.getText();
@@ -121,7 +119,7 @@ public class AccountbeheerFXMLController implements Initializable {
             //TODO: Password hashing and write SQL query
             
             resetPasswordInfo.setTextFill(Paint.valueOf("green"));
-            resetPasswordInfo.setText("Wachtwoord gereset.");
+            resetPasswordInfo.setText(data.getResourceBundle().getString("passwordResetInfo"));
             resetUser.clear();
             resetPassword.clear();
         }
@@ -133,7 +131,7 @@ public class AccountbeheerFXMLController implements Initializable {
         if ((createUserPassword.getText() == null || createUserPassword.getText().trim().isEmpty()) || (createUsername.getText() == null || createUsername.getText().trim().isEmpty()) || (createUserRealname.getText() == null || createUserRealname.getText().trim().isEmpty())) {
             createUserInfo.setTextFill(Paint.valueOf("d81e05"));
             createUserInfo.setFont(Font.font(10));
-            createUserInfo.setText("Account niet aangemaakt. Een of meerdere velden zijn leeg.");
+            createUserInfo.setText(data.getResourceBundle().getString("accountNotCreatedInfo"));
         } else {
             // Store username, password, permissions and real name in variables.
             String username = createUsername.getText();
@@ -162,7 +160,7 @@ public class AccountbeheerFXMLController implements Initializable {
             // Confirm to the user that the account was succesfully created
             createUserInfo.setTextFill(Paint.valueOf("green"));
             createUserInfo.setFont(Font.font(12));
-            createUserInfo.setText("Account Aangemaakt.");
+            createUserInfo.setText(data.getResourceBundle().getString("accountCreatedInfo"));
             // Empty everything
             createUserPassword.clear();
             createUserRealname.clear();
@@ -179,14 +177,14 @@ public class AccountbeheerFXMLController implements Initializable {
         if (deactivateUsername.getText() == null || deactivateUsername.getText().trim().isEmpty()) {
             deactivateUsername.clear();
             deactivateUserInfo.setTextFill(Paint.valueOf("d81e05"));
-            deactivateUserInfo.setText("Voer een gebruiker in.");
+            deactivateUserInfo.setText(data.getResourceBundle().getString("accountNotDeactivatedInfo"));
         } else {
             String userToDeactivate = deactivateUsername.getText();
             
             //TODO: Write SQL Query
             
             deactivateUserInfo.setTextFill(Paint.valueOf("green"));
-            deactivateUserInfo.setText("Gebruiker ge(de)activeerd.");
+            deactivateUserInfo.setText(data.getResourceBundle().getString("accountDeactivatedInfo"));
         }
     }
 
@@ -196,34 +194,5 @@ public class AccountbeheerFXMLController implements Initializable {
         roleAdmin.setToggleGroup(accountButtons);
         roleEmployee.setToggleGroup(accountButtons);
         roleManager.setToggleGroup(accountButtons);
-
-        //i18n
-        // RESET PASSWORD
-        resetPasswordHeader.setText(data.getResourceBundle().getString("resetPassword"));
-        resetUserLabel.setText(data.getResourceBundle().getString("username") + ":");
-        resetPasswordLabel.setText(data.getResourceBundle().getString("newPassword") + ":");
-        resetPasswordButton.setText(data.getResourceBundle().getString("resetPassword"));
-
-        // CREATE ACCOUNT
-        createAccountHeader.setText(data.getResourceBundle().getString("createAccount"));
-        createUsernameLabel.setText(data.getResourceBundle().getString("username") + ":");
-        createUserRealNameLabel.setText(data.getResourceBundle().getString("realName") + ":");
-        createUserPasswordLabel.setText(data.getResourceBundle().getString("password") + ":");
-        roleAdmin.setText(data.getResourceBundle().getString("admin"));
-        roleEmployee.setText(data.getResourceBundle().getString("deskEmployee"));
-        roleManager.setText(data.getResourceBundle().getString("manager"));
-        createAccountButton.setText(data.getResourceBundle().getString("createAccount"));
-
-        // DEACTIVATE ACCOUNT
-        deactivateUserHeader.setText(data.getResourceBundle().getString("deactivateUser"));
-        deactivateUserLabel.setText(data.getResourceBundle().getString("username") + ":");
-        deactivateUserButton.setText(data.getResourceBundle().getString("deactivateUser"));
-
-        // SEARCH ACCOUNT
-        searchLabel.setText(data.getResourceBundle().getString("search"));
-        tableColumnUsername.setText(data.getResourceBundle().getString("username"));
-        tableColumnRealName.setText(data.getResourceBundle().getString("realName"));
-        tableColumnPermissions.setText(data.getResourceBundle().getString("permissions"));
-        tableColumnActive.setText(data.getResourceBundle().getString("active"));
     }
 }
