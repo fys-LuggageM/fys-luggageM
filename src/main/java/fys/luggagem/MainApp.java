@@ -14,22 +14,14 @@ import javafx.stage.Stage;
 
 public class MainApp extends Application {
 
+    static MyJDBC myJDBC;
     static Data data = new Data();
     Scene window;
 
     @Override
     public void start(Stage stage) throws Exception {
-//        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/FXMLDocument.fxml"));
-//        loader.setResources(data.getResourceBundle());
-//        Parent root = (Parent) loader.load();
-//        Scene scene = new Scene(root);
-//        data.setScene(scene);
-//        stage.setScene(scene);
-//        stage.setFullScreen(true);
-//        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-//        stage.setWidth(stage.getWidth());
-//        stage.setHeight(stage.getHeight());
-//        stage.show();
+        MyJDBC.createDatabase("luggagem");
+        myJDBC = new MyJDBC("luggagem");
         data.setStage(stage);
         setScene(this.getClass().getResource("/fxml/FXMLDocument.fxml"));
     }
