@@ -1,291 +1,247 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" maxHeight="768.0" maxWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" style="-fx-border-color: black; -fx-border-width: 1 0 0 0;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.luggagem.GevondenBagageController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" maxHeight="600.0" maxWidth="800.0" minHeight="768.0" minWidth="1024.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.luggagem.GevondenBagageController">
    <children>
-      <BorderPane layoutX="341.0" layoutY="92.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 0 0 1 0;" BorderPane.alignment="CENTER">
+      <GridPane layoutX="10.0" layoutY="10.0" vgap="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="0.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="400.0" prefWidth="300.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="150.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="400.0" prefWidth="400.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="0.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS" />
+            <RowConstraints vgrow="NEVER" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="0.0" vgrow="ALWAYS" />
+         </rowConstraints>
+         <children>
+            <VBox alignment="CENTER" minWidth="310.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/Naamloos-2.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                  <Label maxWidth="1.7976931348623157E308" text="Registratienummer" VBox.vgrow="NEVER">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label maxWidth="1.7976931348623157E308" text="Datum">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <DatePicker maxWidth="1.7976931348623157E308">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </DatePicker>
+                  <Label maxWidth="1.7976931348623157E308" text="Tijd">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <HBox prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#handleCloseAction" style="-fx-background-color: white;">
+                        <TextField>
                            <HBox.margin>
-                              <Insets right="43.0" />
+                              <Insets />
                            </HBox.margin>
-                           <graphic>
-                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/back_button.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
+                        </TextField>
+                        <Label maxHeight="1.7976931348623157E308" text=":">
+                           <HBox.margin>
+                              <Insets left="15.0" right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField>
+                           <HBox.margin>
+                              <Insets right="150.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <padding>
+                        <Insets bottom="20.0" />
+                     </padding>
+                  </HBox>
+                  <Label maxWidth="1.7976931348623157E308" text="Type">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label maxWidth="1.7976931348623157E308" text="Merk">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label maxWidth="1.7976931348623157E308" text="Vlucht">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label maxWidth="1.7976931348623157E308" text="Tag">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label maxWidth="1.7976931348623157E308" text="Plek gevonden">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField />
+               </children>
+            </VBox>
+            <VBox minWidth="310.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <children>
+                  <Label maxWidth="1.7976931348623157E308" text="Kleuren">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <HBox prefWidth="200.0">
+                     <children>
+                        <TextField />
+                        <TextField>
+                           <HBox.margin>
+                              <Insets left="25.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label maxWidth="1.7976931348623157E308" text="Grootte">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <HBox prefWidth="200.0">
+                     <children>
+                        <TextField>
+                           <HBox.margin>
+                              <Insets right="25.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField />
+                        <TextField>
+                           <HBox.margin>
+                              <Insets left="25.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label maxWidth="1.7976931348623157E308" text="Gewicht">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label maxWidth="1.7976931348623157E308" text="Passagier naam">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <HBox prefWidth="200.0">
+                     <children>
+                        <TextField prefWidth="225.0">
+                           <HBox.margin>
+                              <Insets right="25.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField />
+                        <TextField prefWidth="225.0">
+                           <HBox.margin>
+                              <Insets left="25.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label maxWidth="1.7976931348623157E308" text="Stad">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label maxWidth="1.7976931348623157E308" text="Opmerkingen">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <HBox alignment="CENTER_RIGHT">
+                     <children>
+                        <Button mnemonicParsing="false" text="Opslaan">
                            <font>
                               <Font size="16.0" />
                            </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
                         </Button>
                      </children>
                   </HBox>
                </children>
-            </HBox>
-         </top>
-         <center>
-            <StackPane maxHeight="800.0" maxWidth="1500.0" BorderPane.alignment="CENTER">
-               <children>
-                  <GridPane>
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="0.0" />
-                      <ColumnConstraints hgrow="NEVER" minWidth="400.0" prefWidth="300.0" />
-                        <ColumnConstraints hgrow="NEVER" minWidth="150.0" prefWidth="150.0" />
-                      <ColumnConstraints hgrow="NEVER" minWidth="400.0" prefWidth="400.0" />
-                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="0.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="1.7976931348623157E308" prefHeight="0.0" vgrow="ALWAYS" />
-                      <RowConstraints vgrow="NEVER" />
-                      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="0.0" vgrow="ALWAYS" />
-                    </rowConstraints>
-                     <children>
-                        <VBox alignment="CENTER" minWidth="310.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <children>
-                              <Label maxWidth="1.7976931348623157E308" text="Registratienummer" VBox.vgrow="NEVER">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                              <TextField>
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </TextField>
-                              <Label maxWidth="1.7976931348623157E308" text="Datum">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                              <DatePicker maxWidth="1.7976931348623157E308">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </DatePicker>
-                              <Label maxWidth="1.7976931348623157E308" text="Tijd">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                              <HBox prefWidth="200.0">
-                                 <children>
-                                    <TextField>
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <Label maxHeight="1.7976931348623157E308" text=":">
-                                       <HBox.margin>
-                                          <Insets left="15.0" right="15.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <TextField>
-                                       <HBox.margin>
-                                          <Insets right="150.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="20.0" />
-                                 </padding>
-                              </HBox>
-                              <Label maxWidth="1.7976931348623157E308" text="Type">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                              <TextField>
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </TextField>
-                              <Label maxWidth="1.7976931348623157E308" text="Merk">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                              <TextField>
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </TextField>
-                              <Label maxWidth="1.7976931348623157E308" text="Vlucht">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                              <TextField>
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </TextField>
-                              <Label maxWidth="1.7976931348623157E308" text="Tag">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                              <TextField>
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </TextField>
-                              <Label maxWidth="1.7976931348623157E308" text="Plek gevonden">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                              <TextField />
-                           </children>
-                        </VBox>
-                        <VBox minWidth="310.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                           <children>
-                              <Label maxWidth="1.7976931348623157E308" text="Kleuren">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                              <HBox prefWidth="200.0">
-                                 <children>
-                                    <TextField />
-                                    <TextField>
-                                       <HBox.margin>
-                                          <Insets left="25.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <Label maxWidth="1.7976931348623157E308" text="Grootte">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                              <HBox prefWidth="200.0">
-                                 <children>
-                                    <TextField>
-                                       <HBox.margin>
-                                          <Insets right="25.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <TextField />
-                                    <TextField>
-                                       <HBox.margin>
-                                          <Insets left="25.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <Label maxWidth="1.7976931348623157E308" text="Gewicht">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                              <TextField>
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </TextField>
-                              <Label maxWidth="1.7976931348623157E308" text="Passagier naam">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                              <HBox prefWidth="200.0">
-                                 <children>
-                                    <TextField prefWidth="225.0">
-                                       <HBox.margin>
-                                          <Insets right="25.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <TextField />
-                                    <TextField prefWidth="225.0">
-                                       <HBox.margin>
-                                          <Insets left="25.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <Label maxWidth="1.7976931348623157E308" text="Stad">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                              <TextField>
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </TextField>
-                              <Label maxWidth="1.7976931348623157E308" text="Opmerkingen">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                              <TextField maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </TextField>
-                              <HBox alignment="CENTER_RIGHT">
-                                 <children>
-                                    <Button mnemonicParsing="false" text="Opslaan">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Button>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </children>
-                  </GridPane>
-               </children>
-               <BorderPane.margin>
-                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-               </BorderPane.margin>
-            </StackPane>
-         </center>
-      </BorderPane>
+            </VBox>
+            <Label alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Bagage gevonden" GridPane.columnSpan="2147483647">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Label>
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>
