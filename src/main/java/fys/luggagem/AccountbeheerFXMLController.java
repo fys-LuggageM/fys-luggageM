@@ -115,9 +115,8 @@ public class AccountbeheerFXMLController implements Initializable {
         } else {
             String userToReset = resetUser.getText();
             String newPassword = resetPassword.getText();
-            
+
             //TODO: Password hashing and write SQL query
-            
             resetPasswordInfo.setTextFill(Paint.valueOf("green"));
             resetPasswordInfo.setText(data.getResourceBundle().getString("passwordResetInfo"));
             resetUser.clear();
@@ -138,25 +137,26 @@ public class AccountbeheerFXMLController implements Initializable {
             String realName = createUserRealname.getText();
             String password = createUserPassword.getText();
             String permissions;
-            
-            // Note: kinda ugly workaround for i18n, since getText returns incorrect
-            // variables for internationalization. This if block basically checks
-            // if the getText is equal to one of the three options and gives
-            // permissions a reusable value to work with.
-            RadioButton selectedPermissions = (RadioButton) accountButtons.getSelectedToggle();
-            String un18perms = selectedPermissions.getText();
-            if (un18perms.equals(data.getResourceBundle().getString("admin"))) {
-                permissions = "admin";
-            } else if (un18perms.equals(data.getResourceBundle().getString("manager"))){
-                permissions = "manager";
-            } else if (un18perms.equals(data.getResourceBundle().getString("deskEmployee"))){
-                permissions = "employee";
-            } else {
-                createUserInfo.setText("Something went really wrong...");
-            }
-            
-            //TODO: Hash password and write SQL query
 
+            // Store universally named userPermissions
+            RadioButton selectedPermissions = (RadioButton) accountButtons.getSelectedToggle();
+            String un18perms = selectedPermissions.getId();
+            switch (un18perms) {
+                case "roleEmployee":
+                    permissions = "Employee";
+                    break;
+                case "roleManager":
+                    permissions = "Manager";
+                    break;
+                case "roleAdmin":
+                    permissions = "Admin";
+                    break;
+                default:
+                    createUserInfo.setText("Something went really wrong...");
+                    break;
+            }
+
+            //TODO: Hash password and write SQL query
             // Confirm to the user that the account was succesfully created
             createUserInfo.setTextFill(Paint.valueOf("green"));
             createUserInfo.setFont(Font.font(12));
@@ -180,9 +180,8 @@ public class AccountbeheerFXMLController implements Initializable {
             deactivateUserInfo.setText(data.getResourceBundle().getString("accountNotDeactivatedInfo"));
         } else {
             String userToDeactivate = deactivateUsername.getText();
-            
+
             //TODO: Write SQL Query
-            
             deactivateUserInfo.setTextFill(Paint.valueOf("green"));
             deactivateUserInfo.setText(data.getResourceBundle().getString("accountDeactivatedInfo"));
         }
