@@ -1,479 +1,247 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" maxHeight="768.0" maxWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" style="-fx-border-color: black; -fx-border-width: 1 0 0 0;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.luggagem.GevondenBagageController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" maxHeight="600.0" maxWidth="800.0" minHeight="768.0" minWidth="1024.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.luggagem.GevondenBagageController">
    <children>
-      <BorderPane layoutX="341.0" layoutY="92.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 0 0 1 0;" BorderPane.alignment="CENTER">
+      <GridPane layoutX="10.0" layoutY="10.0" vgap="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="0.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="400.0" prefWidth="300.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="150.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="400.0" prefWidth="400.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="0.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS" />
+            <RowConstraints vgrow="NEVER" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="0.0" vgrow="ALWAYS" />
+         </rowConstraints>
+         <children>
+            <VBox alignment="CENTER" minWidth="310.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/Naamloos-2.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                  <Label maxWidth="1.7976931348623157E308" text="Registratienummer" VBox.vgrow="NEVER">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label maxWidth="1.7976931348623157E308" text="Datum">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <DatePicker maxWidth="1.7976931348623157E308">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </DatePicker>
+                  <Label maxWidth="1.7976931348623157E308" text="Tijd">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <HBox prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#handleCloseAction" style="-fx-background-color: white;">
-                           <graphic>
-                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/back_button.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Label fx:id="nameLabel">
+                        <TextField>
                            <HBox.margin>
-                              <Insets left="25.0" right="25.0" />
+                              <Insets />
                            </HBox.margin>
-                           <font>
-                              <Font name="Arial" size="24.0" />
-                           </font>
+                        </TextField>
+                        <Label maxHeight="1.7976931348623157E308" text=":">
+                           <HBox.margin>
+                              <Insets left="15.0" right="15.0" />
+                           </HBox.margin>
                         </Label>
+                        <TextField>
+                           <HBox.margin>
+                              <Insets right="150.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <padding>
+                        <Insets bottom="20.0" />
+                     </padding>
+                  </HBox>
+                  <Label maxWidth="1.7976931348623157E308" text="Type">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label maxWidth="1.7976931348623157E308" text="Merk">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label maxWidth="1.7976931348623157E308" text="Vlucht">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label maxWidth="1.7976931348623157E308" text="Tag">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label maxWidth="1.7976931348623157E308" text="Plek gevonden">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField />
+               </children>
+            </VBox>
+            <VBox minWidth="310.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <children>
+                  <Label maxWidth="1.7976931348623157E308" text="Kleuren">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <HBox prefWidth="200.0">
+                     <children>
+                        <TextField />
+                        <TextField>
+                           <HBox.margin>
+                              <Insets left="25.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label maxWidth="1.7976931348623157E308" text="Grootte">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <HBox prefWidth="200.0">
+                     <children>
+                        <TextField>
+                           <HBox.margin>
+                              <Insets right="25.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField />
+                        <TextField>
+                           <HBox.margin>
+                              <Insets left="25.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label maxWidth="1.7976931348623157E308" text="Gewicht">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label maxWidth="1.7976931348623157E308" text="Passagier naam">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <HBox prefWidth="200.0">
+                     <children>
+                        <TextField prefWidth="225.0">
+                           <HBox.margin>
+                              <Insets right="25.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField />
+                        <TextField prefWidth="225.0">
+                           <HBox.margin>
+                              <Insets left="25.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label maxWidth="1.7976931348623157E308" text="Stad">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label maxWidth="1.7976931348623157E308" text="Opmerkingen">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <HBox alignment="CENTER_RIGHT">
+                     <children>
+                        <Button mnemonicParsing="false" text="Opslaan">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
                      </children>
                   </HBox>
                </children>
-            </HBox>
-         </top>
-         <bottom>
-            <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="54.0" maxWidth="1.7976931348623157E308" minHeight="48.0" prefHeight="48.0" prefWidth="1004.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label fx:id="statusMessage" prefHeight="53.0" prefWidth="905.0">
-                     <font>
-                        <Font name="System Italic" size="36.0" />
-                     </font>
-                  </Label>
-                  <Button mnemonicParsing="false" onAction="#handleSaveAction" prefHeight="28.0" prefWidth="98.0" text="Opslaan">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-               </children>
-               <opaqueInsets>
+            </VBox>
+            <Label alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Bagage gevonden" GridPane.columnSpan="2147483647">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
                   <Insets />
-               </opaqueInsets>
-               <BorderPane.margin>
-                  <Insets left="10.0" right="10.0" top="-10.0" />
-               </BorderPane.margin>
-            </HBox>
-         </bottom>
-         <center>
-            <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="TOP_CENTER">
-               <center>
-                  <GridPane style="-fx-background-color: lightgrey;" BorderPane.alignment="TOP_CENTER">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <GridPane alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" prefHeight="618.0" prefWidth="512.0" style="-fx-background-color: lightgrey;" GridPane.columnIndex="1">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="94.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="116.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="141.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="161.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="167.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="155.0" minHeight="0.0" prefHeight="36.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="303.0" minHeight="10.0" prefHeight="222.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="184.0" prefWidth="482.0" GridPane.rowIndex="1">
-                                 <children>
-                                    <TextField prefHeight="17.0" prefWidth="200.0" promptText="Luchthaven">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </TextField>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" prefHeight="50.0" prefWidth="437.0" GridPane.rowIndex="5">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Type">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="136.6708984375" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Merk">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Text>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="100.0" prefWidth="400.0" GridPane.rowIndex="6">
-                                 <children>
-                                    <TextField prefHeight="37.0" prefWidth="121.0" promptText="Koffer">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </TextField>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="48.6708984375" />
-                                    <TextField prefHeight="37.0" prefWidth="130.0" promptText="Samsonite">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </TextField>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="8">
-                                 <children>
-                                    <TextField prefHeight="26.0" prefWidth="158.0" promptText="Wit">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </TextField>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bagage Informatie" wrappingWidth="334.25048828125">
-                                       <font>
-                                          <Font name="System Bold" size="19.0" />
-                                       </font>
-                                    </Text>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Luchthaven">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Text>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="7">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kleur">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Text>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="9">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bijzondere Kenmerken">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Text>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" prefHeight="184.0" prefWidth="482.0" GridPane.rowIndex="3">
-                                 <children>
-                                    <TextField prefHeight="17.0" prefWidth="200.0" promptText="Luchthaven">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </TextField>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" prefHeight="70.0" prefWidth="477.0" GridPane.rowIndex="2">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lost-and-found ID">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Text>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="312.0" prefWidth="477.0" GridPane.rowIndex="10">
-                                 <children>
-                                    <TextField maxWidth="600.0" prefHeight="130.0" prefWidth="471.0" promptText="Bijzondere Kenmerken">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </TextField>
-                                 </children>
-                              </HBox>
-                           </children>
-                           <padding>
-                              <Insets bottom="15.0" left="10.0" right="15.0" top="10.0" />
-                           </padding>
-                        </GridPane>
-                        <GridPane alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" prefHeight="618.0" prefWidth="512.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints maxHeight="29.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="63.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="104.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="117.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="119.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="138.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="134.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="153.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="145.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="159.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="153.0" minHeight="0.0" prefHeight="32.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="195.0" minHeight="10.0" prefHeight="124.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="322.0" GridPane.rowIndex="1">
-                                 <children>
-                                    <TextField fx:id="DatumDag" editable="false" prefHeight="26.0" prefWidth="41.0" promptText="DD">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </TextField>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="-" />
-                                    <TextField fx:id="DatumMaand" editable="false" prefHeight="26.0" prefWidth="47.0" promptText="MM">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </TextField>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="-" />
-                                    <TextField fx:id="DatumJaar" editable="false" prefHeight="26.0" prefWidth="55.0" promptText="YYYY">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </TextField>
-                                 </children>
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="482.0" GridPane.rowIndex="3">
-                                 <children>
-                                    <TextField fx:id="TijdUur" editable="false" prefHeight="26.0" prefWidth="42.0" promptText="hh">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </TextField>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text=":">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Text>
-                                    <TextField fx:id="TijdMinuut" editable="false" prefHeight="26.0" prefWidth="48.0" promptText="mm">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </TextField>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="100.0" prefWidth="482.0" GridPane.rowIndex="12">
-                                 <children>
-                                    <TextField prefHeight="37.0" prefWidth="172.0" promptText="Voornaam">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </TextField>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
-                                       <font>
-                                          <Font size="26.0" />
-                                       </font>
-                                    </Text>
-                                    <TextField prefHeight="37.0" prefWidth="61.0" promptText="Tussenvoegsel">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </TextField>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
-                                       <font>
-                                          <Font size="26.0" />
-                                       </font>
-                                    </Text>
-                                    <TextField prefHeight="37.0" prefWidth="185.0" promptText="Achernaam">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </TextField>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Datum" wrappingWidth="52.30615234375">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Text>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tijd">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Text>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="11">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Naam">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Text>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bagage Label Informatie" wrappingWidth="334.25048828125">
-                                       <font>
-                                          <Font name="System Bold" size="19.0" />
-                                       </font>
-                                    </Text>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" prefHeight="26.0" prefWidth="492.0" GridPane.rowIndex="5">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Labelnummer">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Text>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" prefHeight="26.0" prefWidth="492.0" GridPane.rowIndex="7">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Vluchtnummer">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Text>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" prefHeight="50.0" prefWidth="437.0" GridPane.rowIndex="9">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bestemming">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Text>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="100.0" prefWidth="468.0" GridPane.rowIndex="10">
-                                 <children>
-                                    <TextField prefHeight="26.0" prefWidth="213.0" promptText="Amsterdam">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </TextField>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="6">
-                                 <children>
-                                    <TextField prefHeight="37.0" prefWidth="337.0" promptText="0A12345678">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </TextField>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="8">
-                                 <children>
-                                    <TextField prefHeight="37.0" prefWidth="118.0" promptText="AB123">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="TEXT" />
-                                       </cursor>
-                                    </TextField>
-                                 </children>
-                              </HBox>
-                           </children>
-                           <padding>
-                              <Insets bottom="20.0" left="15.0" right="15.0" top="10.0" />
-                           </padding>
-                        </GridPane>
-                     </children>
-                     <BorderPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </BorderPane.margin>
-                  </GridPane>
-               </center>
-            </BorderPane>
-         </center>
-      </BorderPane>
+               </GridPane.margin>
+            </Label>
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>

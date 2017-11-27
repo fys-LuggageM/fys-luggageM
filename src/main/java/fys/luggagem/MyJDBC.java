@@ -308,9 +308,9 @@ public class MyJDBC {
                 + " email VARCHAR(50),"
                 + " password VARCHAR(64),"
                 + " salt VARCHAR(64))");
-        String[] poentje = Encryptor.encrypt("test");
+        String[] pass = Encryptor.encrypt("test");
         myJDBC.executeUpdateQuery("INSERT IGNORE INTO staffMembers (staffID, firstName, lastName, preposition, email,"
-                + "  password, salt) VALUES ('1', 'Pathe', 'Dude', null, 'test', '" + poentje[0] + "', '" + poentje[1] + "')");
+                + "  password, salt) VALUES ('1', 'Pathe', 'Dude', null, 'test', '" + pass[0] + "', '" + pass[1] + "')");
     }
 
     public boolean isVerbose() {
