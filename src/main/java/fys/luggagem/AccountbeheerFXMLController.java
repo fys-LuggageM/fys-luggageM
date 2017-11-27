@@ -127,7 +127,9 @@ public class AccountbeheerFXMLController implements Initializable {
     @FXML
     private void createAccount(ActionEvent event) {
         System.out.println("Account aangemaakt.");
-        if ((createUserPassword.getText() == null || createUserPassword.getText().trim().isEmpty()) || (createUsername.getText() == null || createUsername.getText().trim().isEmpty()) || (createUserRealname.getText() == null || createUserRealname.getText().trim().isEmpty())) {
+        if ((createUserPassword.getText() == null || createUserPassword.getText().trim().isEmpty()) 
+                || (createUsername.getText() == null || createUsername.getText().trim().isEmpty()) 
+                || (createUserRealname.getText() == null || createUserRealname.getText().trim().isEmpty())) {
             createUserInfo.setTextFill(Paint.valueOf("d81e05"));
             createUserInfo.setFont(Font.font(10));
             createUserInfo.setText(data.getResourceBundle().getString("accountNotCreatedInfo"));
@@ -167,7 +169,7 @@ public class AccountbeheerFXMLController implements Initializable {
             createUsername.clear();
             roleAdmin.setSelected(false);
             roleManager.setSelected(false);
-            roleEmployee.setSelected(false);
+            roleEmployee.setSelected(true);
         }
     }
 
@@ -193,5 +195,6 @@ public class AccountbeheerFXMLController implements Initializable {
         roleAdmin.setToggleGroup(accountButtons);
         roleEmployee.setToggleGroup(accountButtons);
         roleManager.setToggleGroup(accountButtons);
+        roleEmployee.setSelected(true);
     }
 }
