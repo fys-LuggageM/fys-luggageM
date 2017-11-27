@@ -94,11 +94,11 @@
                            <cursor>
                               <Cursor fx:constant="TEXT" />
                            </cursor></TextField>
-                        <Label text="Gebruikersnaam:" GridPane.rowIndex="1">
+                        <Label fx:id="resetUserLabel" text="%username" GridPane.rowIndex="1">
                            <font>
                               <Font size="16.0" />
                            </font></Label>
-                        <Label text="Nieuw Wachtwoord:" GridPane.rowIndex="2">
+                        <Label fx:id="resetPasswordLabel" text="%newPassword" GridPane.rowIndex="2">
                            <font>
                               <Font size="16.0" />
                            </font></Label>
@@ -106,7 +106,7 @@
                            <cursor>
                               <Cursor fx:constant="TEXT" />
                            </cursor></TextField>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Wachtwoord Resetten" wrappingWidth="335.4700622558594">
+                        <Text fx:id="resetPasswordHeader" strokeType="OUTSIDE" strokeWidth="0.0" text="%resetPassword" wrappingWidth="335.4700622558594">
                            <font>
                               <Font size="32.0" />
                            </font>
@@ -120,7 +120,7 @@
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Button mnemonicParsing="false" onAction="#resetPasswordAction" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Wachtwoord Resetten" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                              <Button fx:id="resetPasswordButton" mnemonicParsing="false" onAction="#resetPasswordAction" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="%resetPassword" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor></Button>
@@ -146,11 +146,11 @@
                            <cursor>
                               <Cursor fx:constant="TEXT" />
                            </cursor></TextField>
-                        <Label text="Gebruikersnaam:" GridPane.rowIndex="1">
+                        <Label fx:id="createUsernameLabel" text="%username" GridPane.rowIndex="1">
                            <font>
                               <Font size="16.0" />
                            </font></Label>
-                        <Label text="Echte naam:" GridPane.rowIndex="2">
+                        <Label fx:id="createUserRealNameLabel" text="%realName" GridPane.rowIndex="2">
                            <font>
                               <Font size="16.0" />
                            </font></Label>
@@ -158,22 +158,22 @@
                            <cursor>
                               <Cursor fx:constant="TEXT" />
                            </cursor></TextField>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Account Aanmaken" wrappingWidth="335.4700622558594">
+                        <Text fx:id="createAccountHeader" strokeType="OUTSIDE" strokeWidth="0.0" text="%createAccount" wrappingWidth="335.4700622558594">
                            <font>
                               <Font size="32.0" />
                            </font>
                         </Text>
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.rowIndex="4">
                            <children>
-                              <RadioButton fx:id="roleAdmin" mnemonicParsing="false" style="-fx-selected-color: d81e05;" text="Admin">
+                              <RadioButton fx:id="roleAdmin" mnemonicParsing="false" style="-fx-selected-color: d81e05;" text="%admin">
                                  <font>
                                     <Font size="16.0" />
                                  </font></RadioButton>
-                              <RadioButton fx:id="roleManager" mnemonicParsing="false" text="Manager">
+                              <RadioButton fx:id="roleManager" mnemonicParsing="false" text="%manager">
                                  <font>
                                     <Font size="16.0" />
                                  </font></RadioButton>
-                              <RadioButton fx:id="roleEmployee" mnemonicParsing="false" text="Baliemedewerker">
+                              <RadioButton fx:id="roleEmployee" mnemonicParsing="false" text="%deskEmployee">
                                  <font>
                                     <Font size="16.0" />
                                  </font></RadioButton>
@@ -196,13 +196,13 @@
                                  <font>
                                     <Font size="10.0" />
                                  </font></Label>
-                              <Button mnemonicParsing="false" onAction="#createAccount" prefWidth="150.0" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Account Aanmaken" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                              <Button fx:id="createAccountButton" mnemonicParsing="false" onAction="#createAccount" prefWidth="150.0" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="%createAccount" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor></Button>
                            </children>
                         </GridPane>
-                        <Label text="Wachtwoord:" GridPane.rowIndex="3">
+                        <Label fx:id="createUserPasswordLabel" text="%password" GridPane.rowIndex="3">
                            <font>
                               <Font size="16.0" />
                            </font></Label>
@@ -224,11 +224,11 @@
                            <cursor>
                               <Cursor fx:constant="TEXT" />
                            </cursor></TextField>
-                        <Label text="Gebruikersnaam:" GridPane.rowIndex="1">
+                        <Label fx:id="deactivateUserLabel" text="%username" GridPane.rowIndex="1">
                            <font>
                               <Font size="16.0" />
                            </font></Label>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Account (De)activeren" wrappingWidth="335.4700622558594">
+                        <Text fx:id="deactivateUserHeader" strokeType="OUTSIDE" strokeWidth="0.0" text="%deactivateUser" wrappingWidth="335.4700622558594">
                            <font>
                               <Font size="32.0" />
                            </font>
@@ -243,7 +243,7 @@
                            </rowConstraints>
                            <children>
                               <Label fx:id="deactivateUserInfo" prefHeight="17.0" prefWidth="280.0" />
-                              <Button mnemonicParsing="false" onAction="#deactivateUser" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Account (de)activeren" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                              <Button fx:id="deactivateUserButton" mnemonicParsing="false" onAction="#deactivateUser" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="%deactivateUser" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor></Button>
@@ -276,15 +276,15 @@
                                  <cursor>
                                     <Cursor fx:constant="TEXT" />
                                  </cursor></TextField>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Zoeken" />
+                              <Text fx:id="searchLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="%search" />
                            </children>
                         </GridPane>
                         <TableView prefHeight="200.0" prefWidth="593.0" GridPane.rowIndex="1">
                            <columns>
-                              <TableColumn prefWidth="152.3333282470703" text="Gebruikersnaam" />
-                              <TableColumn prefWidth="150.33334350585938" text="Echte Naam" />
-                              <TableColumn prefWidth="75.0" text="Permissies" />
-                              <TableColumn prefWidth="75.0" text="Actief" />
+                              <TableColumn fx:id="tableColumnUsername" prefWidth="152.3333282470703" text="%username" />
+                              <TableColumn fx:id="tableColumnRealName" prefWidth="150.33334350585938" text="%realName" />
+                              <TableColumn fx:id="tableColumnPermissions" prefWidth="75.0" text="%permissions" />
+                              <TableColumn fx:id="tableColumnActive" prefWidth="75.0" text="%active" />
                            </columns>
                         </TableView>
                      </children>
