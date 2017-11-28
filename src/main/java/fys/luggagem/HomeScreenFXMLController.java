@@ -54,7 +54,7 @@ public class HomeScreenFXMLController implements Initializable {
 
     @FXML
     private void handleVerlorenBagageAction(ActionEvent event) throws IOException {
-        MainApp.setScene(this.getClass().getResource("/fxml/VerlorenBagageFXML.fxml"));
+        loadFXMLFile(this.getClass().getResource("/fxml/VerlorenBagageFXML.fxml"));
     }
 
     @FXML
