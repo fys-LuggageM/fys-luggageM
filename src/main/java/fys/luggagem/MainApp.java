@@ -16,6 +16,13 @@ public class MainApp extends Application {
 
     static MyJDBC myJDBC;
     static Data data = new Data();
+
+    static File selectFileToRead(String xlsx) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select file to save into");
+        return null;
+    }
+
     Scene window;
 
     @Override

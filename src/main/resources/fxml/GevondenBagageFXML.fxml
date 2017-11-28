@@ -40,7 +40,7 @@
                         <Insets />
                      </VBox.margin>
                   </Label>
-                  <TextField editable="false" promptText="2017/12345">
+                  <TextField fx:id="registrationNumber" editable="false" promptText="2017/12345">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
@@ -50,7 +50,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <DatePicker fx:id="datum" maxWidth="1.7976931348623157E308" prefHeight="31.0" prefWidth="349.0" promptText="14-11-2017">
+                  <DatePicker fx:id="date" maxWidth="1.7976931348623157E308" prefHeight="31.0" prefWidth="349.0" promptText="14-11-2017">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
@@ -90,7 +90,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField promptText="%luggageTypePrompt">
+                  <TextField fx:id="luggageType" promptText="%luggageTypePrompt">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
@@ -100,7 +100,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField promptText="Eastsport">
+                  <TextField fx:id="brand" promptText="Eastsport">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
@@ -110,7 +110,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField promptText="AA1234">
+                  <TextField fx:id="arrivedWithFlight" promptText="AA1234">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
@@ -120,7 +120,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField promptText="1234567890">
+                  <TextField fx:id="tag" promptText="1234567890">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
@@ -130,7 +130,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField promptText="%locationFoundPrompt">
+                  <TextField fx:id="locationFound" promptText="%locationFoundPrompt">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
@@ -149,8 +149,8 @@
                   </Label>
                   <HBox prefWidth="200.0">
                      <children>
-                        <TextField promptText="%colorsPrompt1" />
-                        <TextField promptText="%colorsPrompt2">
+                        <TextField fx:id="color1" promptText="%colorsPrompt1" />
+                        <TextField fx:id="color2" promptText="%colorsPrompt2">
                            <HBox.margin>
                               <Insets left="25.0" />
                            </HBox.margin>
@@ -167,19 +167,19 @@
                   </Label>
                   <HBox alignment="CENTER" prefWidth="200.0">
                      <children>
-                        <TextField promptText="%luggageSizeInCmPromptHeight">
+                        <TextField fx:id="luggageSizeHeight" promptText="%luggageSizeInCmPromptHeight">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
                         </TextField>
                         <Label alignment="CENTER" prefHeight="21.0" prefWidth="28.0" text="X" />
-                        <TextField promptText="%luggageSizeInCmPromptWidth">
+                        <TextField fx:id="luggageSizeWidth" promptText="%luggageSizeInCmPromptWidth">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </TextField>
                         <Label alignment="CENTER" prefHeight="21.0" prefWidth="28.0" text="X" />
-                        <TextField promptText="%luggageSizeInCmPromptDepth">
+                        <TextField fx:id="luggageSizeDepth" promptText="%luggageSizeInCmPromptDepth">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
@@ -194,7 +194,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField promptText="15kg">
+                  <TextField fx:id="luggageWeight" promptText="15kg">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
@@ -206,16 +206,16 @@
                   </Label>
                   <HBox prefWidth="200.0">
                      <children>
-                        <TextField minWidth="50.0" promptText="A.B.">
+                        <TextField fx:id="name1" minWidth="50.0" promptText="A.B.">
                            <HBox.margin>
                               <Insets right="25.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField minWidth="50.0" promptText="van">
+                        <TextField fx:id="name2" minWidth="50.0" promptText="van">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin></TextField>
-                        <TextField minWidth="125.0" prefWidth="225.0" promptText="Houten">
+                        <TextField fx:id="name3" minWidth="125.0" prefWidth="225.0" promptText="Houten">
                            <HBox.margin>
                               <Insets left="25.0" />
                            </HBox.margin>
@@ -230,7 +230,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField promptText="Amsterdam">
+                  <TextField fx:id="city" promptText="Amsterdam">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
@@ -240,19 +240,30 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextArea maxHeight="115.0" VBox.vgrow="ALWAYS">
+                  <TextArea fx:id="comments" maxHeight="115.0" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
                   </TextArea>
                   <HBox alignment="CENTER_RIGHT">
                      <children>
-                        <Button mnemonicParsing="false" text="%save">
+                        <Button mnemonicParsing="false" onAction="#handleImportFoundLuggageAction2" text="Import From Excel">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Button>
+                        <Button fx:id="save" mnemonicParsing="false" text="%save">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="25.0" />
+                           </HBox.margin>
+                        </Button>
                      </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </HBox>
                </children>
             </VBox>
