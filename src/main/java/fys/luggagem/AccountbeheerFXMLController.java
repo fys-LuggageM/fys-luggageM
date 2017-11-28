@@ -111,13 +111,19 @@ public class AccountbeheerFXMLController implements Initializable {
         System.out.println("Wachtwoord gereset.");
         if ((resetUser.getText() == null || resetUser.getText().trim().isEmpty()) || (resetPassword.getText().trim().isEmpty())) {
             resetPasswordInfo.setTextFill(Paint.valueOf("d81e05"));
-            resetPasswordInfo.setText(data.getResourceBundle().getString("passwordResetInfo"));
             resetPasswordInfo.setText(data.getResourceBundle().getString("passwordNotResetInfo"));
         } else {
             String userToReset = resetUser.getText();
             String newPassword = resetPassword.getText();
 
-            //TODO: Password hashing and write SQL query
+            String[] hashAndPass;
+            hashAndPass = Encryptor.encrypt(newPassword);
+
+            String query = String.format("UPDATE `luggagem`.`staffmembers` "
+                    + "SET `password`='%s', `salt`='%s' "
+                    + "WHERE `staffID`='%s';", hashAndPass[0], hashAndPass[1], userToReset);
+            MainApp.myJDBC.executeUpdateQuery(query);
+
             resetPasswordInfo.setTextFill(Paint.valueOf("green"));
             resetPasswordInfo.setText(data.getResourceBundle().getString("passwordResetInfo"));
             resetUser.clear();
@@ -128,8 +134,8 @@ public class AccountbeheerFXMLController implements Initializable {
     @FXML
     private void createAccount(ActionEvent event) {
         System.out.println("Account aangemaakt.");
-        if ((createUserPassword.getText() == null || createUserPassword.getText().trim().isEmpty()) 
-                || (createUsername.getText() == null || createUsername.getText().trim().isEmpty()) 
+        if ((createUserPassword.getText() == null || createUserPassword.getText().trim().isEmpty())
+                || (createUsername.getText() == null || createUsername.getText().trim().isEmpty())
                 || (createUserRealname.getText() == null || createUserRealname.getText().trim().isEmpty())) {
             createUserInfo.setTextFill(Paint.valueOf("d81e05"));
             createUserInfo.setFont(Font.font(10));
@@ -159,15 +165,21 @@ public class AccountbeheerFXMLController implements Initializable {
                     break;
             }
 
-            //TODO: Hash password and write SQL query
+            String[] hashAndPass;
+            hashAndPass = Encryptor.encrypt(password);
+
+            //TODO: Write SQL query
             // Confirm to the user that the account was succesfully created
             createUserInfo.setTextFill(Paint.valueOf("green"));
             createUserInfo.setFont(Font.font(12));
             createUserInfo.setText(data.getResourceBundle().getString("accountCreatedInfo"));
+
             // Empty everything
             createUserPassword.clear();
             createUserRealname.clear();
-            createUsername.clear();
+
+            getNextStaffID();
+
             roleAdmin.setSelected(false);
             roleManager.setSelected(false);
             roleEmployee.setSelected(true);
@@ -190,6 +202,15 @@ public class AccountbeheerFXMLController implements Initializable {
         }
     }
 
+    private void getNextStaffID() {
+        // Get next staff ID
+        String query = "SELECT MAX(staffid)"
+                + "FROM staffmembers";
+        String result = MainApp.myJDBC.executeStringQuery(query);
+        result = Integer.toString(Integer.parseInt(result) + 1);
+        createUsername.setText(result);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Set toggleGroup for roleAdmin
@@ -197,5 +218,7 @@ public class AccountbeheerFXMLController implements Initializable {
         roleEmployee.setToggleGroup(accountButtons);
         roleManager.setToggleGroup(accountButtons);
         roleEmployee.setSelected(true);
+
+        getNextStaffID();
     }
 }
