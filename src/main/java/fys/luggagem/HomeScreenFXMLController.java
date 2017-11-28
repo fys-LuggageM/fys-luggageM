@@ -39,7 +39,7 @@ public class HomeScreenFXMLController implements Initializable {
 
     @FXML
     private void handleBeschadigdeBagageAction(ActionEvent event) throws IOException {
-        MainApp.setScene(this.getClass().getResource("/fxml/BeschadigdeBagageFXML.fxml"));
+        loadFXMLFile(this.getClass().getResource("/fxml/BeschadigdeBagageFXML.fxml"));
     }
 
     @FXML
@@ -77,7 +77,7 @@ public class HomeScreenFXMLController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(fxmlFileName);
             loader.setResources(data.getResourceBundle());
-            Parent root = (Parent) loader.load();      
+            Parent root = (Parent) loader.load();
             workspace.getChildren().clear();
             workspace.getChildren().add(root);
         } catch (IOException ex) {
