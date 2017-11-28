@@ -162,14 +162,25 @@ public class AccountbeheerFXMLController implements Initializable {
                     break;
                 default:
                     createUserInfo.setText("Something went really wrong...");
-                    break;
+                    return;
             }
 
             String[] hashAndPass;
             hashAndPass = Encryptor.encrypt(password);
 
             //TODO: Write SQL query
-            // Confirm to the user that the account was succesfully created
+            String query = "INSERT INTO `luggagem`.`staffmembers` "
+                    + "(`staffID`, `firstName`, `lastName`, `email`, `password`, `salt`) "
+                    + "VALUES "
+                    + "('" + username + "', '" + realName + "', '" + permissions + "', '" + username  + "', '" + hashAndPass[0] + "', '" + hashAndPass[1] + "');";
+            MainApp.myJDBC.executeUpdateQuery(query);
+//            query = String.format("INSERT INTO `luggagem`.`staffmembers` "
+//                    + "(`staffID`, `firstName`, `lastName`, `email`, `password`, `salt`) "
+//                    + "VALUES "
+//                    + "('2', 'Valentijn', 'Vermeij', 'vverm', 'test', 'salty');", 
+//                       username, realName, permissions, hashAndPass[0], hashAndPass[1] );
+//            // Confirm to the user that the account was succesfully created
+            System.out.println(query);
             createUserInfo.setTextFill(Paint.valueOf("green"));
             createUserInfo.setFont(Font.font(12));
             createUserInfo.setText(data.getResourceBundle().getString("accountCreatedInfo"));
