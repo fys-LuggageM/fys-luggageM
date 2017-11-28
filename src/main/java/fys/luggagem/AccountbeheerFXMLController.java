@@ -112,6 +112,7 @@ public class AccountbeheerFXMLController implements Initializable {
         if ((resetUser.getText() == null || resetUser.getText().trim().isEmpty()) || (resetPassword.getText().trim().isEmpty())) {
             resetPasswordInfo.setTextFill(Paint.valueOf("d81e05"));
             resetPasswordInfo.setText(data.getResourceBundle().getString("passwordResetInfo"));
+            resetPasswordInfo.setText(data.getResourceBundle().getString("passwordNotResetInfo"));
         } else {
             String userToReset = resetUser.getText();
             String newPassword = resetPassword.getText();
