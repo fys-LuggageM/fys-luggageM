@@ -7,10 +7,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -20,172 +18,139 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" maxHeight="768.0" maxWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" style="-fx-border-color: black; -fx-border-width: 1 0 0 0;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.luggagem.BeschadigdeBagageController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" maxHeight="600.0" maxWidth="800.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.luggagem.BeschadigdeBagageController">
    <children>
-      <BorderPane layoutX="341.0" layoutY="92.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 0 0 1 0;" BorderPane.alignment="CENTER">
+      <GridPane hgap="10.0" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="506.0" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.7618865966797" minWidth="91.61906433105469" prefWidth="148.7618865966797" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="382.9046630859375" minWidth="276.2381134033203" prefWidth="276.2381134033203" />
+            <ColumnConstraints hgrow="NEVER" />
+            <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+         </rowConstraints>
+         <children>
+            <VBox prefHeight="666.0" prefWidth="408.0" GridPane.columnIndex="2">
                <children>
-                  <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/Naamloos-2.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#handleCloseAction" style="-fx-background-color: white;">
-                           <HBox.margin>
-                              <Insets right="43.0" />
-                           </HBox.margin>
-                           <graphic>
-                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/back_button.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-            
-                        </Button>
-                     </children>
-                  </HBox>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" wrappingWidth="262.7337703704834" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Text>
+                  <DatePicker prefHeight="25.0" prefWidth="262.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </DatePicker>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Time:" wrappingWidth="261.20998191833496">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Text>
+                  <TextField maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Airport" wrappingWidth="261.20998191833496">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Text>
+                  <TextField maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Luggage type" wrappingWidth="261.20998191833496">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Text>
+                  <TextField maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Luggage brand:" wrappingWidth="261.20998191833496">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Text>
+                  <TextField maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Luggage color:" wrappingWidth="261.20998191833496">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Text>
+                  <TextField maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Notes:" wrappingWidth="261.20998191833496">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Text>
+                  <TextArea prefHeight="202.0" prefWidth="336.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </TextArea>
                </children>
-            </HBox>
-         </top>
-         <center>
-            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="505.142822265625" minWidth="10.0" prefWidth="390.09521484375" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="666.0" minHeight="10.0" prefHeight="657.3809204101562" vgrow="SOMETIMES" />
-              </rowConstraints>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                <children>
-                  <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="506.0" minWidth="10.0" prefWidth="437.5714111328125" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="249.14291381835938" minWidth="0.0" prefWidth="60.4285888671875" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Datum:" wrappingWidth="262.7337703704834" VBox.vgrow="ALWAYS">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                              </Text>
-                              <DatePicker prefHeight="25.0" prefWidth="262.0">
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor></DatePicker>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tijd:" wrappingWidth="261.20998191833496">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="15.0" />
-                                 </VBox.margin>
-                              </Text>
-                              <TextField maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
-                                 <cursor>
-                                    <Cursor fx:constant="TEXT" />
-                                 </cursor></TextField>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Luchthaven:" wrappingWidth="261.20998191833496">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="15.0" />
-                                 </VBox.margin>
-                              </Text>
-                              <TextField maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
-                                 <cursor>
-                                    <Cursor fx:constant="TEXT" />
-                                 </cursor>
-                              </TextField>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Type:" wrappingWidth="261.20998191833496">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="15.0" />
-                                 </VBox.margin>
-                              </Text>
-                              <TextField maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
-                                 <cursor>
-                                    <Cursor fx:constant="TEXT" />
-                                 </cursor>
-                              </TextField>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Merk:" wrappingWidth="261.20998191833496">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="15.0" />
-                                 </VBox.margin>
-                              </Text>
-                              <TextField maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
-                                 <cursor>
-                                    <Cursor fx:constant="TEXT" />
-                                 </cursor>
-                              </TextField>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kleur:" wrappingWidth="261.20998191833496">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="15.0" />
-                                 </VBox.margin>
-                              </Text>
-                              <TextField maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
-                                 <cursor>
-                                    <Cursor fx:constant="TEXT" />
-                                 </cursor>
-                              </TextField>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Notities:" wrappingWidth="261.20998191833496">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="15.0" />
-                                 </VBox.margin>
-                              </Text>
-                              <TextArea prefHeight="202.0" prefWidth="486.0">
-                                 <cursor>
-                                    <Cursor fx:constant="TEXT" />
-                                 </cursor>
-                              </TextArea>
-                           </children>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <GridPane.margin>
-                              <Insets left="20.0" />
-                           </GridPane.margin>
-                        </VBox>
-                     </children>
-                  </GridPane>
-               </children>
-            </GridPane>
-         </center>
-         <left>
-            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadImage01" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Foto 1" VBox.vgrow="ALWAYS">
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadImage01" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Photo 1" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadImage02" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Photo 2">
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin>
@@ -196,7 +161,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadImage02" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Foto 2">
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadImage03" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Photo 3">
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin>
@@ -207,49 +172,39 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadImage03" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Foto 3">
-                     <VBox.margin>
-                        <Insets top="15.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <VBox maxHeight="1.7976931348623157E308" prefHeight="540.0" prefWidth="100.0" />
+                  <VBox maxHeight="1.7976931348623157E308" prefHeight="350.0" prefWidth="100.0" />
                   <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="saveImages" mnemonicParsing="false" onAction="#saveToDatabase" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Opslaan">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
                         <Label fx:id="savedConfirmation" prefHeight="39.0" prefWidth="96.0" style="-fx-background-color: green; -fx-text-fill: white;" text="Opgeslagen" visible="false">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
+                        <Button fx:id="saveImages" mnemonicParsing="false" onAction="#saveToDatabase" prefHeight="39.0" prefWidth="92.0" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="Save">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
                      </children>
                   </StackPane>
                </children>
-               <BorderPane.margin>
-                  <Insets left="20.0" />
-               </BorderPane.margin>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
             </VBox>
-         </left>
-         <right>
-            <VBox prefHeight="668.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="668.0" prefWidth="100.0" GridPane.columnIndex="3">
                <children>
                   <HBox prefHeight="100.0" prefWidth="359.0">
                      <children>
                         <ImageView fx:id="image01" fitHeight="210.0" fitWidth="384.0" pickOnBounds="true" preserveRatio="true">
                            <HBox.margin>
-                              <Insets />
+                              <Insets left="15.0" right="15.0" top="2.0" />
                            </HBox.margin>
                         </ImageView>
                      </children>
@@ -258,7 +213,7 @@
                      <children>
                         <ImageView fx:id="image02" fitHeight="210.0" fitWidth="384.0" pickOnBounds="true" preserveRatio="true">
                            <HBox.margin>
-                              <Insets top="5.0" />
+                              <Insets left="15.0" right="15.0" top="2.0" />
                            </HBox.margin>
                         </ImageView>
                      </children>
@@ -267,17 +222,14 @@
                      <children>
                         <ImageView fx:id="image03" fitHeight="210.0" fitWidth="384.0" pickOnBounds="true" preserveRatio="true">
                            <HBox.margin>
-                              <Insets top="5.0" />
+                              <Insets left="15.0" right="15.0" top="2.0" />
                            </HBox.margin>
                         </ImageView>
                      </children>
                   </HBox>
                </children>
-               <BorderPane.margin>
-                  <Insets right="20.0" />
-               </BorderPane.margin>
             </VBox>
-         </right>
-      </BorderPane>
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>

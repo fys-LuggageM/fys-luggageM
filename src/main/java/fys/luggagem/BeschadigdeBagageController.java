@@ -63,7 +63,7 @@ public class BeschadigdeBagageController implements Initializable {
         if (file != null) {
             imageURL = file.toURI().toURL().toString();
 
-            Image image = new Image(imageURL, 384, 216, false, false);
+            Image image = new Image(imageURL, 384, 205, false, false);
             image01.setImage(image);
         }
     }
@@ -81,7 +81,7 @@ public class BeschadigdeBagageController implements Initializable {
         if (file != null) {
             imageURL = file.toURI().toURL().toString();
 
-            Image image = new Image(imageURL, 384, 216, false, false);
+            Image image = new Image(imageURL, 384, 205, false, false);
             image02.setImage(image);
         }
     }
@@ -99,7 +99,7 @@ public class BeschadigdeBagageController implements Initializable {
         if (file != null) {
             imageURL = file.toURI().toURL().toString();
 
-            Image image = new Image(imageURL, 384, 216, false, false);
+            Image image = new Image(imageURL, 384, 205, false, false);
             image03.setImage(image);
         }
     }
