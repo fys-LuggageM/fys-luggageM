@@ -13,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 /**
  *
@@ -21,11 +20,6 @@ import javafx.stage.Stage;
  */
 public class FXMLDocumentController implements Initializable {
 
-    private Stage prevStage;
-//    private boolean loginSuccesvol = false;
-//    private int index = 0;
-//    private final String[] usernames = {"Jordan van Beijnhem", "Tabish Nanhekhan", "Joris Ebbelaar",
-//        "Valentijn Vermeij", "Pathe Dude", "Ayoub El Gris"};
     private Data data = MainApp.getData();
     Scene window;
 
@@ -94,6 +88,8 @@ public class FXMLDocumentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        username.setText("500500"); // ONLY FOR DEVELOPMENT BUILD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        password.setText("test");   // ONLY FOR DEVELOPMENT BUILD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if (data.getLanguage().equals("en") && data.getCountry().equals("US")) {
             dutchButton.setStyle("-fx-background-color: white");
             englishButton.setStyle("-fx-background-color: grey");
@@ -102,32 +98,21 @@ public class FXMLDocumentController implements Initializable {
             englishButton.setStyle("-fx-background-color: white");
         }
     }
-
-//    private void userCheck(String username, String password, ActionEvent event) throws IOException {
-//        while (!loginSuccesvol && index < usernames.length) {
-//            if (username.equals(usernames[index]) && password.equals("test")) {
-//                loginSuccesvol = true;
-//                data.setName(usernames[index]);
-//                MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
-//            }
-//            index++;
-//        }
-//        if (!loginSuccesvol) {
-//            statusMessage.setText("De ingevulde gegevens zijn niet correct!");
-//            System.out.println("MISLUKT!");
-//        }
-//        index = 0;
-//        loginSuccesvol = false;
-//    }
+    
     private void userCheck(String username, String password) throws IOException {
         try {
-            ResultSet resultSet = MainApp.myJDBC.executeResultSetQuery("SELECT * FROM staffMembers");
+            ResultSet resultSet = MainApp.myJDBC.executeResultSetQuery("SELECT * FROM Account");
             while (resultSet.next()) {
-                if (username.equals(resultSet.getString("email")) && Encryptor.encrypt(password,
+                if (username.equals(resultSet.getString("Employee_code")) && Encryptor.encrypt(password,
                         resultSet.getString("salt")).equals(resultSet.getString("password"))) {
-                    data.setName(resultSet.getString("firstName") + (resultSet.getString("preposition") != null ? " "
-                            + resultSet.getString("preposition") : "") + " " + resultSet.getString("lastName"));
-                    MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
+                    ResultSet userDataSet = MainApp.myJDBC.executeResultSetQuery("SELECT * FROM Employee WHERE code=" + resultSet.getInt("Employee_code"));
+                    if (userDataSet.next()) {
+                        data.setName(userDataSet.getString("first_name") + (userDataSet.getString("preposition") != null ? " "
+                                + userDataSet.getString("preposition") : "") + " " + userDataSet.getString("last_name"));
+                        MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
+                    } else {
+                        statusMessage.setText("Impossible error has occured. Please try again.");
+                    }
                 }
             }
             statusMessage.setText("De ingevulde gegevens zijn niet correct!");

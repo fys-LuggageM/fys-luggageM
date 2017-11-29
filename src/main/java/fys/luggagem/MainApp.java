@@ -20,7 +20,8 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        MyJDBC.createDatabase("luggagem");
+        String[] temp = Encryptor.encrypt("test");
+        System.out.println(temp[0] + " " + temp[1]);
         myJDBC = new MyJDBC("luggagem");
         data.setStage(stage);
         setScene(this.getClass().getResource("/fxml/FXMLDocument.fxml"));
