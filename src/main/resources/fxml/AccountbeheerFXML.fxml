@@ -196,7 +196,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="airportBox" prefHeight="25.0" prefWidth="138.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <ComboBox fx:id="airportBox" prefHeight="25.0" prefWidth="138.0" promptText="%airport" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets left="300.0" />
                      </GridPane.margin>
@@ -283,12 +283,14 @@
                         <Text fx:id="searchLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="%search" />
                      </children>
                   </GridPane>
-                  <TableView prefHeight="200.0" prefWidth="593.0" GridPane.rowIndex="1">
+                  <TableView prefHeight="168.0" prefWidth="763.0" GridPane.rowIndex="1">
                      <columns>
                         <TableColumn fx:id="tableColumnUsername" prefWidth="152.3333282470703" text="%username" />
-                        <TableColumn fx:id="tableColumnRealName" prefWidth="150.33334350585938" text="%realName" />
-                        <TableColumn fx:id="tableColumnPermissions" prefWidth="75.0" text="%permissions" />
-                        <TableColumn fx:id="tableColumnActive" prefWidth="75.0" text="%active" />
+                        <TableColumn fx:id="tableColumnRealName1" prefWidth="150.33334350585938" text="%firstName" />
+                        <TableColumn fx:id="tableColumnRealName" prefWidth="150.33334350585938" text="%lastName" />
+                        <TableColumn fx:id="tableColumnPermissions" prefWidth="98.0" text="%permissions" />
+                        <TableColumn prefWidth="109.0" text="%airport" />
+                        <TableColumn fx:id="tableColumnActive" prefWidth="81.0" text="%active" />
                      </columns>
                   </TableView>
                </children>
