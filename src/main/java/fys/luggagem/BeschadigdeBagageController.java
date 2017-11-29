@@ -10,14 +10,11 @@ import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
@@ -58,12 +55,12 @@ public class BeschadigdeBagageController implements Initializable {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"));
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
 
-        File file = fileChooser.showOpenDialog(stage);
+        File file = fileChooser.showOpenDialog(data.getStage());
 
         if (file != null) {
             imageURL = file.toURI().toURL().toString();
 
-            Image image = new Image(imageURL, 384, 205, false, false);
+            Image image = new Image(imageURL, 308, 205, false, false);
             image01.setImage(image);
         }
     }
@@ -76,12 +73,12 @@ public class BeschadigdeBagageController implements Initializable {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"));
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
 
-        File file = fileChooser.showOpenDialog(stage);
+        File file = fileChooser.showOpenDialog(data.getStage());
 
         if (file != null) {
             imageURL = file.toURI().toURL().toString();
 
-            Image image = new Image(imageURL, 384, 205, false, false);
+            Image image = new Image(imageURL, 308, 205, false, false);
             image02.setImage(image);
         }
     }
@@ -94,22 +91,26 @@ public class BeschadigdeBagageController implements Initializable {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"));
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
 
-        File file = fileChooser.showOpenDialog(stage);
+        File file = fileChooser.showOpenDialog(data.getStage());
 
         if (file != null) {
             imageURL = file.toURI().toURL().toString();
 
-            Image image = new Image(imageURL, 384, 205, false, false);
+            Image image = new Image(imageURL, 308, 205, false, false);
             image03.setImage(image);
         }
     }
 
     @FXML
     private void saveToDatabase(ActionEvent event) {
-        //alert dialog
-        imageURL = this.getClass().getResource("/images/corendon.jpg").toString();
-        Image image = new Image(imageURL, 180, 50, false, false);
+        // Image inside alert dialog resized to 65x50
+        imageURL = this.getClass().getResource("/images/upload_button02.png").toString();
+        Image image = new Image(imageURL, 100, 100, false, true);
+
+        //Create new alert dialog
         Alert alert = new Alert(AlertType.CONFIRMATION);
+
+        // Alert dialog setup
         alert.initOwner(data.getStage());
         alert.setGraphic(new ImageView(image));
         alert.setTitle("Damaged luggage");
@@ -131,7 +132,7 @@ public class BeschadigdeBagageController implements Initializable {
                 }
             });
             pause.play();
-            
+
             //ToDo: INSERT input fields + images INTO database
         } else {
             // ... user chose CANCEL or closed the dialog
