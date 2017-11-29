@@ -3,10 +3,13 @@ package fys.luggagem;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -100,8 +103,19 @@ public class AccountbeheerFXMLController implements Initializable {
     private TableColumn<?, ?> tableColumnPermissions;
     @FXML
     private TableColumn<?, ?> tableColumnActive;
-
     @FXML
+    private TextField createUserBetweenName;
+    @FXML
+    private TextField createUserLastname;
+    @FXML
+    private ComboBox<?> airportBox;
+
+    private ObservableList<String> Airports
+            = FXCollections.observableArrayList(
+                    "AMS",
+                    "TRK"
+            );
+
     private void handleCloseAction(ActionEvent event) throws IOException {
         MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
     }
@@ -136,7 +150,8 @@ public class AccountbeheerFXMLController implements Initializable {
         System.out.println("Account aangemaakt.");
         if ((createUserPassword.getText() == null || createUserPassword.getText().trim().isEmpty())
                 || (createUsername.getText() == null || createUsername.getText().trim().isEmpty())
-                || (createUserRealname.getText() == null || createUserRealname.getText().trim().isEmpty())) {
+                || (createUserRealname.getText() == null || createUserRealname.getText().trim().isEmpty())
+                || (createUserLastname.getText() == null || createUserLastname.getText().trim().isEmpty())) {
             createUserInfo.setTextFill(Paint.valueOf("d81e05"));
             createUserInfo.setFont(Font.font(10));
             createUserInfo.setText(data.getResourceBundle().getString("accountNotCreatedInfo"));
@@ -144,6 +159,10 @@ public class AccountbeheerFXMLController implements Initializable {
             // Store username, password, permissions and real name in variables.
             String username = createUsername.getText();
             String realName = createUserRealname.getText();
+            if (createUserBetweenName.getText() != null || !createUserBetweenName.getText().trim().isEmpty()) {
+                String betweenName = createUserBetweenName.getText();
+            }
+            String lastName = createUserLastname.getText();
             String password = createUserPassword.getText();
             String permissions;
 
@@ -172,14 +191,9 @@ public class AccountbeheerFXMLController implements Initializable {
             String query = "INSERT INTO `luggagem`.`staffmembers` "
                     + "(`staffID`, `firstName`, `lastName`, `email`, `password`, `salt`) "
                     + "VALUES "
-                    + "('" + username + "', '" + realName + "', '" + permissions + "', '" + username  + "', '" + hashAndPass[0] + "', '" + hashAndPass[1] + "');";
+                    + "('" + username + "', '" + realName + "', '" + permissions + "', '" + username + "', '" + hashAndPass[0] + "', '" + hashAndPass[1] + "');";
             MainApp.myJDBC.executeUpdateQuery(query);
-//            query = String.format("INSERT INTO `luggagem`.`staffmembers` "
-//                    + "(`staffID`, `firstName`, `lastName`, `email`, `password`, `salt`) "
-//                    + "VALUES "
-//                    + "('2', 'Valentijn', 'Vermeij', 'vverm', 'test', 'salty');", 
-//                       username, realName, permissions, hashAndPass[0], hashAndPass[1] );
-//            // Confirm to the user that the account was succesfully created
+            // Confirm to the user that the account was succesfully created
             System.out.println(query);
             createUserInfo.setTextFill(Paint.valueOf("green"));
             createUserInfo.setFont(Font.font(12));
@@ -231,5 +245,8 @@ public class AccountbeheerFXMLController implements Initializable {
         roleEmployee.setSelected(true);
 
         getNextStaffID();
+
+        //
+        airportBox.setItems(Airports);
     }
 }
