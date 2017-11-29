@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: luggagem
+-- Host: 127.0.0.1    Database: luggagem
 -- ------------------------------------------------------
 -- Server version	5.7.20-log
 
@@ -28,6 +28,7 @@ CREATE TABLE `account` (
   `password` varchar(64) DEFAULT NULL,
   `salt` varchar(64) DEFAULT NULL,
   `user_level` int(11) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`Employee_code`),
   KEY `fk_Account_Medewerker_idx` (`Employee_code`),
   CONSTRAINT `fk_Account_Medewerker` FOREIGN KEY (`Employee_code`) REFERENCES `employee` (`code`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -40,7 +41,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (500500,'test@gmail.com','6F71EF86333B48BDAD9CC03E697A58FEC0E53E7BA4B2C7A33593D34D1263775B','F9064373F9B3C8F0A1C610DA2346341F89062E58055B10480A19AD965273DEE9',1);
+INSERT INTO `account` VALUES (500500,'test@gmail.com','6F71EF86333B48BDAD9CC03E697A58FEC0E53E7BA4B2C7A33593D34D1263775B','F9064373F9B3C8F0A1C610DA2346341F89062E58055B10480A19AD965273DEE9',1,1);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,4 +266,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-28 23:09:33
+-- Dump completed on 2017-11-29 18:17:48
