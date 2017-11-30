@@ -229,6 +229,9 @@ public class AccountbeheerFXMLController implements Initializable {
             // Empty everything 
             createUserPassword.clear();
             createUserRealname.clear();
+            createUserBetweenName.clear();
+            createUserLastname.clear();
+            createUserEmail.clear();
 
             getNextStaffID();
 
