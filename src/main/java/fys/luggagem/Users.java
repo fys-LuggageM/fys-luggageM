@@ -56,10 +56,6 @@ public class Users {
         return permissions;
     }
 
-    public void setPermissions(String permissions) {
-        this.permissions = permissions;
-    }
-
     public void setPreposition(String preposition) {
         this.preposition = preposition;
     }
