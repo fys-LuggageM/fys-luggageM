@@ -268,6 +268,15 @@ public class AccountbeheerFXMLController implements Initializable {
             String query = "SELECT Employee_code,first_name,preposition,last_name,user_level,Luchthaven_IATA,active FROM luggagem.account,luggagem.employee;";
             ResultSet result = MainApp.myJDBC.executeResultSetQuery(query);
 
+            for (int cnr = 0; cnr < TableViewUsers.getColumns().size(); cnr++) {
+                TableColumn tc = (TableColumn)TableViewUsers.getColumns().get(cnr);
+                String propertyName = tc.getId();
+                if (propertyName != null && !propertyName.isEmpty()) {
+                    tc.setCellValueFactory(new PropertyValueFactory<>(propertyName));
+                    System.out.printf("Attached column %s in tableview to matching attribute.",propertyName);
+                }
+            }
+            
             while (result.next()) {
                 String TBusername = result.getString("Employee_Code");
                 String TBfirstName = result.getString("first_name");

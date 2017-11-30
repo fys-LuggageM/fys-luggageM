@@ -9,7 +9,7 @@ package fys.luggagem;
  *
  * @author ev1l0rd
  */
-class Users {
+public class Users {
 
     private String username;
     private String firstName;
