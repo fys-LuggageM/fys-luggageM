@@ -149,6 +149,8 @@ public class AccountbeheerFXMLController implements Initializable {
     private TableColumn<?, ?> permissions;
     @FXML
     private TableColumn<?, ?> active;
+    @FXML
+    private TextField createUserEmail;
 
     private void handleCloseAction(ActionEvent event) throws IOException {
         MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
@@ -181,65 +183,69 @@ public class AccountbeheerFXMLController implements Initializable {
 
     @FXML
     private void createAccount(ActionEvent event) {
-        System.out.println("Account aangemaakt.");
         if ((createUserPassword.getText() == null || createUserPassword.getText().trim().isEmpty())
                 || (createUsername.getText() == null || createUsername.getText().trim().isEmpty())
                 || (createUserRealname.getText() == null || createUserRealname.getText().trim().isEmpty())
-                || (createUserLastname.getText() == null || createUserLastname.getText().trim().isEmpty())) {
+                || (createUserLastname.getText() == null || createUserLastname.getText().trim().isEmpty())
+                || (createUserEmail.getText() == null || createUserEmail.getText().trim().isEmpty())) {
             createUserInfo.setTextFill(Paint.valueOf("d81e05"));
             createUserInfo.setFont(Font.font(10));
             createUserInfo.setText(data.getResourceBundle().getString("accountNotCreatedInfo"));
         } else {
-            // Store username, password, permissions and real name in variables.
             String createUserStringName = createUsername.getText();
             String createUserStringRealName = createUserRealname.getText();
+            String betweenName = "";
             if (createUserBetweenName.getText() != null || !createUserBetweenName.getText().trim().isEmpty()) {
-                String betweenName = createUserBetweenName.getText();
+                betweenName = createUserBetweenName.getText();
             }
+            String createUserStringEmail = createUserEmail.getText();
             String createUserStringLastName = createUserLastname.getText();
+            String createUserStringAirport = "AMS";
             String password = createUserPassword.getText();
-            String createUserStringPermissions;
-
-            // Store universally named userPermissions
-            RadioButton selectedPermissions = (RadioButton) accountButtons.getSelectedToggle();
-            String un18perms = selectedPermissions.getId();
-            switch (un18perms) {
-                case "roleEmployee":
-                    createUserStringPermissions = "Employee";
-                    break;
-                case "roleManager":
-                    createUserStringPermissions = "Manager";
-                    break;
-                case "roleAdmin":
-                    createUserStringPermissions = "Admin";
-                    break;
-                default:
-                    createUserInfo.setText("Something went really wrong...");
-                    return;
-            }
 
             String[] hashAndPass;
             hashAndPass = Encryptor.encrypt(password);
 
-            // Confirm to the user that the account was succesfully created
-            createUserInfo.setTextFill(Paint.valueOf("green"));
-            createUserInfo.setFont(Font.font(12));
-            createUserInfo.setText(data.getResourceBundle().getString("accountCreatedInfo"));
+            int createUserIntPermissions;
 
-            // Empty everything
-            createUserPassword.clear();
-            createUserRealname.clear();
+            // Store universally named userPermissions 
+            RadioButton selectedPermissions = (RadioButton) accountButtons.getSelectedToggle();
+            String un18perms = selectedPermissions.getId();
+            switch (un18perms) {
+                case "roleManager":
+                    createUserIntPermissions = 2;
+                    break;
+                case "roleAdmin":
+                    createUserIntPermissions = 3;
+                    break;
+                default:
+                    createUserIntPermissions = 1;
+                    break;
+            }
 
-            getNextStaffID();
-
-            roleAdmin.setSelected(false);
-            roleManager.setSelected(false);
-            roleEmployee.setSelected(true);
+            String queryEmployee = "INSERT INTO `luggagem`.`employee` "
+                    + "(`code`, `first_name`, `preposition`, `last_name`, `Luchthaven_IATA`) "
+                    + "VALUES "
+                    + "('" + createUserStringName +"', '" + createUserStringRealName + "', '" + betweenName + "', '" + createUserStringLastName + "', '" + createUserStringAirport + "');";
+            int doQueryEmployeeTable = MainApp.myJDBC.executeUpdateQuery(queryEmployee);
+            String queryAccounts = String.format("INSERT INTO `luggagem`.`account` "
+                    + "(`Employee_code`, `email`, `password`, `salt`, `user_level`, `active`) "
+                    + "VALUES "
+                    + "('%s', '%s', '%s', '%s', '%d', '1');",
+                    createUserStringEmail, createUserStringEmail, hashAndPass[0], hashAndPass[1], createUserIntPermissions);
+            int doQueryAccountsTable = MainApp.myJDBC.executeUpdateQuery(queryAccounts);
+            if (doQueryEmployeeTable == -1 || doQueryAccountsTable == -1) {
+                createUserInfo.setTextFill(Paint.valueOf("d81e05"));
+                createUserInfo.setFont(Font.font(10));
+                createUserInfo.setText(data.getResourceBundle().getString("Something went wrong in the SQL query.\n Please contact your local sysadmin."));
+            }
         }
+
     }
 
     @FXML
-    private void deactivateUser(ActionEvent event) {
+    private void deactivateUser(ActionEvent event
+    ) {
         System.out.println("Gebruiker ge(de)activeerd.");
         if (deactivateUsername.getText() == null || deactivateUsername.getText().trim().isEmpty()) {
             deactivateUsername.clear();
@@ -269,14 +275,14 @@ public class AccountbeheerFXMLController implements Initializable {
             ResultSet result = MainApp.myJDBC.executeResultSetQuery(query);
 
             for (int cnr = 0; cnr < TableViewUsers.getColumns().size(); cnr++) {
-                TableColumn tc = (TableColumn)TableViewUsers.getColumns().get(cnr);
+                TableColumn tc = (TableColumn) TableViewUsers.getColumns().get(cnr);
                 String propertyName = tc.getId();
                 if (propertyName != null && !propertyName.isEmpty()) {
                     tc.setCellValueFactory(new PropertyValueFactory<>(propertyName));
-                    System.out.printf("Attached column %s in tableview to matching attribute.",propertyName);
+                    System.out.printf("Attached column %s in tableview to matching attribute.", propertyName);
                 }
             }
-            
+
             while (result.next()) {
                 String TBusername = result.getString("Employee_Code");
                 String TBfirstName = result.getString("first_name");

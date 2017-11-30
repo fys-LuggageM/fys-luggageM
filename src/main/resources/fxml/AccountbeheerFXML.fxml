@@ -105,7 +105,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <TextField fx:id="createUsername" editable="false" prefHeight="25.0" prefWidth="617.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TextField fx:id="createUsername" disable="true" editable="false" prefHeight="25.0" prefWidth="617.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -196,16 +196,29 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="airportBox" prefHeight="25.0" prefWidth="138.0" promptText="%airport" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                     <GridPane.margin>
-                        <Insets left="300.0" />
-                     </GridPane.margin>
-                  </ComboBox>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%airport" GridPane.rowIndex="4">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Text>
+                  <HBox GridPane.rowIndex="4">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%airport">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <ComboBox fx:id="airportBox" prefHeight="25.0" prefWidth="138.0" promptText="%airport">
+                           <HBox.margin>
+                              <Insets left="125.0" />
+                           </HBox.margin>
+                        </ComboBox>
+                     </children>
+                  </HBox>
+                  <HBox GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <children>
+                        <TextField fx:id="createUserEmail" prefHeight="25.0" prefWidth="490.0" promptText="%email">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
                </children>
             </GridPane>
             <GridPane GridPane.columnIndex="1" GridPane.rowIndex="4">
