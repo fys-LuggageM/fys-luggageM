@@ -7,10 +7,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,21 +25,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
-import java.sql.Connection;
 import java.sql.ResultSet;
-import javafx.application.Application;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
-import javafx.util.Callback;
 
 public class AccountbeheerFXMLController implements Initializable {
 
@@ -131,7 +119,6 @@ public class AccountbeheerFXMLController implements Initializable {
     private ObservableList<String> Airports
             = FXCollections.observableArrayList(
                     "AMS",
-                    "TRK"
             );
     @FXML
     private TableView TableViewUsers;
@@ -187,7 +174,8 @@ public class AccountbeheerFXMLController implements Initializable {
                 || (createUsername.getText() == null || createUsername.getText().trim().isEmpty())
                 || (createUserRealname.getText() == null || createUserRealname.getText().trim().isEmpty())
                 || (createUserLastname.getText() == null || createUserLastname.getText().trim().isEmpty())
-                || (createUserEmail.getText() == null || createUserEmail.getText().trim().isEmpty())) {
+                || (createUserEmail.getText() == null || createUserEmail.getText().trim().isEmpty())
+                || (airportBox.getSelectionModel().getSelectedItem() == null || airportBox.getSelectionModel().getSelectedItem().trim().isEmpty())) {
             createUserInfo.setTextFill(Paint.valueOf("d81e05"));
             createUserInfo.setFont(Font.font(10));
             createUserInfo.setText(data.getResourceBundle().getString("accountNotCreatedInfo"));
@@ -200,52 +188,67 @@ public class AccountbeheerFXMLController implements Initializable {
             }
             String createUserStringEmail = createUserEmail.getText();
             String createUserStringLastName = createUserLastname.getText();
-            String createUserStringAirport = "AMS";
+            String createUserStringAirport = airportBox.getSelectionModel().getSelectedItem();
             String password = createUserPassword.getText();
 
             String[] hashAndPass;
             hashAndPass = Encryptor.encrypt(password);
 
-            int createUserIntPermissions;
+            String createUserStringPermissions;
 
             // Store universally named userPermissions 
             RadioButton selectedPermissions = (RadioButton) accountButtons.getSelectedToggle();
             String un18perms = selectedPermissions.getId();
             switch (un18perms) {
                 case "roleManager":
-                    createUserIntPermissions = 2;
+                    createUserStringPermissions = "1";
                     break;
                 case "roleAdmin":
-                    createUserIntPermissions = 3;
+                    createUserStringPermissions = "2";
                     break;
                 default:
-                    createUserIntPermissions = 1;
+                    createUserStringPermissions = "0";
                     break;
             }
 
             String queryEmployee = "INSERT INTO `luggagem`.`employee` "
                     + "(`code`, `first_name`, `preposition`, `last_name`, `Luchthaven_IATA`) "
                     + "VALUES "
-                    + "('" + createUserStringName +"', '" + createUserStringRealName + "', '" + betweenName + "', '" + createUserStringLastName + "', '" + createUserStringAirport + "');";
+                    + "('" + createUserStringName + "', '" + createUserStringRealName + "', '" + betweenName + "', '" + createUserStringLastName + "', '" + createUserStringAirport + "');";
             int doQueryEmployeeTable = MainApp.myJDBC.executeUpdateQuery(queryEmployee);
-            String queryAccounts = String.format("INSERT INTO `luggagem`.`account` "
+            String queryAccounts = "INSERT INTO `luggagem`.`account` "
                     + "(`Employee_code`, `email`, `password`, `salt`, `user_level`, `active`) "
                     + "VALUES "
-                    + "('%s', '%s', '%s', '%s', '%d', '1');",
-                    createUserStringEmail, createUserStringEmail, hashAndPass[0], hashAndPass[1], createUserIntPermissions);
+                    + "('" + createUserStringName + "', '" + createUserStringEmail + "', '" + hashAndPass[0] + "', '" + hashAndPass[1] + "', '" + createUserStringPermissions + "', '1');";
             int doQueryAccountsTable = MainApp.myJDBC.executeUpdateQuery(queryAccounts);
             if (doQueryEmployeeTable == -1 || doQueryAccountsTable == -1) {
                 createUserInfo.setTextFill(Paint.valueOf("d81e05"));
                 createUserInfo.setFont(Font.font(10));
                 createUserInfo.setText(data.getResourceBundle().getString("Something went wrong in the SQL query.\n Please contact your local sysadmin."));
             }
+
+            // Empty everything 
+            createUserPassword.clear();
+            createUserRealname.clear();
+
+            getNextStaffID();
+
+            roleAdmin.setSelected(false);
+            roleManager.setSelected(false);
+            roleEmployee.setSelected(true);
+
+            reloadTable();
+
+            // Confirm to the user that the account was succesfully created
+            createUserInfo.setTextFill(Paint.valueOf("green"));
+            createUserInfo.setFont(Font.font(12));
+            createUserInfo.setText(data.getResourceBundle().getString("accountCreatedInfo"));
         }
 
     }
 
     @FXML
-    private void deactivateUser(ActionEvent event
-    ) {
+    private void deactivateUser(ActionEvent event) {
         System.out.println("Gebruiker ge(de)activeerd.");
         if (deactivateUsername.getText() == null || deactivateUsername.getText().trim().isEmpty()) {
             deactivateUsername.clear();
@@ -254,10 +257,19 @@ public class AccountbeheerFXMLController implements Initializable {
         } else {
             String userToDeactivate = deactivateUsername.getText();
 
-            //TODO: Write SQL Query
+            String deactivateQuery = "UPDATE `luggagem`.`account` SET `active`='0' WHERE `Employee_code`='" + userToDeactivate +"';";
+            String activateQuery = "UPDATE `luggagem`.`account` SET `active`='1' WHERE `Employee_code`='" + userToDeactivate +"';";
+            String activeCheckQuery = "SELECT active FROM luggagem.account WHERE Employee_code = '" + userToDeactivate + "'";
+            
+            if (MainApp.myJDBC.executeStringQuery(activeCheckQuery).equals("1")) {
+                MainApp.myJDBC.executeUpdateQuery(deactivateQuery);
+            } else {
+                MainApp.myJDBC.executeUpdateQuery(activateQuery);
+            }
             deactivateUserInfo.setTextFill(Paint.valueOf("green"));
             deactivateUserInfo.setText(data.getResourceBundle().getString("accountDeactivatedInfo"));
         }
+        reloadTable();
     }
 
     private void getNextStaffID() {
@@ -270,18 +282,23 @@ public class AccountbeheerFXMLController implements Initializable {
     }
 
     private void setupTableView() {
-        try {
-            String query = "SELECT Employee_code,first_name,preposition,last_name,user_level,Luchthaven_IATA,active FROM luggagem.account,luggagem.employee;";
-            ResultSet result = MainApp.myJDBC.executeResultSetQuery(query);
-
-            for (int cnr = 0; cnr < TableViewUsers.getColumns().size(); cnr++) {
-                TableColumn tc = (TableColumn) TableViewUsers.getColumns().get(cnr);
-                String propertyName = tc.getId();
-                if (propertyName != null && !propertyName.isEmpty()) {
-                    tc.setCellValueFactory(new PropertyValueFactory<>(propertyName));
-                    System.out.printf("Attached column %s in tableview to matching attribute.", propertyName);
-                }
+        for (int cnr = 0; cnr < TableViewUsers.getColumns().size(); cnr++) {
+            TableColumn tc = (TableColumn) TableViewUsers.getColumns().get(cnr);
+            String propertyName = tc.getId();
+            if (propertyName != null && !propertyName.isEmpty()) {
+                tc.setCellValueFactory(new PropertyValueFactory<>(propertyName));
+                System.out.printf("Attached column %s in tableview to matching attribute.", propertyName);
             }
+        }
+        reloadTable();
+    }
+
+    public void reloadTable() {
+        try {
+            TableViewUsers.getItems().clear();
+            userTable.clear();
+            String query = "SELECT Employee_code,first_name,preposition,last_name,user_level,Luchthaven_IATA,active FROM luggagem.account JOIN luggagem.employee ON Employee_code = code;";
+            ResultSet result = MainApp.myJDBC.executeResultSetQuery(query);
 
             while (result.next()) {
                 String TBusername = result.getString("Employee_Code");
@@ -329,7 +346,6 @@ public class AccountbeheerFXMLController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(AccountbeheerFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @Override

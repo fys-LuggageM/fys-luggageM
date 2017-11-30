@@ -21,17 +21,11 @@ public class Users {
 
     public Users(String username, String firstName, String lastName, String airport, String active, String permissions) {
         this.username = username;
-        System.out.println(this.username);
         this.firstName = firstName;
-        System.out.println(this.firstName);
         this.lastName = lastName;
-        System.out.println(this.lastName);
         this.airport = airport;
-        System.out.println(this.airport);
         this.active = active;
-        System.out.println(this.active);
         this.permissions = permissions;
-        System.out.println(this.permissions);
     }
 
     public String getUsername() {
