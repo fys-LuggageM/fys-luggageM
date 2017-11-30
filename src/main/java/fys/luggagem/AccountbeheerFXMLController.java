@@ -118,7 +118,7 @@ public class AccountbeheerFXMLController implements Initializable {
 
     private ObservableList<String> Airports
             = FXCollections.observableArrayList(
-                    "AMS",
+                    "AMS"
             );
     @FXML
     private TableView TableViewUsers;
@@ -145,7 +145,6 @@ public class AccountbeheerFXMLController implements Initializable {
 
     @FXML
     private void resetPasswordAction(ActionEvent event) {
-        System.out.println("Wachtwoord gereset.");
         if ((resetUser.getText() == null || resetUser.getText().trim().isEmpty()) || (resetPassword.getText().trim().isEmpty())) {
             resetPasswordInfo.setTextFill(Paint.valueOf("d81e05"));
             resetPasswordInfo.setText(data.getResourceBundle().getString("passwordNotResetInfo"));
@@ -156,9 +155,9 @@ public class AccountbeheerFXMLController implements Initializable {
             String[] hashAndPass;
             hashAndPass = Encryptor.encrypt(newPassword);
 
-            String query = String.format("UPDATE `luggagem`.`staffmembers` "
+            String query = String.format("UPDATE `luggagem`.`account` "
                     + "SET `password`='%s', `salt`='%s' "
-                    + "WHERE `staffID`='%s';", hashAndPass[0], hashAndPass[1], userToReset);
+                    + "WHERE `Employee_code`='%s';", hashAndPass[0], hashAndPass[1], userToReset);
             MainApp.myJDBC.executeUpdateQuery(query);
 
             resetPasswordInfo.setTextFill(Paint.valueOf("green"));
@@ -230,6 +229,9 @@ public class AccountbeheerFXMLController implements Initializable {
             // Empty everything 
             createUserPassword.clear();
             createUserRealname.clear();
+            createUserBetweenName.clear();
+            createUserLastname.clear();
+            createUserEmail.clear();
 
             getNextStaffID();
 
