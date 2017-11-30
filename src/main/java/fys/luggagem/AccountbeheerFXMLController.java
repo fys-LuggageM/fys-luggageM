@@ -2,7 +2,13 @@ package fys.luggagem;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,6 +19,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
@@ -20,6 +28,21 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class AccountbeheerFXMLController implements Initializable {
 
@@ -96,25 +119,36 @@ public class AccountbeheerFXMLController implements Initializable {
     @FXML
     private Text searchLabel;
     @FXML
-    private TableColumn<?, ?> tableColumnUsername;
-    @FXML
-    private TableColumn<?, ?> tableColumnRealName;
-    @FXML
-    private TableColumn<?, ?> tableColumnPermissions;
-    @FXML
-    private TableColumn<?, ?> tableColumnActive;
-    @FXML
     private TextField createUserBetweenName;
     @FXML
     private TextField createUserLastname;
     @FXML
-    private ComboBox<?> airportBox;
+    private ComboBox<String> airportBox;
+
+    private ObservableList<Users> userTable = FXCollections.observableArrayList();
+    ;
 
     private ObservableList<String> Airports
             = FXCollections.observableArrayList(
                     "AMS",
                     "TRK"
             );
+    @FXML
+    private TableView TableViewUsers;
+    @FXML
+    private TableColumn<?, ?> username;
+    @FXML
+    private TableColumn<?, ?> firstName;
+    @FXML
+    private TableColumn<?, ?> preposition;
+    @FXML
+    private TableColumn<?, ?> lastName;
+    @FXML
+    private TableColumn<?, ?> airport;
+    @FXML
+    private TableColumn<?, ?> permissions;
+    @FXML
+    private TableColumn<?, ?> active;
 
     private void handleCloseAction(ActionEvent event) throws IOException {
         MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
@@ -157,27 +191,27 @@ public class AccountbeheerFXMLController implements Initializable {
             createUserInfo.setText(data.getResourceBundle().getString("accountNotCreatedInfo"));
         } else {
             // Store username, password, permissions and real name in variables.
-            String username = createUsername.getText();
-            String realName = createUserRealname.getText();
+            String createUserStringName = createUsername.getText();
+            String createUserStringRealName = createUserRealname.getText();
             if (createUserBetweenName.getText() != null || !createUserBetweenName.getText().trim().isEmpty()) {
                 String betweenName = createUserBetweenName.getText();
             }
-            String lastName = createUserLastname.getText();
+            String createUserStringLastName = createUserLastname.getText();
             String password = createUserPassword.getText();
-            String permissions;
+            String createUserStringPermissions;
 
             // Store universally named userPermissions
             RadioButton selectedPermissions = (RadioButton) accountButtons.getSelectedToggle();
             String un18perms = selectedPermissions.getId();
             switch (un18perms) {
                 case "roleEmployee":
-                    permissions = "Employee";
+                    createUserStringPermissions = "Employee";
                     break;
                 case "roleManager":
-                    permissions = "Manager";
+                    createUserStringPermissions = "Manager";
                     break;
                 case "roleAdmin":
-                    permissions = "Admin";
+                    createUserStringPermissions = "Admin";
                     break;
                 default:
                     createUserInfo.setText("Something went really wrong...");
@@ -187,14 +221,7 @@ public class AccountbeheerFXMLController implements Initializable {
             String[] hashAndPass;
             hashAndPass = Encryptor.encrypt(password);
 
-            //TODO: Write SQL query
-            String query = "INSERT INTO `luggagem`.`staffmembers` "
-                    + "(`staffID`, `firstName`, `lastName`, `email`, `password`, `salt`) "
-                    + "VALUES "
-                    + "('" + username + "', '" + realName + "', '" + permissions + "', '" + username + "', '" + hashAndPass[0] + "', '" + hashAndPass[1] + "');";
-            MainApp.myJDBC.executeUpdateQuery(query);
             // Confirm to the user that the account was succesfully created
-            System.out.println(query);
             createUserInfo.setTextFill(Paint.valueOf("green"));
             createUserInfo.setFont(Font.font(12));
             createUserInfo.setText(data.getResourceBundle().getString("accountCreatedInfo"));
@@ -229,11 +256,65 @@ public class AccountbeheerFXMLController implements Initializable {
 
     private void getNextStaffID() {
         // Get next staff ID
-        String query = "SELECT MAX(staffid)"
-                + "FROM staffmembers";
+        String query = "SELECT MAX(code)"
+                + "FROM employee";
         String result = MainApp.myJDBC.executeStringQuery(query);
         result = Integer.toString(Integer.parseInt(result) + 1);
         createUsername.setText(result);
+    }
+
+    private void setupTableView() {
+        try {
+            String query = "SELECT Employee_code,first_name,preposition,last_name,user_level,Luchthaven_IATA,active FROM luggagem.account,luggagem.employee;";
+            ResultSet result = MainApp.myJDBC.executeResultSetQuery(query);
+
+            while (result.next()) {
+                String TBusername = result.getString("Employee_Code");
+                String TBfirstName = result.getString("first_name");
+                String TBpreposition = null;
+                String TBlastName = result.getString("last_name");
+                int TBpermissions = result.getInt("user_level");
+                String TBIATA = result.getString("Luchthaven_IATA");
+                int TBactive = result.getInt("active");
+                String realPermissions;
+                String RealActive;
+                if (TBactive == 0) {
+                    RealActive = "Inactive";
+                } else {
+                    RealActive = "Active";
+                }
+                switch (TBpermissions) {
+                    case 0:
+                        realPermissions = "Employee";
+                        break;
+                    case 1:
+                        realPermissions = "Manager";
+                        break;
+                    case 2:
+                        realPermissions = "Admin";
+                        break;
+                    default:
+                        realPermissions = "Employee";
+                        break;
+                }
+
+                if (!result.getString("preposition").isEmpty() && result.getString("preposition") != null) {
+                    TBpreposition = result.getString("preposition");
+                }
+                Users storingUsers = new Users(TBusername, TBfirstName, TBlastName, TBIATA, RealActive, realPermissions);
+
+                if (TBpreposition != null && !TBpreposition.isEmpty()) {
+                    storingUsers.setPreposition(TBpreposition);
+                }
+                userTable.add(storingUsers);
+            }
+
+            TableViewUsers.setItems(userTable);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountbeheerFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     @Override
@@ -245,6 +326,7 @@ public class AccountbeheerFXMLController implements Initializable {
         roleEmployee.setSelected(true);
 
         getNextStaffID();
+        setupTableView();
 
         //
         airportBox.setItems(Airports);
