@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  *
@@ -89,6 +90,10 @@ public class FXMLDocumentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // Set application icon
+        // Get stage
+        // Add a custom icon
+        data.getStage().getIcons().add(new Image(this.getClass().getResource("/images/corendon_star_logo.png").toString()));
         username.setText("500500"); // ONLY FOR DEVELOPMENT BUILD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         password.setText("test");   // ONLY FOR DEVELOPMENT BUILD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if (data.getLanguage().equals("en") && data.getCountry().equals("US")) {
@@ -99,11 +104,7 @@ public class FXMLDocumentController implements Initializable {
             englishButton.setStyle("-fx-background-color: white");
         }
 
-        // Set application icon
-        // Get stage
-        Stage stage = (data.getStage());
-        // Add a custom icon
-        stage.getIcons().add(new Image(this.getClass().getResource("/images/corendon_star_logo.png").toString()));
+        
     }
     
     private void userCheck(String username, String password) throws IOException {

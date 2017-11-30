@@ -1,9 +1,14 @@
 package fys.luggagem;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.animation.PauseTransition;
@@ -21,11 +26,16 @@ import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BeschadigdeBagageController implements Initializable {
 
     private Data data = MainApp.getData();
     private String imageURL;
+    private MyJDBC db = MainApp.myJDBC;
 
     @FXML
     private ImageView image01;
@@ -141,6 +151,7 @@ public class BeschadigdeBagageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
     }
 
 }
