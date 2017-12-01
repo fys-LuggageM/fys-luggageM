@@ -259,10 +259,10 @@ public class AccountbeheerFXMLController implements Initializable {
         } else {
             String userToDeactivate = deactivateUsername.getText();
 
-            String deactivateQuery = "UPDATE `luggagem`.`account` SET `active`='0' WHERE `Employee_code`='" + userToDeactivate +"';";
-            String activateQuery = "UPDATE `luggagem`.`account` SET `active`='1' WHERE `Employee_code`='" + userToDeactivate +"';";
+            String deactivateQuery = "UPDATE `luggagem`.`account` SET `active`='0' WHERE `Employee_code`='" + userToDeactivate + "';";
+            String activateQuery = "UPDATE `luggagem`.`account` SET `active`='1' WHERE `Employee_code`='" + userToDeactivate + "';";
             String activeCheckQuery = "SELECT active FROM luggagem.account WHERE Employee_code = '" + userToDeactivate + "'";
-            
+
             if (MainApp.myJDBC.executeStringQuery(activeCheckQuery).equals("1")) {
                 MainApp.myJDBC.executeUpdateQuery(deactivateQuery);
             } else {
@@ -289,7 +289,7 @@ public class AccountbeheerFXMLController implements Initializable {
             String propertyName = tc.getId();
             if (propertyName != null && !propertyName.isEmpty()) {
                 tc.setCellValueFactory(new PropertyValueFactory<>(propertyName));
-                System.out.printf("Attached column %s in tableview to matching attribute.", propertyName);
+                System.out.printf("Attached column %s in tableview to matching attribute.\n", propertyName);
             }
         }
         reloadTable();
@@ -313,22 +313,22 @@ public class AccountbeheerFXMLController implements Initializable {
                 String realPermissions;
                 String RealActive;
                 if (TBactive == 0) {
-                    RealActive = "Inactive";
+                    RealActive = data.getResourceBundle().getString("inactive");
                 } else {
-                    RealActive = "Active";
+                    RealActive = data.getResourceBundle().getString("active");
                 }
                 switch (TBpermissions) {
                     case 0:
-                        realPermissions = "Employee";
+                        realPermissions = data.getResourceBundle().getString("deskEmployee");
                         break;
                     case 1:
-                        realPermissions = "Manager";
+                        realPermissions = data.getResourceBundle().getString("manager");
                         break;
                     case 2:
-                        realPermissions = "Admin";
+                        realPermissions = data.getResourceBundle().getString("admin");
                         break;
                     default:
-                        realPermissions = "Employee";
+                        realPermissions = "Invalid";
                         break;
                 }
 

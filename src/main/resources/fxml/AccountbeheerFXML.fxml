@@ -275,8 +275,8 @@
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="NEVER" />
+                  <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="163.0" minHeight="10.0" prefHeight="162.0" vgrow="NEVER" />
                </rowConstraints>
                <children>
                   <GridPane>
@@ -303,8 +303,8 @@
                         <TableColumn fx:id="preposition" editable="false" prefWidth="75.0" text="%betweenName" />
                         <TableColumn fx:id="lastName" editable="false" prefWidth="75.0" text="%lastName" />
                         <TableColumn fx:id="airport" editable="false" prefWidth="75.0" text="%airport" />
-                        <TableColumn fx:id="permissions" editable="false" prefWidth="75.0" text="%permissions" />
-                        <TableColumn fx:id="active" editable="false" prefWidth="75.0" text="%active" />
+                        <TableColumn fx:id="permissions" editable="false" prefWidth="100.0" text="%permissions" />
+                        <TableColumn fx:id="active" editable="false" prefWidth="71.0" text="%active" />
                      </columns></TableView>
                </children>
             </GridPane>
