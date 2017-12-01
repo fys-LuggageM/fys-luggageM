@@ -324,4 +324,8 @@ public class MyJDBC {
     public String getErrorMessage() {
         return errorMessage;
     }
+    
+    public Connection getConnection(){
+        return connection;
+    }
 }
