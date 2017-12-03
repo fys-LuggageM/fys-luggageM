@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.PauseTransition;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,7 +24,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
@@ -35,6 +39,7 @@ public class BeschadigdeBagageController implements Initializable {
     private Data data = MainApp.getData();
 
     //To store the image URL's as strings
+    private String placeholderURL;
     private String imageURL;
     private URI imageURL01;
     private URI imageURL02;
@@ -45,7 +50,23 @@ public class BeschadigdeBagageController implements Initializable {
 
     private MyJDBC db = MainApp.myJDBC;
 
-    public static int imageIdCounter = 4;
+    @FXML
+    private TextField luggageType;
+
+    @FXML
+    private TextField luggageBrand;
+
+    @FXML
+    private TextField primaryColor;
+
+    @FXML
+    private TextField secondaryColor;
+
+    @FXML
+    private TextArea notes;
+
+    @FXML
+    private ComboBox comboBox;
 
     @FXML
     private ImageView image01;
@@ -132,7 +153,7 @@ public class BeschadigdeBagageController implements Initializable {
         String selectMaxRegNR = "SELECT MAX(registrationnr) FROM luggage";
 
         // insert query to create new registrationNr
-        String insertNewRegNR = "INSERT INTO luggage (registrationnr) VALUES (?)";
+        String insertNewRegNR = "INSERT INTO luggage (registrationnr, case_type) VALUES (?, 3)";
 //        String INSERT_PICTURE = "insert into test(id, image01, image02, image03) values (?, ?, ?, ?)";
 
         // prepared statement
@@ -257,7 +278,20 @@ public class BeschadigdeBagageController implements Initializable {
                     }
                 }
             });
-            // start the pause timer
+            // clear all input field and set placeholder for images
+            placeholderURL = this.getClass().getResource("/images/placeholder-600x400.png").toString();
+            Image placeholder = new Image(placeholderURL);
+
+            luggageType.clear();
+            luggageBrand.clear();
+            primaryColor.clear();
+            secondaryColor.clear();
+            notes.clear();
+            image01.setImage(placeholder);
+            image02.setImage(placeholder);
+            image03.setImage(placeholder);
+
+            // start the pause timer    
             pause.play();
         } else {
             // ... user chose CANCEL or closed the dialog
@@ -266,6 +300,19 @@ public class BeschadigdeBagageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    }
+        // add items to combobox and set pre selection to"AMS"
+        comboBox.getItems().addAll("AMS (Amsterdam Schiphol Airport)", "RTM (Rotterdam The Hague Airport)");
+        comboBox.getSelectionModel().select("AMS (Amsterdam Schiphol Airport");
 
+        // booleanbinding to check if textfields are empty
+        // if so, disable the save button to prevent accidental uploads to the database
+        BooleanBinding bb = luggageType.textProperty().isEmpty()
+                .or(luggageBrand.textProperty().isEmpty())
+                .or(primaryColor.textProperty().isEmpty())
+                .or(secondaryColor.textProperty().isEmpty())
+                .or(notes.textProperty().isEmpty());
+
+        saveImages.disableProperty().bind(bb);
+
+    }
 }
