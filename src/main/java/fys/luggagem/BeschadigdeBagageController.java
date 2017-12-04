@@ -7,15 +7,15 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.PauseTransition;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -24,7 +24,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
@@ -36,14 +39,34 @@ public class BeschadigdeBagageController implements Initializable {
     private Data data = MainApp.getData();
 
     //To store the image URL's as strings
+    private String placeholderURL;
     private String imageURL;
     private URI imageURL01;
     private URI imageURL02;
     private URI imageURL03;
-    
+
+    //Will store the new/highest registrationNr
+    private int registrationNr;
+
     private MyJDBC db = MainApp.myJDBC;
 
-    public static int imageIdCounter = 4;
+    @FXML
+    private TextField luggageType;
+
+    @FXML
+    private TextField luggageBrand;
+
+    @FXML
+    private TextField primaryColor;
+
+    @FXML
+    private TextField secondaryColor;
+
+    @FXML
+    private TextArea notes;
+
+    @FXML
+    private ComboBox comboBox;
 
     @FXML
     private ImageView image01;
@@ -78,7 +101,7 @@ public class BeschadigdeBagageController implements Initializable {
         if (file != null) {
             imageURL = file.toURI().toURL().toString();
             imageURL01 = file.toURI();
-            
+
             Image image = new Image(imageURL, 308, 205, false, false);
             image01.setImage(image);
         }
@@ -122,13 +145,60 @@ public class BeschadigdeBagageController implements Initializable {
         }
     }
 
-    // Method to insert the selected images
-    private void uploadImageQuery(ActionEvent event) throws IOException, SQLException {
-//        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/luggagem", "root", "");
+    // Create new unique registrationnr
+    private void newRegistrationNr(ActionEvent event) throws SQLException {
         Connection conn = db.getConnection();
 
-        // Query
-        String INSERT_PICTURE = "insert into test(id, image01, image02, image03) values (?, ?, ?, ?)";
+        // select query for max registationNr
+        String selectMaxRegNR = "SELECT MAX(registrationnr) FROM luggage";
+
+        // insert query to create new registrationNr
+        String insertNewRegNR = "INSERT INTO luggage (registrationnr, case_type) VALUES (?, 3)";
+//        String INSERT_PICTURE = "insert into test(id, image01, image02, image03) values (?, ?, ?, ?)";
+
+        // prepared statement
+        PreparedStatement ps = null;
+        try {
+            // set autocommit false
+            conn.setAutoCommit(false);
+
+            // add query to prepared statement
+            ps = conn.prepareStatement(selectMaxRegNR);
+
+            // execute prepared statement
+            ResultSet result = ps.executeQuery();
+
+            // get results from the query
+            if (result.next()) {
+                registrationNr = result.getInt(1);
+
+                // increment registrationNr by 1 for a new registrationNr
+                registrationNr++;
+
+                try {
+                    // execute insert query for new registrationNr
+                    // TODO: INSERT more luggage details    
+                    PreparedStatement ps02 = null;
+                    ps02 = conn.prepareStatement(insertNewRegNR);
+                    ps02.setInt(1, registrationNr);
+                    ps02.executeUpdate();
+                    conn.commit();
+                } finally {
+                }
+
+            }
+        } finally {
+            System.out.print(registrationNr);
+
+        }
+    }
+
+    // Method to insert the selected images
+    private void uploadImageQuery(ActionEvent event) throws IOException, SQLException {
+        Connection conn = db.getConnection();
+
+        // insert query for images
+        String INSERT_PICTURE = "INSERT luggage_damaged (image01, image02, image03, Luggage_registrationnr) values (?, ?, ?, ?)";
 
         FileInputStream fis01 = null;
         FileInputStream fis02 = null;
@@ -153,10 +223,10 @@ public class BeschadigdeBagageController implements Initializable {
 
             //preparedstatement
             ps = conn.prepareStatement(INSERT_PICTURE);
-            ps.setInt(1, 8);
-            ps.setBinaryStream(2, fis01, (int) file01.length());
-            ps.setBinaryStream(3, fis02, (int) file02.length());
-            ps.setBinaryStream(4, fis03, (int) file03.length());
+            ps.setBinaryStream(1, fis01, (int) file01.length());
+            ps.setBinaryStream(2, fis02, (int) file02.length());
+            ps.setBinaryStream(3, fis03, (int) file03.length());
+            ps.setInt(4, registrationNr);
             ps.executeUpdate();
 
             conn.commit();
@@ -193,17 +263,36 @@ public class BeschadigdeBagageController implements Initializable {
                     savedConfirmation.setVisible(false);
                     saveImages.setVisible(true);
                     saveImages.setDisable(true);
+
                     try {
-                        uploadImageQuery(event);
-                    } catch (IOException ex) {
-                        Logger.getLogger(BeschadigdeBagageController.class.getName()).log(Level.SEVERE, null, ex);
+                        // create new registrationnr
+                        newRegistrationNr(event);
                     } catch (SQLException ex) {
+                        Logger.getLogger(BeschadigdeBagageController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                        // upload selected images
+                        uploadImageQuery(event);
+                    } catch (IOException | SQLException ex) {
                         Logger.getLogger(BeschadigdeBagageController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             });
+            // clear all input field and set placeholder for images
+            placeholderURL = this.getClass().getResource("/images/placeholder-600x400.png").toString();
+            Image placeholder = new Image(placeholderURL);
+
+            luggageType.clear();
+            luggageBrand.clear();
+            primaryColor.clear();
+            secondaryColor.clear();
+            notes.clear();
+            image01.setImage(placeholder);
+            image02.setImage(placeholder);
+            image03.setImage(placeholder);
+
+            // start the pause timer    
             pause.play();
-            //ToDo: INSERT input fields + images INTO database
         } else {
             // ... user chose CANCEL or closed the dialog
         }
@@ -211,6 +300,19 @@ public class BeschadigdeBagageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    }
+        // add items to combobox and set pre selection to"AMS"
+        comboBox.getItems().addAll("AMS (Amsterdam Schiphol Airport)", "RTM (Rotterdam The Hague Airport)");
+        comboBox.getSelectionModel().select("AMS (Amsterdam Schiphol Airport");
 
+        // booleanbinding to check if textfields are empty
+        // if so, disable the save button to prevent accidental uploads to the database
+        BooleanBinding bb = luggageType.textProperty().isEmpty()
+                .or(luggageBrand.textProperty().isEmpty())
+                .or(primaryColor.textProperty().isEmpty())
+                .or(secondaryColor.textProperty().isEmpty())
+                .or(notes.textProperty().isEmpty());
+
+        saveImages.disableProperty().bind(bb);
+
+    }
 }

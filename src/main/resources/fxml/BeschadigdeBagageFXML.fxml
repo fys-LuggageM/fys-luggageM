@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" maxHeight="600.0" maxWidth="800.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.luggagem.BeschadigdeBagageController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" maxHeight="600.0" maxWidth="800.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.luggagem.BeschadigdeBagageController">
    <children>
       <GridPane hgap="10.0" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -36,46 +36,31 @@
          <children>
             <VBox prefHeight="666.0" prefWidth="408.0" GridPane.columnIndex="2">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" wrappingWidth="262.7337703704834" VBox.vgrow="ALWAYS">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Text>
-                  <DatePicker prefHeight="25.0" prefWidth="262.0">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </DatePicker>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Time:" wrappingWidth="261.20998191833496">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="15.0" />
-                     </VBox.margin>
-                  </Text>
-                  <TextField maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                  </TextField>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Airport" wrappingWidth="261.20998191833496">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="15.0" />
-                     </VBox.margin>
-                  </Text>
-                  <TextField maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                  </TextField>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Luggage type" wrappingWidth="261.20998191833496">
+                  <HBox prefHeight="23.0" prefWidth="262.0">
+                     <children>
+                        <Label maxWidth="161.0" prefHeight="25.0" prefWidth="161.0" text="%customer" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="25.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label maxWidth="154.0" prefHeight="25.0" prefWidth="154.0" text="%newCustomer" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="29.0" prefWidth="262.0">
+                     <children>
+                        <Button maxWidth="131.0" mnemonicParsing="false" text="Button" HBox.hgrow="ALWAYS" />
+                        <Label maxWidth="25.0" HBox.hgrow="ALWAYS" />
+                        <Button maxWidth="131.0" mnemonicParsing="false" text="Button" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%airport" wrappingWidth="261.20998191833496">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -83,12 +68,21 @@
                         <Insets top="15.0" />
                      </VBox.margin>
                   </Text>
-                  <TextField maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
+                  <ComboBox fx:id="comboBox" prefHeight="25.0" prefWidth="282.0" promptText="Choose Airport" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%luggageType" wrappingWidth="261.20998191833496">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Text>
+                  <TextField fx:id="luggageType" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </TextField>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Luggage brand:" wrappingWidth="261.20998191833496">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%luggageBrand" wrappingWidth="261.20998191833496">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -96,12 +90,12 @@
                         <Insets top="15.0" />
                      </VBox.margin>
                   </Text>
-                  <TextField maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
+                  <TextField fx:id="luggageBrand" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </TextField>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Luggage color:" wrappingWidth="261.20998191833496">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%primaryColor" wrappingWidth="261.20998191833496">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -109,12 +103,22 @@
                         <Insets top="15.0" />
                      </VBox.margin>
                   </Text>
-                  <TextField maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
+                  <TextField fx:id="primaryColor" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </TextField>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Notes:" wrappingWidth="261.20998191833496">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%secondaryColor" wrappingWidth="261.20998191833496">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="secondaryColor" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%notes" wrappingWidth="261.20998191833496">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -122,7 +126,7 @@
                         <Insets top="15.0" />
                      </VBox.margin>
                   </Text>
-                  <TextArea prefHeight="243.0" prefWidth="263.0">
+                  <TextArea fx:id="notes" prefHeight="302.0" prefWidth="262.0">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -140,7 +144,7 @@
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                <children>
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadImage01" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="Photo 1" VBox.vgrow="ALWAYS">
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadImage01" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="%photo01" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets top="6.0" />
                      </VBox.margin>
@@ -151,7 +155,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadImage02" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="Photo 2">
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadImage02" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="%photo02">
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin>
@@ -162,7 +166,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadImage03" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="Photo 3">
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadImage03" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="%photo03">
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin>
@@ -173,17 +177,15 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <VBox maxHeight="1.7976931348623157E308" prefHeight="350.0" prefWidth="100.0">
-                     <children>
-                     </children></VBox>
+                  <VBox maxHeight="1.7976931348623157E308" prefHeight="350.0" prefWidth="100.0" />
                   <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <Label fx:id="savedConfirmation" alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #5cb85c; -fx-text-fill: #f9f9f9;" text="Succesful" textAlignment="CENTER" visible="false">
+                        <Label fx:id="savedConfirmation" alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #5cb85c; -fx-text-fill: #f9f9f9;" text="%succesful" textAlignment="CENTER" visible="false">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Button fx:id="saveImages" mnemonicParsing="false" onAction="#saveToDatabase" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #d9534f; -fx-text-fill: white;" text="Save">
+                        <Button fx:id="saveImages" mnemonicParsing="false" onAction="#saveToDatabase" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #d9534f; -fx-text-fill: white;" text="%save">
                            <font>
                               <Font size="18.0" />
                            </font>
