@@ -12,11 +12,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -30,7 +32,9 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -194,9 +198,9 @@ public class RapportageController implements Initializable {
         if (pieChartData == null) {
             exportLabel.setText(exportNoSelection);
 
+        } else {
+            createChartImage();
         }
-        
-        
 //else {
 //
 //            Alert alertPdf = new Alert(Alert.AlertType.CONFIRMATION);
@@ -216,21 +220,17 @@ public class RapportageController implements Initializable {
 //            } else {
 //                exportLabel.setText(exportCancel);
 //            }
-        
-        }
+    }
 
-        @FXML
-        private void handleCloseAction
-        (ActionEvent event) throws IOException {
-            MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
-        }
-
-    
+    @FXML
+    private void handleCloseAction(ActionEvent event) throws IOException {
+        MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
+    }
 
     private void comboBoxController() {
 
         try {
-            resultSet = db.executeResultSetQuery("SELECT YEAR(date), COUNT(*) c FROM airport GROUP BY YEAR(date) HAVING c > 0");
+            resultSet = db.executeResultSetQuery("SELECT YEAR(date), COUNT(*) c FROM luggage GROUP BY YEAR(date) HAVING c > 0");
 
             while (resultSet.next()) {
                 year = resultSet.getString("YEAR(date)");
@@ -244,7 +244,7 @@ public class RapportageController implements Initializable {
         }
 
         try {
-            resultSet = db.executeResultSetQuery("SELECT MONTH(date), COUNT(*) c FROM airport GROUP BY MONTH(date) HAVING c > 0");
+            resultSet = db.executeResultSetQuery("SELECT MONTH(date), COUNT(*) c FROM luggage GROUP BY MONTH(date) HAVING c > 0");
 
             comboMonth.getItems().add(
                     null
@@ -276,7 +276,7 @@ public class RapportageController implements Initializable {
         pieChartData = FXCollections.observableArrayList();
 
         try {
-            //not null block
+           
             if (comboYear.getValue() != null) {
                 resultSet = db.executeResultSetQuery("SELECT name, timezone FROM airport where YEAR(date) ="
                         + comboYear.getValue());
@@ -424,6 +424,28 @@ public class RapportageController implements Initializable {
 
         } catch (SQLException ex) {
             Logger.getLogger(RapportageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void createChartImage() throws IOException {
+        if (tabVerloren.isSelected()) {
+            WritableImage image = verlorenAnchorPane.snapshot(new SnapshotParameters(), null);
+
+            File file = MainApp.selectFileToSave("*.png");
+
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+        } else if (tabGevonden.isSelected()) {
+            WritableImage image = gevondenAnchorPane.snapshot(new SnapshotParameters(), null);
+
+            File file = MainApp.selectFileToSave("*.png");
+
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+        } else if (tabBeschadigde.isSelected()) {
+            WritableImage image = beschadigdeAnchorPane.snapshot(new SnapshotParameters(), null);
+
+            File file = MainApp.selectFileToSave("*.png");
+
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
         }
     }
 
