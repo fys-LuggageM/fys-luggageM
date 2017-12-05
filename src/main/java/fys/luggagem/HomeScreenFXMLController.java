@@ -1,5 +1,6 @@
 package fys.luggagem;
 
+import fys.luggagem.models.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -34,12 +35,12 @@ public class HomeScreenFXMLController implements Initializable {
 
     @FXML
     private void handleGebruikersbeheerAction(ActionEvent event) throws IOException {
-        loadFXMLFile(this.getClass().getResource("/fxml/AccountbeheerFXML.fxml"));
+        MainApp.loadFXMLFile(this.getClass().getResource("/fxml/AccountbeheerFXML.fxml"));
     }
 
     @FXML
     private void handleBeschadigdeBagageAction(ActionEvent event) throws IOException {
-        loadFXMLFile(this.getClass().getResource("/fxml/BeschadigdeBagageFXML.fxml"));
+        MainApp.loadFXMLFile(this.getClass().getResource("/fxml/BeschadigdeBagageFXML.fxml"));
     }
 
     @FXML
@@ -54,34 +55,23 @@ public class HomeScreenFXMLController implements Initializable {
 
     @FXML
     private void handleVerlorenBagageAction(ActionEvent event) throws IOException {
-        loadFXMLFile(this.getClass().getResource("/fxml/VerlorenBagageFXML.fxml"));
+        MainApp.loadFXMLFile(this.getClass().getResource("/fxml/VerlorenBagageFXML.fxml"));
     }
 
     @FXML
     private void handleHomeAction(ActionEvent event) {
-        loadFXMLFile(this.getClass().getResource("/fxml/HomeScreenContentFXML.fxml"));
+        MainApp.loadFXMLFile(this.getClass().getResource("/fxml/HomeScreenContentFXML.fxml"));
     }
 
     @FXML
     private void handleGevondenBagageAction(ActionEvent event) throws IOException {
-        loadFXMLFile(this.getClass().getResource("/fxml/GevondenBagageFXML.fxml"));
+        MainApp.loadFXMLFile(this.getClass().getResource("/fxml/GevondenBagageFXML.fxml"));
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loadFXMLFile(this.getClass().getResource("/fxml/HomeScreenContentFXML.fxml"));
+        data.setWorkspace(workspace);
+        MainApp.loadFXMLFile(this.getClass().getResource("/fxml/HomeScreenContentFXML.fxml"));
         nameLabel.setText(data.getName());
-    }
-
-    private void loadFXMLFile(URL fxmlFileName) {
-        try {
-            FXMLLoader loader = new FXMLLoader(fxmlFileName);
-            loader.setResources(data.getResourceBundle());
-            Parent root = (Parent) loader.load();
-            workspace.getChildren().clear();
-            workspace.getChildren().add(root);
-        } catch (IOException ex) {
-            System.out.println(ex.getClass().getName() + ": " + ex.getMessage());
-        }
     }
 }

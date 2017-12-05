@@ -1,5 +1,6 @@
 package fys.luggagem;
 
+import fys.luggagem.models.Data;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -145,53 +146,7 @@ public class BeschadigdeBagageController implements Initializable {
         }
     }
 
-    // Create new unique registrationnr
-    private void newRegistrationNr(ActionEvent event) throws SQLException {
-        Connection conn = db.getConnection();
 
-        // select query for max registationNr
-        String selectMaxRegNR = "SELECT MAX(registrationnr) FROM luggage";
-
-        // insert query to create new registrationNr
-        String insertNewRegNR = "INSERT INTO luggage (registrationnr, case_type) VALUES (?, 3)";
-//        String INSERT_PICTURE = "insert into test(id, image01, image02, image03) values (?, ?, ?, ?)";
-
-        // prepared statement
-        PreparedStatement ps = null;
-        try {
-            // set autocommit false
-            conn.setAutoCommit(false);
-
-            // add query to prepared statement
-            ps = conn.prepareStatement(selectMaxRegNR);
-
-            // execute prepared statement
-            ResultSet result = ps.executeQuery();
-
-            // get results from the query
-            if (result.next()) {
-                registrationNr = result.getInt(1);
-
-                // increment registrationNr by 1 for a new registrationNr
-                registrationNr++;
-
-                try {
-                    // execute insert query for new registrationNr
-                    // TODO: INSERT more luggage details    
-                    PreparedStatement ps02 = null;
-                    ps02 = conn.prepareStatement(insertNewRegNR);
-                    ps02.setInt(1, registrationNr);
-                    ps02.executeUpdate();
-                    conn.commit();
-                } finally {
-                }
-
-            }
-        } finally {
-            System.out.print(registrationNr);
-
-        }
-    }
 
     // Method to insert the selected images
     private void uploadImageQuery(ActionEvent event) throws IOException, SQLException {
@@ -226,7 +181,7 @@ public class BeschadigdeBagageController implements Initializable {
             ps.setBinaryStream(1, fis01, (int) file01.length());
             ps.setBinaryStream(2, fis02, (int) file02.length());
             ps.setBinaryStream(3, fis03, (int) file03.length());
-            ps.setInt(4, registrationNr);
+            ps.setInt(4, db.getRegNrDamaged());
             ps.executeUpdate();
 
             conn.commit();
@@ -239,7 +194,7 @@ public class BeschadigdeBagageController implements Initializable {
     public void saveToDatabase(ActionEvent event) {
         // Image inside alert dialog resized to 65x50
         imageURL = this.getClass().getResource("/images/upload_button02.png").toString();
-        Image image = new Image(imageURL, 100, 100, false, true);
+        Image image = new Image(imageURL, 64, 64, false, true);
 
         //Create new alert dialog
         Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -262,11 +217,10 @@ public class BeschadigdeBagageController implements Initializable {
                 public void handle(ActionEvent event) {
                     savedConfirmation.setVisible(false);
                     saveImages.setVisible(true);
-                    saveImages.setDisable(true);
 
                     try {
                         // create new registrationnr
-                        newRegistrationNr(event);
+                        db.newRegnrDamagedLuggage();
                     } catch (SQLException ex) {
                         Logger.getLogger(BeschadigdeBagageController.class.getName()).log(Level.SEVERE, null, ex);
                     }
