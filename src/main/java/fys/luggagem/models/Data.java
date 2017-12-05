@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fys.luggagem;
+package fys.luggagem.models;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -23,6 +24,7 @@ public class Data {
     private Locale locale;
     private ResourceBundle resource;
     private Stage stage;
+    private StackPane workspace;
     
     public Data() {
         language = "en";
@@ -79,4 +81,13 @@ public class Data {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
+
+    public StackPane getWorkspace() {
+        return workspace;
+    }
+
+    public void setWorkspace(StackPane workspace) {
+        this.workspace = workspace;
+    }
+    
 }
