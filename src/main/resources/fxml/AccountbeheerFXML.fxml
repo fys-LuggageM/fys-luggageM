@@ -98,29 +98,18 @@
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <TextField fx:id="createUsername" disable="true" editable="false" prefHeight="25.0" prefWidth="617.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                  </TextField>
-                  <Label fx:id="createUsernameLabel" text="%username" GridPane.rowIndex="1">
+                  <Label fx:id="createUserRealNameLabel" text="%realName" GridPane.rowIndex="1">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="createUserRealNameLabel" text="%realName" GridPane.rowIndex="2">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <HBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
                         <TextField fx:id="createUserRealname" prefHeight="25.0" prefWidth="672.0" promptText="%firstName">
                            <cursor>
@@ -146,7 +135,7 @@
                         <Font size="32.0" />
                      </font>
                   </Text>
-                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.rowIndex="5">
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.rowIndex="4">
                      <children>
                         <RadioButton fx:id="roleAdmin" mnemonicParsing="false" style="-fx-selected-color: d81e05;" text="%admin">
                            <font>
@@ -165,12 +154,12 @@
                         </RadioButton>
                      </children>
                   </HBox>
-                  <TextField fx:id="createUserPassword" prefHeight="25.0" prefWidth="617.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <TextField fx:id="createUserPassword" prefHeight="25.0" prefWidth="617.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </TextField>
-                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -191,12 +180,12 @@
                         </Button>
                      </children>
                   </GridPane>
-                  <Label fx:id="createUserPasswordLabel" text="%password" GridPane.rowIndex="3">
+                  <Label fx:id="createUserPasswordLabel" text="%password" GridPane.rowIndex="2">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <HBox GridPane.rowIndex="4">
+                  <HBox GridPane.rowIndex="3">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%airport">
                            <font>
@@ -210,7 +199,7 @@
                         </ComboBox>
                      </children>
                   </HBox>
-                  <HBox GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <HBox GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
                         <TextField fx:id="createUserEmail" prefHeight="25.0" prefWidth="490.0" promptText="%email">
                            <HBox.margin>
@@ -275,8 +264,8 @@
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="NEVER" />
+                  <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="163.0" minHeight="10.0" prefHeight="162.0" vgrow="NEVER" />
                </rowConstraints>
                <children>
                   <GridPane>
@@ -288,7 +277,7 @@
                         <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <TextField GridPane.columnIndex="1">
+                        <TextField fx:id="searchField" GridPane.columnIndex="1">
                            <cursor>
                               <Cursor fx:constant="TEXT" />
                            </cursor>
@@ -303,8 +292,8 @@
                         <TableColumn fx:id="preposition" editable="false" prefWidth="75.0" text="%betweenName" />
                         <TableColumn fx:id="lastName" editable="false" prefWidth="75.0" text="%lastName" />
                         <TableColumn fx:id="airport" editable="false" prefWidth="75.0" text="%airport" />
-                        <TableColumn fx:id="permissions" editable="false" prefWidth="75.0" text="%permissions" />
-                        <TableColumn fx:id="active" editable="false" prefWidth="75.0" text="%active" />
+                        <TableColumn fx:id="permissions" editable="false" prefWidth="100.0" text="%permissions" />
+                        <TableColumn fx:id="active" editable="false" prefWidth="71.0" text="%active" />
                      </columns></TableView>
                </children>
             </GridPane>

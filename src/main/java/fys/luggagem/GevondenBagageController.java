@@ -1,6 +1,7 @@
 package fys.luggagem;
 
 import java.io.File;
+import fys.luggagem.models.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;

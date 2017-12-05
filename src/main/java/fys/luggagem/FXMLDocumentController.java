@@ -1,5 +1,6 @@
 package fys.luggagem;
 
+import fys.luggagem.models.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -14,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 /**
  *
@@ -102,9 +102,8 @@ public class FXMLDocumentController implements Initializable {
 
         // Set application icon
         // Get stage
-        Stage stage = (data.getStage());
         // Add a custom icon
-        stage.getIcons().add(new Image(this.getClass().getResource("/images/corendon_star_logo.png").toString()));
+        data.getStage().getIcons().add(new Image(this.getClass().getResource("/images/corendon_star_logo.png").toString()));
     }
     
     private void userCheck(String username, String password) throws IOException {

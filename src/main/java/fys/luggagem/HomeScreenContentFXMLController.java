@@ -1,5 +1,6 @@
 package fys.luggagem;
 
+import fys.luggagem.models.Data;
 import java.awt.event.ActionListener;
 import java.net.URL;
 import java.text.SimpleDateFormat;

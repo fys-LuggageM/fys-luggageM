@@ -1,6 +1,8 @@
 package fys.luggagem;
 
 import com.sun.rowset.internal.Row;
+import fys.luggagem.models.Customer;
+import fys.luggagem.models.Data;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -21,6 +24,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class MainApp extends Application {
 
     static MyJDBC myJDBC;
+    static Customer customer = new Customer();
     static Data data = new Data();
     Scene window;
 
@@ -77,8 +81,24 @@ public class MainApp extends Application {
         }
         data.getScene().setRoot(root);
     }
+    
+    public static void loadFXMLFile(URL fxmlFileName) {
+        try {
+            FXMLLoader loader = new FXMLLoader(fxmlFileName);
+            loader.setResources(data.getResourceBundle());
+            Parent root = (Parent) loader.load();
+            data.getWorkspace().getChildren().clear();
+            data.getWorkspace().getChildren().add(root);
+        } catch (IOException ex) {
+            System.out.println(ex.getClass().getName() + ": " + ex.getMessage());
+        }
+    }
 
     public static Data getData() {
         return data;
+    }
+    
+    public static Customer getCustomer() {
+        return customer;
     }
 }
