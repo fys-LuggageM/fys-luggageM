@@ -1,8 +1,11 @@
 package fys.luggagem;
 
+import com.sun.rowset.internal.Row;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Iterator;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +13,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class MainApp extends Application {
 
@@ -42,6 +48,18 @@ public class MainApp extends Application {
         }
         return null;
     }
+
+     public static File selectFileToRead(String xlsx){
+         Stage stage = new Stage();
+         FileChooser filechooser = new FileChooser();
+         filechooser.setTitle("Select file to read");
+         filechooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel", "*.xlsx"));
+         File selectedFile = filechooser.showOpenDialog(stage);
+         if(selectedFile != null){
+             return selectedFile;
+         }
+         return null;
+     }
 
     public static void setScene(URL location) throws IOException {
         FXMLLoader loader = new FXMLLoader(location);

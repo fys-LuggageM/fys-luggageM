@@ -170,7 +170,7 @@ DROP TABLE IF EXISTS `luggage`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `luggage` (
   `registrationnr` int(11) NOT NULL,
-  `date` varchar(45) DEFAULT NULL,
+  `date` date NOT NULL,
   `time` varchar(45) DEFAULT NULL,
   `flightnr` varchar(45) DEFAULT NULL,
   `labelnr` varchar(45) DEFAULT NULL,

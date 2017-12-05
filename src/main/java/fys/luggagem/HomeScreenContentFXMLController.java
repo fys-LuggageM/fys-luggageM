@@ -21,16 +21,16 @@ public class HomeScreenContentFXMLController implements Initializable {
 
     Data data = MainApp.getData();
     Timer t;
-    
+
     @FXML
     private Label timeLabel;
-    
+
     @FXML
     private Label greetingLabel;
-    
+
     @FXML
     private Label dateLabel;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         t = new Timer(1000, new ActionListener() {
@@ -62,7 +62,7 @@ public class HomeScreenContentFXMLController implements Initializable {
         });
         t.start();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        dateLabel.setText(dateFormat.format(new Date())); 
-    }    
-    
+        dateLabel.setText(dateFormat.format(new Date()));
+    }
+
 }
