@@ -30,7 +30,7 @@ public class PDFExport {
         content.setFont(PDType1Font.HELVETICA, 14);
         content.newLineAtOffset(100, 675);
         String test = "Pdf Exporter Test";
-        content.drawString(test);
+        content.showText(test);
         content.endText();
 
         content.setStrokingColor(Color.black);
