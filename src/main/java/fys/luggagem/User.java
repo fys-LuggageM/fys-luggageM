@@ -9,7 +9,7 @@ package fys.luggagem;
  *
  * @author ev1l0rd
  */
-public class Users {
+public class User {
 
     private String username;
     private String firstName;
@@ -19,7 +19,7 @@ public class Users {
     private String active;
     private String permissions;
 
-    public Users(String username, String firstName, String lastName, String airport, String active, String permissions) {
+    public User(String username, String firstName, String lastName, String airport, String active, String permissions) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;

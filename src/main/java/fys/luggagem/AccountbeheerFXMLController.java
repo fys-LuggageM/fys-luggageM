@@ -15,9 +15,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
@@ -26,11 +23,17 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import java.sql.ResultSet;
+import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class AccountbeheerFXMLController implements Initializable {
 
@@ -45,7 +48,6 @@ public class AccountbeheerFXMLController implements Initializable {
     @FXML
     private Label resetPasswordInfo;
 
-    @FXML
     private TextField createUsername;
 
     @FXML
@@ -89,8 +91,6 @@ public class AccountbeheerFXMLController implements Initializable {
     @FXML
     private Button resetPasswordButton;
     @FXML
-    private Label createUsernameLabel;
-    @FXML
     private Label createUserRealNameLabel;
     @FXML
     private Button createAccountButton;
@@ -113,8 +113,7 @@ public class AccountbeheerFXMLController implements Initializable {
     @FXML
     private ComboBox<String> airportBox;
 
-    private ObservableList<Users> userTable = FXCollections.observableArrayList();
-    ;
+    private ObservableList<User> userTable = FXCollections.observableArrayList();
 
     private ObservableList<String> Airports
             = FXCollections.observableArrayList(
@@ -155,7 +154,7 @@ public class AccountbeheerFXMLController implements Initializable {
             String[] hashAndPass;
             hashAndPass = Encryptor.encrypt(newPassword);
 
-            String query = String.format("UPDATE `luggagem`.`account` "
+            String query = String.format("UPDATE `account` "
                     + "SET `password`='%s', `salt`='%s' "
                     + "WHERE `Employee_code`='%s';", hashAndPass[0], hashAndPass[1], userToReset);
             MainApp.myJDBC.executeUpdateQuery(query);
@@ -170,7 +169,6 @@ public class AccountbeheerFXMLController implements Initializable {
     @FXML
     private void createAccount(ActionEvent event) {
         if ((createUserPassword.getText() == null || createUserPassword.getText().trim().isEmpty())
-                || (createUsername.getText() == null || createUsername.getText().trim().isEmpty())
                 || (createUserRealname.getText() == null || createUserRealname.getText().trim().isEmpty())
                 || (createUserLastname.getText() == null || createUserLastname.getText().trim().isEmpty())
                 || (createUserEmail.getText() == null || createUserEmail.getText().trim().isEmpty())
@@ -179,7 +177,6 @@ public class AccountbeheerFXMLController implements Initializable {
             createUserInfo.setFont(Font.font(10));
             createUserInfo.setText(data.getResourceBundle().getString("accountNotCreatedInfo"));
         } else {
-            String createUserStringName = createUsername.getText();
             String createUserStringRealName = createUserRealname.getText();
             String betweenName = "";
             if (createUserBetweenName.getText() != null || !createUserBetweenName.getText().trim().isEmpty()) {
@@ -210,41 +207,67 @@ public class AccountbeheerFXMLController implements Initializable {
                     break;
             }
 
-            String queryEmployee = "INSERT INTO `luggagem`.`employee` "
-                    + "(`code`, `first_name`, `preposition`, `last_name`, `Luchthaven_IATA`) "
-                    + "VALUES "
-                    + "('" + createUserStringName + "', '" + createUserStringRealName + "', '" + betweenName + "', '" + createUserStringLastName + "', '" + createUserStringAirport + "');";
-            int doQueryEmployeeTable = MainApp.myJDBC.executeUpdateQuery(queryEmployee);
-            String queryAccounts = "INSERT INTO `luggagem`.`account` "
-                    + "(`Employee_code`, `email`, `password`, `salt`, `user_level`, `active`) "
-                    + "VALUES "
-                    + "('" + createUserStringName + "', '" + createUserStringEmail + "', '" + hashAndPass[0] + "', '" + hashAndPass[1] + "', '" + createUserStringPermissions + "', '1');";
-            int doQueryAccountsTable = MainApp.myJDBC.executeUpdateQuery(queryAccounts);
-            if (doQueryEmployeeTable == -1 || doQueryAccountsTable == -1) {
-                createUserInfo.setTextFill(Paint.valueOf("d81e05"));
-                createUserInfo.setFont(Font.font(10));
-                createUserInfo.setText(data.getResourceBundle().getString("Something went wrong in the SQL query.\n Please contact your local sysadmin."));
+            Alert createUserAlert = new Alert(AlertType.CONFIRMATION);
+            String imageURL = this.getClass().getResource("/images/2000px-New_user_icon-01.svg.png").toString();
+            Image image = new Image(imageURL, 64, 64, false, true);
+
+            createUserAlert.initOwner(data.getStage());
+            createUserAlert.setTitle("Account creation");
+            createUserAlert.setHeaderText("A new user will be created");
+            createUserAlert.setContentText("A new user will be created with the following information:\n"
+                    + "Please confirm the following information is correct\n"
+                    + "Email: " + createUserStringEmail + "\n"
+                    + "Airport: " + createUserStringAirport);
+            createUserAlert.setGraphic(new ImageView(image));
+
+            Optional<ButtonType> createUserAnswer = createUserAlert.showAndWait();
+            if (createUserAnswer.get() == ButtonType.OK) {
+                String createUserStringName = getNextStaffID();
+                String queryEmployee = "INSERT INTO `employee` "
+                        + "(`code`, `first_name`, `preposition`, `last_name`, `Luchthaven_IATA`) "
+                        + "VALUES "
+                        + "('" + createUserStringName + "', '" + createUserStringRealName + "', '" + betweenName + "', '" + createUserStringLastName + "', '" + createUserStringAirport + "');";
+                int doQueryEmployeeTable = MainApp.myJDBC.executeUpdateQuery(queryEmployee);
+                String queryAccounts = "INSERT INTO `account` "
+                        + "(`Employee_code`, `email`, `password`, `salt`, `user_level`, `active`) "
+                        + "VALUES "
+                        + "('" + createUserStringName + "', '" + createUserStringEmail + "', '" + hashAndPass[0] + "', '" + hashAndPass[1] + "', '" + createUserStringPermissions + "', '1');";
+                int doQueryAccountsTable = MainApp.myJDBC.executeUpdateQuery(queryAccounts);
+                if (doQueryEmployeeTable == -1 || doQueryAccountsTable == -1) {
+                    createUserInfo.setTextFill(Paint.valueOf("d81e05"));
+                    createUserInfo.setFont(Font.font(10));
+                    createUserInfo.setText(data.getResourceBundle().getString("Something went wrong in the SQL query.\n Please contact your local sysadmin."));
+                }
+
+                createUserAlert = new Alert(AlertType.INFORMATION);
+                createUserAlert.setTitle("Account creation");
+                createUserAlert.setHeaderText("Account succesfully created.");
+                createUserAlert.setContentText("A new user has been created with the following information:"
+                        + "Username: " + createUserStringName + "\n");
+                createUserAlert.showAndWait();
+
+                // Empty everything 
+                createUserPassword.clear();
+                createUserRealname.clear();
+                createUserBetweenName.clear();
+                createUserLastname.clear();
+                createUserEmail.clear();
+
+                roleAdmin.setSelected(false);
+                roleManager.setSelected(false);
+                roleEmployee.setSelected(true);
+
+                reloadTable();
+
+                // Confirm to the user that the account was succesfully created
+                createUserInfo.setTextFill(Paint.valueOf("green"));
+                createUserInfo.setFont(Font.font(12));
+                createUserInfo.setText(data.getResourceBundle().getString("accountCreatedInfo"));
+
+            } else {
+
             }
 
-            // Empty everything 
-            createUserPassword.clear();
-            createUserRealname.clear();
-            createUserBetweenName.clear();
-            createUserLastname.clear();
-            createUserEmail.clear();
-
-            getNextStaffID();
-
-            roleAdmin.setSelected(false);
-            roleManager.setSelected(false);
-            roleEmployee.setSelected(true);
-
-            reloadTable();
-
-            // Confirm to the user that the account was succesfully created
-            createUserInfo.setTextFill(Paint.valueOf("green"));
-            createUserInfo.setFont(Font.font(12));
-            createUserInfo.setText(data.getResourceBundle().getString("accountCreatedInfo"));
         }
 
     }
@@ -259,9 +282,9 @@ public class AccountbeheerFXMLController implements Initializable {
         } else {
             String userToDeactivate = deactivateUsername.getText();
 
-            String deactivateQuery = "UPDATE `luggagem`.`account` SET `active`='0' WHERE `Employee_code`='" + userToDeactivate + "';";
-            String activateQuery = "UPDATE `luggagem`.`account` SET `active`='1' WHERE `Employee_code`='" + userToDeactivate + "';";
-            String activeCheckQuery = "SELECT active FROM luggagem.account WHERE Employee_code = '" + userToDeactivate + "'";
+            String deactivateQuery = "UPDATE `account` SET `active`='0' WHERE `Employee_code`='" + userToDeactivate + "';";
+            String activateQuery = "UPDATE `account` SET `active`='1' WHERE `Employee_code`='" + userToDeactivate + "';";
+            String activeCheckQuery = "SELECT active FROM account WHERE Employee_code = '" + userToDeactivate + "'";
 
             if (MainApp.myJDBC.executeStringQuery(activeCheckQuery).equals("1")) {
                 MainApp.myJDBC.executeUpdateQuery(deactivateQuery);
@@ -274,13 +297,13 @@ public class AccountbeheerFXMLController implements Initializable {
         reloadTable();
     }
 
-    private void getNextStaffID() {
+    private String getNextStaffID() {
         // Get next staff ID
         String query = "SELECT MAX(code)"
                 + "FROM employee";
         String result = MainApp.myJDBC.executeStringQuery(query);
         result = Integer.toString(Integer.parseInt(result) + 1);
-        createUsername.setText(result);
+        return result;
     }
 
     private void setupTableView() {
@@ -299,7 +322,7 @@ public class AccountbeheerFXMLController implements Initializable {
         try {
             TableViewUsers.getItems().clear();
             userTable.clear();
-            String query = "SELECT Employee_code,first_name,preposition,last_name,user_level,Luchthaven_IATA,active FROM luggagem.account JOIN luggagem.employee ON Employee_code = code;";
+            String query = "SELECT Employee_code,first_name,preposition,last_name,user_level,Luchthaven_IATA,active FROM account JOIN employee ON Employee_code = code;";
             ResultSet result = MainApp.myJDBC.executeResultSetQuery(query);
 
             while (result.next()) {
@@ -335,7 +358,7 @@ public class AccountbeheerFXMLController implements Initializable {
                 if (!result.getString("preposition").isEmpty() && result.getString("preposition") != null) {
                     TBpreposition = result.getString("preposition");
                 }
-                Users storingUsers = new Users(TBusername, TBfirstName, TBlastName, TBIATA, RealActive, realPermissions);
+                User storingUsers = new User(TBusername, TBfirstName, TBlastName, TBIATA, RealActive, realPermissions);
 
                 if (TBpreposition != null && !TBpreposition.isEmpty()) {
                     storingUsers.setPreposition(TBpreposition);
@@ -358,7 +381,6 @@ public class AccountbeheerFXMLController implements Initializable {
         roleManager.setToggleGroup(accountButtons);
         roleEmployee.setSelected(true);
 
-        getNextStaffID();
         setupTableView();
 
         //
