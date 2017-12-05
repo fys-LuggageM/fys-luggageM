@@ -2,12 +2,10 @@ package fys.luggagem;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,10 +24,13 @@ import java.sql.ResultSet;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -113,7 +114,7 @@ public class AccountbeheerFXMLController implements Initializable {
     @FXML
     private ComboBox<String> airportBox;
 
-    private ObservableList<User> userTable = FXCollections.observableArrayList();
+    private ObservableList<User> userList = FXCollections.observableArrayList();
 
     private ObservableList<String> Airports
             = FXCollections.observableArrayList(
@@ -137,6 +138,8 @@ public class AccountbeheerFXMLController implements Initializable {
     private TableColumn<?, ?> active;
     @FXML
     private TextField createUserEmail;
+    @FXML
+    private TextField searchField;
 
     private void handleCloseAction(ActionEvent event) throws IOException {
         MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
@@ -154,15 +157,28 @@ public class AccountbeheerFXMLController implements Initializable {
             String[] hashAndPass;
             hashAndPass = Encryptor.encrypt(newPassword);
 
-            String query = String.format("UPDATE `account` "
-                    + "SET `password`='%s', `salt`='%s' "
-                    + "WHERE `Employee_code`='%s';", hashAndPass[0], hashAndPass[1], userToReset);
-            MainApp.myJDBC.executeUpdateQuery(query);
+            String imageURL = this.getClass().getResource("/images/32190-200.png").toString();
+            Image image = new Image(imageURL, 64, 64, false, true);
+            Alert resetPasswordAlert = new Alert(AlertType.CONFIRMATION);
+            resetPasswordAlert.initOwner(data.getStage());
+            resetPasswordAlert.setTitle("Reset Password");
+            resetPasswordAlert.setContentText("Are you sure you want to reset the password for user " + userToReset);
+            resetPasswordAlert.setGraphic(new ImageView(image));
 
-            resetPasswordInfo.setTextFill(Paint.valueOf("green"));
-            resetPasswordInfo.setText(data.getResourceBundle().getString("passwordResetInfo"));
-            resetUser.clear();
-            resetPassword.clear();
+            Optional<ButtonType> resetPasswordAnswer = resetPasswordAlert.showAndWait();
+            if (resetPasswordAnswer.get() == ButtonType.OK) {
+                String query = String.format("UPDATE `account` "
+                        + "SET `password`='%s', `salt`='%s' "
+                        + "WHERE `Employee_code`='%s';", hashAndPass[0], hashAndPass[1], userToReset);
+                MainApp.myJDBC.executeUpdateQuery(query);
+
+                resetPasswordInfo.setTextFill(Paint.valueOf("green"));
+                resetPasswordInfo.setText(data.getResourceBundle().getString("passwordResetInfo"));
+                resetUser.clear();
+                resetPassword.clear();
+            } else {
+
+            }
         }
     }
 
@@ -240,6 +256,7 @@ public class AccountbeheerFXMLController implements Initializable {
                 }
 
                 createUserAlert = new Alert(AlertType.INFORMATION);
+                createUserAlert.initOwner(data.getStage());
                 createUserAlert.setTitle("Account creation");
                 createUserAlert.setHeaderText("Account succesfully created.");
                 createUserAlert.setContentText("A new user has been created with the following information:"
@@ -257,7 +274,7 @@ public class AccountbeheerFXMLController implements Initializable {
                 roleManager.setSelected(false);
                 roleEmployee.setSelected(true);
 
-                reloadTable();
+                setupTableView();
 
                 // Confirm to the user that the account was succesfully created
                 createUserInfo.setTextFill(Paint.valueOf("green"));
@@ -287,14 +304,38 @@ public class AccountbeheerFXMLController implements Initializable {
             String activeCheckQuery = "SELECT active FROM account WHERE Employee_code = '" + userToDeactivate + "'";
 
             if (MainApp.myJDBC.executeStringQuery(activeCheckQuery).equals("1")) {
-                MainApp.myJDBC.executeUpdateQuery(deactivateQuery);
+                Alert deactivateUserAlert = new Alert(AlertType.CONFIRMATION);
+                String imageURL = this.getClass().getResource("/images/32190-200.png").toString();
+                Image image = new Image(imageURL, 64, 64, false, true);
+
+                deactivateUserAlert.initOwner(data.getStage());
+                deactivateUserAlert.setTitle("Deactivate user!");
+                deactivateUserAlert.setContentText("Are you sure you want to deactivate user " + userToDeactivate);
+                deactivateUserAlert.setGraphic(new ImageView(image));
+
+                Optional<ButtonType> deactivateUserAnswer = deactivateUserAlert.showAndWait();
+                if (deactivateUserAnswer.get() == ButtonType.OK) {
+                    MainApp.myJDBC.executeUpdateQuery(deactivateQuery);
+                }
             } else {
-                MainApp.myJDBC.executeUpdateQuery(activateQuery);
+                Alert deactivateUserAlert = new Alert(AlertType.CONFIRMATION);
+                String imageURL = this.getClass().getResource("/images/32190-200.png").toString();
+                Image image = new Image(imageURL, 64, 64, false, true);
+
+                deactivateUserAlert.initOwner(data.getStage());
+                deactivateUserAlert.setTitle("Deactivate user!");
+                deactivateUserAlert.setContentText("Are you sure you want to activate user " + userToDeactivate);
+                deactivateUserAlert.setGraphic(new ImageView(image));
+
+                Optional<ButtonType> deactivateUserAnswer = deactivateUserAlert.showAndWait();
+                if (deactivateUserAnswer.get() == ButtonType.OK) {
+                    MainApp.myJDBC.executeUpdateQuery(activateQuery);
+                }
             }
             deactivateUserInfo.setTextFill(Paint.valueOf("green"));
             deactivateUserInfo.setText(data.getResourceBundle().getString("accountDeactivatedInfo"));
+            setupTableView();
         }
-        reloadTable();
     }
 
     private String getNextStaffID() {
@@ -315,13 +356,63 @@ public class AccountbeheerFXMLController implements Initializable {
                 System.out.printf("Attached column %s in tableview to matching attribute.\n", propertyName);
             }
         }
+
         reloadTable();
+
+        FilteredList<User> filteredData = new FilteredList<>(userList, p -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(users -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (users.getFirstName() != null && users.getFirstName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } else if (users.getLastName() != null && users.getLastName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                } else if (users.getAirport() != null && users.getAirport().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (users.getPermissions() != null && users.getPermissions().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (users.getUsername() != null && users.getUsername().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList. 
+        SortedList<User> sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(TableViewUsers.comparatorProperty());
+
+        // 5. Add sorted (and filtered) data to the table.
+        TableViewUsers.setItems(sortedData);
+
+        // This uh... works okay?
+        TableViewUsers.setRowFactory(tv -> {
+            TableRow<User> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    User rowData = row.getItem();
+                    resetUser.setText(rowData.getUsername());
+                    deactivateUsername.setText(rowData.getUsername());
+                }
+            });
+            return row;
+        });
     }
 
     public void reloadTable() {
         try {
-            TableViewUsers.getItems().clear();
-            userTable.clear();
+            userList.clear();
             String query = "SELECT Employee_code,first_name,preposition,last_name,user_level,Luchthaven_IATA,active FROM account JOIN employee ON Employee_code = code;";
             ResultSet result = MainApp.myJDBC.executeResultSetQuery(query);
 
@@ -363,10 +454,10 @@ public class AccountbeheerFXMLController implements Initializable {
                 if (TBpreposition != null && !TBpreposition.isEmpty()) {
                     storingUsers.setPreposition(TBpreposition);
                 }
-                userTable.add(storingUsers);
+                userList.add(storingUsers);
             }
 
-            TableViewUsers.setItems(userTable);
+            TableViewUsers.setItems(userList);
 
         } catch (SQLException ex) {
             Logger.getLogger(AccountbeheerFXMLController.class.getName()).log(Level.SEVERE, null, ex);
