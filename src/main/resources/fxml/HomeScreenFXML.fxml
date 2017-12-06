@@ -159,7 +159,7 @@
                   </VBox>
                   <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleRapportageAction" style="-fx-background-color: white;" text="%reports">
+                        <Button fx:id="reportsButton" contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleRapportageAction" style="-fx-background-color: white;" text="%reports">
                            <graphic>
                               <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -178,7 +178,7 @@
                   </VBox>
                   <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleGebruikersbeheerAction" style="-fx-background-color: white;" text="%adminPanel">
+                        <Button fx:id="accountManagementButton" contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleGebruikersbeheerAction" style="-fx-background-color: white;" text="%adminPanel">
                            <graphic>
                               <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

@@ -25,6 +25,7 @@ public class Data {
     private ResourceBundle resource;
     private Stage stage;
     private StackPane workspace;
+    private int permissions;
     private String lastScene;
     
     public Data() {
@@ -97,6 +98,14 @@ public class Data {
 
     public void setWorkspace(StackPane workspace) {
         this.workspace = workspace;
+    }
+
+    public int getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(int permissions) {
+        this.permissions = permissions;
     }
     
 }

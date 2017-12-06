@@ -116,6 +116,10 @@ public class FXMLDocumentController implements Initializable {
                     if (userDataSet.next()) {
                         data.setName(userDataSet.getString("first_name") + (userDataSet.getString("preposition") != null ? " "
                                 + userDataSet.getString("preposition") : "") + " " + userDataSet.getString("last_name"));
+                        ResultSet accountInfoSet = MainApp.myJDBC.executeResultSetQuery("SELECT user_level FROM Account WHERE Employee_code=" + resultSet.getInt("Employee_code"));
+                        if (accountInfoSet.next()) {
+                            data.setPermissions(accountInfoSet.getInt("user_level"));
+                        }
                         MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
                     } else {
                         statusMessage.setText("Impossible error has occured. Please try again.");
