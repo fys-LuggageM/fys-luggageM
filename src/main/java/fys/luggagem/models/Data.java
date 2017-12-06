@@ -25,13 +25,22 @@ public class Data {
     private ResourceBundle resource;
     private Stage stage;
     private StackPane workspace;
-    int permissions;
+    private int permissions;
+    private String lastScene;
     
     public Data() {
         language = "en";
         country = "US";
         locale = new Locale(language, country);
         resource = ResourceBundle.getBundle("bundles.Bundle", locale);
+    }
+    
+    public void setLastScene(String lastScene){
+        this.lastScene = lastScene;
+    }
+    
+    public String getLastScene(){
+        return lastScene;
     }
     
     public void setName(String n) {
