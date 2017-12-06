@@ -1,5 +1,6 @@
 package fys.luggagem;
 
+import fys.luggagem.models.Customer;
 import fys.luggagem.models.Data;
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,6 +39,8 @@ import javafx.util.Duration;
 public class BeschadigdeBagageController implements Initializable {
 
     private Data data = MainApp.getData();
+    private MyJDBC db = MainApp.myJDBC;
+    private Customer customer = MainApp.getCustomer();
 
     //To store the image URL's as strings
     private String placeholderURL;
@@ -48,8 +51,6 @@ public class BeschadigdeBagageController implements Initializable {
 
     //Will store the new/highest registrationNr
     private int registrationNr;
-
-    private MyJDBC db = MainApp.myJDBC;
 
     @FXML
     private TextField luggageType;
@@ -87,6 +88,12 @@ public class BeschadigdeBagageController implements Initializable {
     @FXML
     private void handleCloseAction(ActionEvent event) throws IOException {
         MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
+    }
+
+    @FXML
+    public void handleNewCustomerAction(ActionEvent event) throws IOException {
+        data.setLastScene("/fxml/BeschadigdeBagageFXML.fxml");
+        MainApp.loadFXMLFile(this.getClass().getResource("/fxml/NewCustomerFXML.fxml"));
     }
 
     @FXML
@@ -145,8 +152,6 @@ public class BeschadigdeBagageController implements Initializable {
             image03.setImage(image);
         }
     }
-
-
 
     // Method to insert the selected images
     private void uploadImageQuery(ActionEvent event) throws IOException, SQLException {

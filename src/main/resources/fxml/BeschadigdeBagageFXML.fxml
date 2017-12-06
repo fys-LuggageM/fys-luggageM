@@ -36,29 +36,21 @@
          <children>
             <VBox prefHeight="666.0" prefWidth="408.0" GridPane.columnIndex="2">
                <children>
-                  <HBox prefHeight="23.0" prefWidth="262.0">
-                     <children>
-                        <Label maxWidth="161.0" prefHeight="25.0" prefWidth="161.0" text="%customer" HBox.hgrow="ALWAYS">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="25.0" />
-                           </HBox.margin>
-                        </Label>
-                        <Label maxWidth="154.0" prefHeight="25.0" prefWidth="154.0" text="%newCustomer" HBox.hgrow="ALWAYS">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
                   <HBox prefHeight="29.0" prefWidth="262.0">
                      <children>
-                        <Button maxWidth="131.0" mnemonicParsing="false" text="Button" HBox.hgrow="ALWAYS" />
+                        <Button maxWidth="131.0" mnemonicParsing="false" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="%customer" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Button>
                         <Label maxWidth="25.0" HBox.hgrow="ALWAYS" />
-                        <Button maxWidth="131.0" mnemonicParsing="false" text="Button" HBox.hgrow="ALWAYS" />
+                        <Button maxWidth="131.0" mnemonicParsing="false" onAction="#handleNewCustomerAction" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="%newCustomer" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Button>
                      </children>
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
                   </HBox>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%airport" wrappingWidth="261.20998191833496">
                      <font>
@@ -229,7 +221,7 @@
                            <HBox.margin>
                               <Insets left="15.0" right="15.0" top="2.0" />
                            </HBox.margin>
-                           <image>
+                               <image>
                               <Image url="@../images/placeholder-600x400.png" />
                            </image>
                         </ImageView>
