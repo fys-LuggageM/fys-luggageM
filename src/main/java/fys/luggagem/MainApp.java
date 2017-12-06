@@ -23,7 +23,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class MainApp extends Application {
 
-    static MyJDBC myJDBC;
+    public static MyJDBC myJDBC;
     static Customer customer = new Customer();
     static Data data = new Data();
     Scene window;
