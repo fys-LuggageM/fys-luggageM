@@ -72,14 +72,15 @@ public class BeschadigdeBagageController implements Initializable {
     @FXML
     private Label savedConfirmation;
 
-//    @FXML
-//    private void handleCloseAction(ActionEvent event) throws IOException {
-//        MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
-//    }
     @FXML
     public void handleNewCustomerAction(ActionEvent event) throws IOException {
         data.setLastScene("/fxml/BeschadigdeBagageFXML.fxml");
         MainApp.loadFXMLFile(this.getClass().getResource("/fxml/NewCustomerFXML.fxml"));
+    }
+
+    @FXML
+    public void goMatching(ActionEvent event) throws IOException {
+        MainApp.loadFXMLFile(this.getClass().getResource("/fxml/MatchingFXML.fxml"));
     }
 
     @FXML
@@ -156,7 +157,7 @@ public class BeschadigdeBagageController implements Initializable {
             File file01 = new File(imageURL01);
             file01.toURI();
             fis01 = new FileInputStream(file01);
-            
+
             //image02
             File file02 = new File(imageURL02);
             file02.toURI();
