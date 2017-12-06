@@ -62,7 +62,7 @@ public class Customer {
     }
 
     public void setCustomerNr(int customerNr) {
-        this.customerNr = 1;
+        this.customerNr = customerNr;
     }
 
     public void setFirstName(String firstName) {
