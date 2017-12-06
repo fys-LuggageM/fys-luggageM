@@ -82,11 +82,7 @@ public class NewCustomerFXMLController implements Initializable {
             ps = conn.prepareStatement(insertCustomer);
             ps.setInt(1, customer.getCustomerNr());
             ps.setString(2, customer.getFirstName());
-            if (customer.getPreposition() != null) {
-                ps.setString(3, customer.getPreposition());
-            } else {
-                ps.setString(3, "");
-            }
+            ps.setString(3, customer.getPreposition());
             ps.setString(4, customer.getLastName());
             ps.setString(5, customer.getAdres());
             ps.setString(6, customer.getCity());
