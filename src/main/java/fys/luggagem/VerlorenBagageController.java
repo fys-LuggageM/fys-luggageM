@@ -2,6 +2,7 @@ package fys.luggagem;
 
 import fys.luggagem.models.Customer;
 import fys.luggagem.models.Data;
+import fys.luggagem.models.Luggage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -9,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -22,7 +24,13 @@ public class VerlorenBagageController implements Initializable {
     private Data data = MainApp.getData();
     private MyJDBC myJDBC = MainApp.myJDBC;
     private Customer customer = MainApp.getCustomer();
-    
+    private String IATA = "AMS";
+
+    @FXML
+    private ComboBox airportBox;
+
+    @FXML
+    private TextField destinationField;
 
     @FXML
     private Label customerAddedLabel;
@@ -35,15 +43,6 @@ public class VerlorenBagageController implements Initializable {
 
     @FXML
     private Button existingCustomerButton;
-
-    @FXML
-    private DatePicker dateField;
-
-    @FXML
-    private TextField timeHourField;
-
-    @FXML
-    private TextField timeMinuteField;
 
     @FXML
     private TextField airportField;
@@ -125,9 +124,6 @@ public class VerlorenBagageController implements Initializable {
     }
 
     private void toggleFields(boolean toggle) {
-        dateField.setDisable(toggle);
-        timeHourField.setDisable(toggle);
-        timeMinuteField.setDisable(toggle);
         luggageTypeField.setDisable(toggle);
         brandField.setDisable(toggle);
         flightField.setDisable(toggle);
@@ -143,5 +139,20 @@ public class VerlorenBagageController implements Initializable {
         prepositionField.setText(customer.getPreposition() != null ? customer.getPreposition() : "");
         lastNameField.setText(customer.getLastName());
         cityField.setText(customer.getCity());
+    }
+
+    private void createNewFoundLuggage() {
+        Luggage foundLuggage = new Luggage();
+        foundLuggage.setIATA(IATA); //test value
+        foundLuggage.setLuggageType(!luggageTypeField.getText().isEmpty() ? luggageTypeField.getText() : null);
+        foundLuggage.setBrand(!brandField.getText().isEmpty() ? brandField.getText() : null);
+        foundLuggage.setDestination(!destinationField.getText().isEmpty() ? flightField.getText() : null);
+        foundLuggage.setFlightNr(!flightField.getText().isEmpty() ? flightField.getText() : null);
+        foundLuggage.setLabelNr(!tagField.getText().isEmpty() ? tagField.getText() : null);
+        foundLuggage.setPrimaryColor(!primaryColorField.getText().isEmpty() ? primaryColorField.getText() : null);
+        foundLuggage.setSecondaryColor(!secondaryColorField.getText().isEmpty() ? secondaryColorField.getText() : null);
+        foundLuggage.setDestination(customer.getFirstName() + (customer.getPreposition() != null
+                ? " " + customer.getPreposition() : "") + " " + customer.getLastName());
+        foundLuggage.setNotes(!notesField.getText().isEmpty() ? notesField.getText() : null);
     }
 }

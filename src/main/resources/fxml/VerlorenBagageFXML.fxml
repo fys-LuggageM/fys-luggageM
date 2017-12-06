@@ -2,7 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -25,7 +25,7 @@
             <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="0.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="29.0" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="70.0" prefHeight="29.0" vgrow="ALWAYS" />
             <RowConstraints maxHeight="544.0" minHeight="385.0" prefHeight="536.0" vgrow="NEVER" />
             <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="0.0" vgrow="ALWAYS" />
          </rowConstraints>
@@ -47,51 +47,11 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="airportField" disable="true" promptText="%luggageTypePrompt">
+                  <ComboBox fx:id="airportBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Choose airport">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
-                  </TextField>
-                  <Label maxWidth="1.7976931348623157E308" text="%date">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-                  <DatePicker fx:id="dateField" maxWidth="1.7976931348623157E308" prefHeight="31.0" prefWidth="349.0" promptText="14-11-2017">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </DatePicker>
-                  <Label maxWidth="1.7976931348623157E308" text="%time">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-                  <HBox prefWidth="200.0">
-                     <children>
-                        <TextField fx:id="timeHourField" promptText="hh">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </TextField>
-                        <Label maxHeight="1.7976931348623157E308" text=":">
-                           <HBox.margin>
-                              <Insets left="5.0" right="5.0" />
-                           </HBox.margin>
-                        </Label>
-                        <TextField fx:id="timeMinuteField" promptText="mm">
-                           <HBox.margin>
-                              <Insets right="200.0" />
-                           </HBox.margin>
-                        </TextField>
-                     </children>
-                     <padding>
-                        <Insets bottom="5.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
+                  </ComboBox>
                   <Label maxWidth="1.7976931348623157E308" text="%luggageType">
                      <font>
                         <Font name="System Bold" size="16.0" />
@@ -122,20 +82,26 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </TextField>
-               </children>
-            </VBox>
-            <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="310.0" minHeight="500.0" minWidth="310.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-               <children>
+                  <Label maxWidth="1.7976931348623157E308" text="%arrivedWithFlight">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="destinationField" promptText="AA1234">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </TextField>
                   <Label maxWidth="1.7976931348623157E308" text="%tag">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tagField" promptText="1234567890">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </TextField>
+                  <TextField fx:id="tagField" promptText="1234567890" />
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="310.0" minHeight="500.0" minWidth="310.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <children>
                   <Label maxWidth="1.7976931348623157E308" text="%colors" VBox.vgrow="NEVER">
                      <font>
                         <Font name="System Bold" size="16.0" />
@@ -199,7 +165,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="notesField" maxHeight="-Infinity" prefHeight="120.0" VBox.vgrow="ALWAYS">
+                  <TextArea fx:id="notesField" maxHeight="-Infinity" prefHeight="165.0" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
@@ -220,7 +186,7 @@
                   <Font name="System Bold" size="36.0" />
                </font>
                <GridPane.margin>
-                  <Insets />
+                  <Insets bottom="25.0" />
                </GridPane.margin>
             </Label>
          </children>
