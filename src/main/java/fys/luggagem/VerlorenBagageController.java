@@ -22,19 +22,20 @@ public class VerlorenBagageController implements Initializable {
     private Data data = MainApp.getData();
     private MyJDBC myJDBC = MainApp.myJDBC;
     private Customer customer = MainApp.getCustomer();
+    
 
     @FXML
     private Label customerAddedLabel;
-    
+
     @FXML
     private Button saveButton;
 
     @FXML
     private Button newCustomerButton;
-    
+
     @FXML
     private Button existingCustomerButton;
-    
+
     @FXML
     private DatePicker dateField;
 
@@ -83,10 +84,10 @@ public class VerlorenBagageController implements Initializable {
     @FXML
     public void handleSaveAction(ActionEvent event) {
         //TODO build a check method for required fields
-        String sql = "INSERT INTO customer VALUES (546, '" + customer.getFirstName() + "', '" 
-                + (customer.getPreposition() != null ? customer.getPreposition() : "NULL") + "', '" + customer.getLastName() 
-                + "', '" + customer.getAdres() + "', '" + customer.getCity() + "', '" + customer.getPostalCode() 
-                + "', '" + customer.getCountry() + "', '" + customer.getPhoneNumber() + "', '" 
+        String sql = "INSERT INTO customer VALUES (546, '" + customer.getFirstName() + "', '"
+                + (customer.getPreposition() != null ? customer.getPreposition() : "NULL") + "', '" + customer.getLastName()
+                + "', '" + customer.getAdres() + "', '" + customer.getCity() + "', '" + customer.getPostalCode()
+                + "', '" + customer.getCountry() + "', '" + customer.getPhoneNumber() + "', '"
                 + customer.getEmailAdres() + "');";
         myJDBC.executeUpdateQuery(sql);
         customer.clear();
@@ -99,7 +100,7 @@ public class VerlorenBagageController implements Initializable {
 
     @FXML
     public void handleExistingCustomerAction(ActionEvent event) {
-
+        MainApp.loadFXMLFile(this.getClass().getResource("/fxml/ExistingCustomerFXML.fxml"));
     }
 
     @Override
