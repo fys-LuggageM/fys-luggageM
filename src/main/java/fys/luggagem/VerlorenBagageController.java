@@ -94,6 +94,7 @@ public class VerlorenBagageController implements Initializable {
 
     @FXML
     public void handleNewCustomerAction(ActionEvent event) throws IOException {
+        data.setLastScene("/fxml/VerlorenBagageFXML.fxml");
         MainApp.loadFXMLFile(this.getClass().getResource("/fxml/NewCustomerFXML.fxml"));
     }
 

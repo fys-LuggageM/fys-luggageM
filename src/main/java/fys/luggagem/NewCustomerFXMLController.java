@@ -1,6 +1,7 @@
 package fys.luggagem;
 
 import fys.luggagem.models.Customer;
+import fys.luggagem.models.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -8,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -22,6 +22,7 @@ public class NewCustomerFXMLController implements Initializable {
 
     private Customer customer = MainApp.getCustomer();
     private MyJDBC db = MainApp.myJDBC;
+    private Data data = MainApp.getData();
 
     @FXML
     private TextField firstNameField;
@@ -62,7 +63,7 @@ public class NewCustomerFXMLController implements Initializable {
         customer.setPhoneNumber(phoneNumberField.getText());
         customer.setEmailAdres(emailAdresField.getText());
         setCustomer();
-        MainApp.loadFXMLFile(this.getClass().getResource("/fxml/VerlorenBagageFXML.fxml"));
+        MainApp.loadFXMLFile(this.getClass().getResource(data.getLastScene()));
 
     }
 
@@ -82,7 +83,11 @@ public class NewCustomerFXMLController implements Initializable {
             ps = conn.prepareStatement(insertCustomer);
             ps.setInt(1, customer.getCustomerNr());
             ps.setString(2, customer.getFirstName());
-            ps.setString(3, customer.getPreposition());
+            if (customer.getPreposition() != null) {
+                ps.setString(3, customer.getPreposition());
+            } else {
+                ps.setString(3, "");
+            }
             ps.setString(4, customer.getLastName());
             ps.setString(5, customer.getAdres());
             ps.setString(6, customer.getCity());
