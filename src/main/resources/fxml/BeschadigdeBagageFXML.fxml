@@ -6,7 +6,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -61,55 +60,6 @@
                      </VBox.margin>
                   </Text>
                   <ComboBox fx:id="comboBox" prefHeight="25.0" prefWidth="282.0" promptText="Choose Airport" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%luggageType" wrappingWidth="261.20998191833496">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="15.0" />
-                     </VBox.margin>
-                  </Text>
-                  <TextField fx:id="luggageType" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                  </TextField>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%luggageBrand" wrappingWidth="261.20998191833496">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="15.0" />
-                     </VBox.margin>
-                  </Text>
-                  <TextField fx:id="luggageBrand" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                  </TextField>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%primaryColor" wrappingWidth="261.20998191833496">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="15.0" />
-                     </VBox.margin>
-                  </Text>
-                  <TextField fx:id="primaryColor" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                  </TextField>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%secondaryColor" wrappingWidth="261.20998191833496">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="secondaryColor" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="262.0">
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                  </TextField>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%notes" wrappingWidth="261.20998191833496">
                      <font>
                         <Font size="16.0" />
@@ -118,7 +68,7 @@
                         <Insets top="15.0" />
                      </VBox.margin>
                   </Text>
-                  <TextArea fx:id="notes" prefHeight="302.0" prefWidth="262.0">
+                  <TextArea fx:id="notes" prefHeight="478.0" prefWidth="262.0">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -190,7 +140,7 @@
                         <Insets />
                      </VBox.margin>
                      <padding>
-                        <Insets top="103.0" />
+                        <Insets top="65.0" />
                      </padding>
                   </StackPane>
                </children>

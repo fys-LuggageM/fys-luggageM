@@ -360,7 +360,7 @@ public class MyJDBC {
         String selectMaxRegNR = "SELECT MAX(registrationnr) FROM luggage";
 
         // insert query to create new registrationNr
-            String insertNewRegNR = "INSERT INTO luggage (registrationnr, case_type, airport_IATA) VALUES (?, 3, 'AMS')";
+            String insertNewRegNR = "INSERT INTO luggage (registrationnr, case_type) VALUES (?, 3)";
 
 //        String INSERT_PICTURE = "insert into test(id, image01, image02, image03) values (?, ?, ?, ?)";
         // prepared statement

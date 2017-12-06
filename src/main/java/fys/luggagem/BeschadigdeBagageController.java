@@ -10,7 +10,6 @@ import java.net.URI;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -53,18 +52,6 @@ public class BeschadigdeBagageController implements Initializable {
     private int registrationNr;
 
     @FXML
-    private TextField luggageType;
-
-    @FXML
-    private TextField luggageBrand;
-
-    @FXML
-    private TextField primaryColor;
-
-    @FXML
-    private TextField secondaryColor;
-
-    @FXML
     private TextArea notes;
 
     @FXML
@@ -85,11 +72,10 @@ public class BeschadigdeBagageController implements Initializable {
     @FXML
     private Label savedConfirmation;
 
-    @FXML
-    private void handleCloseAction(ActionEvent event) throws IOException {
-        MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
-    }
-
+//    @FXML
+//    private void handleCloseAction(ActionEvent event) throws IOException {
+//        MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
+//    }
     @FXML
     public void handleNewCustomerAction(ActionEvent event) throws IOException {
         data.setLastScene("/fxml/BeschadigdeBagageFXML.fxml");
@@ -170,7 +156,7 @@ public class BeschadigdeBagageController implements Initializable {
             File file01 = new File(imageURL01);
             file01.toURI();
             fis01 = new FileInputStream(file01);
-
+            
             //image02
             File file02 = new File(imageURL02);
             file02.toURI();
@@ -191,7 +177,40 @@ public class BeschadigdeBagageController implements Initializable {
 
             conn.commit();
         } finally {
+        }
+    }
 
+    private void setFields() {
+        String setNotes = notes.getText();
+        String setAirport = comboBox.getValue().toString();
+
+        Connection conn = db.getConnection();
+//        String setInfo = "UPDATE luggage (airport_IATA, notes, customer_firstname, customer_preposition, customer_lastname) VALUES (?, ?, ?, ?, ?)"
+//                + "WHERE registrationnr=?";
+
+        String setInfo2 = "UPDATE luggage SET airport_IATA = ?, notes = ?, customer_firstname = ?, customer_preposition = ?, customer_lastname = ?, customer_customernr = ? WHERE registrationnr = ?";
+
+        PreparedStatement ps = null;
+        try {
+            System.out.print(db.getRegNrDamaged() + "\n");
+            System.out.print(customer.getFirstName() + "\n");
+            System.out.print(customer.getLastName() + "\n");
+            System.out.print("IATA: " + setAirport + "\n");
+
+            conn.setAutoCommit(false);
+            ps = conn.prepareStatement(setInfo2);
+
+            ps.setString(1, setAirport);
+            ps.setString(2, setNotes);
+            ps.setString(3, customer.getFirstName());
+            ps.setString(4, customer.getPreposition());
+            ps.setString(5, customer.getLastName());
+            ps.setInt(6, customer.getCustomerNr());
+            ps.setInt(7, db.getRegNrDamaged());
+            ps.executeUpdate();
+            conn.commit();
+        } catch (SQLException e) {
+            System.err.print("SQL error setfields: " + e);
         }
     }
 
@@ -229,6 +248,7 @@ public class BeschadigdeBagageController implements Initializable {
                     } catch (SQLException ex) {
                         Logger.getLogger(BeschadigdeBagageController.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    setFields();
                     try {
                         // upload selected images
                         uploadImageQuery(event);
@@ -240,11 +260,6 @@ public class BeschadigdeBagageController implements Initializable {
             // clear all input field and set placeholder for images
             placeholderURL = this.getClass().getResource("/images/placeholder-600x400.png").toString();
             Image placeholder = new Image(placeholderURL);
-
-            luggageType.clear();
-            luggageBrand.clear();
-            primaryColor.clear();
-            secondaryColor.clear();
             notes.clear();
             image01.setImage(placeholder);
             image02.setImage(placeholder);
@@ -260,16 +275,12 @@ public class BeschadigdeBagageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // add items to combobox and set pre selection to"AMS"
-        comboBox.getItems().addAll("AMS (Amsterdam Schiphol Airport)", "RTM (Rotterdam The Hague Airport)");
-        comboBox.getSelectionModel().select("AMS (Amsterdam Schiphol Airport");
+        comboBox.getItems().addAll("AMS", "RTM");
+        comboBox.getSelectionModel().select("AMS");
 
         // booleanbinding to check if textfields are empty
         // if so, disable the save button to prevent accidental uploads to the database
-        BooleanBinding bb = luggageType.textProperty().isEmpty()
-                .or(luggageBrand.textProperty().isEmpty())
-                .or(primaryColor.textProperty().isEmpty())
-                .or(secondaryColor.textProperty().isEmpty())
-                .or(notes.textProperty().isEmpty());
+        BooleanBinding bb = notes.textProperty().isEmpty();
 
         saveImages.disableProperty().bind(bb);
 
