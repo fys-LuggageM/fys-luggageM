@@ -123,7 +123,7 @@ public class Customer {
         this.phoneNumber = null;
         this.emailAdres = null;
     }
-    
+
     public static List<Customer> getAllCustomers(MyJDBC myJDBC, List<Customer> customerList) {
         customerList.clear();
         try {

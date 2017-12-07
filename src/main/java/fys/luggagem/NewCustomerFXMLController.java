@@ -127,7 +127,7 @@ public class NewCustomerFXMLController implements Initializable {
                 // increment customernr
                 highestCustomerNr++;
                 customer.setCustomerNr(highestCustomerNr);
-                System.out.print(customer.getCustomerNr()+"\n");
+                System.out.print(customer.getCustomerNr() + "\n");
 
             }
         } catch (SQLException e) {

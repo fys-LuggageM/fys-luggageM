@@ -13,9 +13,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class DatabaseController implements Initializable {
-    
+
     private Data data = MainApp.getData();
-    
+
     @FXML
     private Label label;
     @FXML
@@ -44,7 +44,7 @@ public class DatabaseController implements Initializable {
         System.out.println("Gevonden bagage");
         label.setText("data van Gevonden Bagage");
     }
-    
+
     @FXML
     private void handleCloseAction(ActionEvent event) throws IOException {
         MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
