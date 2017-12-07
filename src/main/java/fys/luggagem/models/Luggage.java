@@ -183,6 +183,7 @@ public class Luggage {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
     public List<Luggage> getMatchingLuggage(MyJDBC myJDBC, List<Luggage> luggageList) {
         luggageList.clear();
