@@ -133,9 +133,9 @@ public class ExcelImport {
     }
 
     private void setFlightNr(String num) {
-        flightNr = num; 
+        flightNr = num;
     }
-    
+
     public String getFlightNr() {
         return flightNr;
     }

@@ -42,7 +42,7 @@ public class Encryptor {
 
         return output;
     }
-    
+
     public static String encrypt(String input, String salt) {
         String SHA256 = null;
         if (null == input) {
