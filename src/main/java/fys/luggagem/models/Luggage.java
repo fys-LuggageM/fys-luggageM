@@ -2,14 +2,20 @@ package fys.luggagem.models;
 
 import fys.luggagem.MainApp;
 import fys.luggagem.MyJDBC;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
  * @author jordan
  */
 public class Luggage {
+
     private MyJDBC myJDBC = MainApp.myJDBC;
-    
+
     private int registrationNr;
     private String flightNr;
     private String labelNr;
@@ -24,9 +30,9 @@ public class Luggage {
     private int caseStatus;
     private String IATA;
     private int customerNr;
-    
+
     public Luggage() {
-        
+
     }
 
     public int getRegistrationNr() {
@@ -140,8 +146,44 @@ public class Luggage {
     public void setCustomerNr(int customerNr) {
         this.customerNr = customerNr;
     }
-    
+
     public void foundLuggageToDatabase(Luggage foundLuggage) {
-        
+
+    }
+
+    public List<Luggage> getMatchingLuggage(MyJDBC myJDBC, List<Luggage> luggageList) {
+        luggageList.clear();
+        Connection conn = myJDBC.getConnection();
+        PreparedStatement ps = null;
+        String matchingLuggage = "SELECT labelnr, luggage_type, brand, primary_color, secondary_color FROM luggage\n" +
+"    WHERE (labelnr = ?) OR (luggage_type = ? AND brand = ? AND primary_color = ? AND secondary_color = ?)";
+        try {
+
+            ps = conn.prepareStatement(matchingLuggage);
+//            ps.setInt(1, db.getRegNrLost());
+            ps.setString(1, getLabelNr());
+            ps.setString(2, getLuggageType());
+            ps.setString(3, getBrand());
+            ps.setString(4, getPrimaryColor());
+            ps.setString(5, getSecondaryColor());
+
+            ResultSet rs = ps.executeQuery();
+
+
+            while (rs.next()) {
+                Luggage luggage = new Luggage();
+//                luggage.setRegistrationNr(rs.getInt(1));
+                luggage.setLabelNr(rs.getString(1));
+                luggage.setLuggageType(rs.getString(2));
+                luggage.setBrand(rs.getString(3));
+                luggage.setPrimaryColor(rs.getString(4));
+                luggage.setSecondaryColor(rs.getString(5));
+                luggageList.add(luggage);
+            }
+        } catch (SQLException sq) {
+            myJDBC.error(sq);
+        }
+
+        return luggageList;
     }
 }
