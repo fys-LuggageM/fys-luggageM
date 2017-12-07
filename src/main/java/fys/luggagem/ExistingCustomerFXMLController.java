@@ -112,7 +112,7 @@ public class ExistingCustomerFXMLController implements Initializable {
         targetCustomer.setCustomerNr(selectedCustomer.getCustomerNr());
         targetCustomer.setFirstName(selectedCustomer.getFirstName());
         targetCustomer.setPreposition(selectedCustomer.getPreposition());
-        targetCustomer.setLastName(selectedCustomer.getLastName());      
+        targetCustomer.setLastName(selectedCustomer.getLastName());
         targetCustomer.setAdres(selectedCustomer.getAdres());
         targetCustomer.setCity(selectedCustomer.getCity());
         targetCustomer.setPostalCode(selectedCustomer.getPostalCode());

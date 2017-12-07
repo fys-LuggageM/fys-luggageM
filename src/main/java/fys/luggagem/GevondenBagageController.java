@@ -133,7 +133,7 @@ public class GevondenBagageController implements Initializable {
             List<ExcelImport> foundLuggage = ExcelImport.importFoundLuggageFromExcel(filename);
 
             setFoundLuggageList(foundLuggage);
-            
+
         } else {
             saveStatus.setText("Excel import has been cancelled.");
         }

@@ -143,9 +143,9 @@
                                                     <rowConstraints>
                                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                     </rowConstraints>
-                                       <children>
-                                          <PieChart fx:id="verlorenPieChart" />
-                                       </children>
+                                                    <children>
+                                                        <PieChart fx:id="verlorenPieChart" />
+                                                    </children>
                                                 </GridPane>
                                             </children>
                                         </AnchorPane>
@@ -199,7 +199,7 @@
                         <GridPane prefHeight="52.0" prefWidth="713.0" GridPane.rowIndex="4">
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints />
@@ -210,11 +210,11 @@
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
-                        <Label fx:id="verlorenTabLabel" maxWidth="1.7976931348623157E308">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
+                                <Label fx:id="verlorenTabLabel" maxWidth="1.7976931348623157E308">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Label>
                             </children>
                         </GridPane>
                         <Label fx:id="titleLabel" text="%reports">
