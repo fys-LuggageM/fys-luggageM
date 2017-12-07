@@ -227,9 +227,14 @@
                   </Label>
                   <TextArea fx:id="comments" maxHeight="115.0" VBox.vgrow="ALWAYS">
                      <VBox.margin>
-                        <Insets bottom="15.0" />
+                        <Insets bottom="10.0" />
                      </VBox.margin>
                   </TextArea>
+                  <Label fx:id="saveStatus" maxHeight="5.0" prefHeight="2.0" prefWidth="0.0">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
                   <HBox alignment="CENTER_RIGHT">
                      <children>
                         <Button minWidth="29.0" mnemonicParsing="false" onAction="#handlePreviousAction" prefHeight="37.0" prefWidth="36.0" text="&lt;">
@@ -269,11 +274,6 @@
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
-            </Label>
-            <Label fx:id="saveStatus" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <font>
-                  <Font size="13.0" />
-               </font>
             </Label>
          </children>
       </GridPane>
