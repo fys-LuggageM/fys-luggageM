@@ -105,7 +105,7 @@ public class FXMLDocumentController implements Initializable {
         // Add a custom icon
         data.getStage().getIcons().add(new Image(this.getClass().getResource("/images/corendon_star_logo.png").toString()));
     }
-    
+
     private void userCheck(String username, String password) throws IOException {
         try {
             ResultSet resultSet = MainApp.myJDBC.executeResultSetQuery("SELECT * FROM Account");
@@ -116,6 +116,10 @@ public class FXMLDocumentController implements Initializable {
                     if (userDataSet.next()) {
                         data.setName(userDataSet.getString("first_name") + (userDataSet.getString("preposition") != null ? " "
                                 + userDataSet.getString("preposition") : "") + " " + userDataSet.getString("last_name"));
+                        ResultSet accountInfoSet = MainApp.myJDBC.executeResultSetQuery("SELECT user_level FROM Account WHERE Employee_code=" + resultSet.getInt("Employee_code"));
+                        if (accountInfoSet.next()) {
+                            data.setPermissions(accountInfoSet.getInt("user_level"));
+                        }
                         MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
                     } else {
                         statusMessage.setText("Impossible error has occured. Please try again.");

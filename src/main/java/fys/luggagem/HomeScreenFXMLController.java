@@ -9,7 +9,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javax.swing.Timer;
 
@@ -27,6 +29,10 @@ public class HomeScreenFXMLController implements Initializable {
 
     @FXML
     private Label nameLabel;
+    @FXML
+    private Button reportsButton;
+    @FXML
+    private Button accountManagementButton;
 
     @FXML
     private void handleLogOutAction(ActionEvent event) throws IOException {
@@ -73,5 +79,13 @@ public class HomeScreenFXMLController implements Initializable {
         data.setWorkspace(workspace);
         MainApp.loadFXMLFile(this.getClass().getResource("/fxml/HomeScreenContentFXML.fxml"));
         nameLabel.setText(data.getName());
+
+        if (data.getPermissions() < 1) {
+            reportsButton.setDisable(true);
+        }
+
+        if (data.getPermissions() < 2) {
+            accountManagementButton.setDisable(true);
+        }
     }
 }

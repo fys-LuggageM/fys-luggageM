@@ -67,122 +67,75 @@
                               <Insets />
                            </HBox.margin>
                         </TextField>
-                     </children>
-                     <padding>
-                        <Insets bottom="5.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets bottom="7.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <Label maxWidth="1.7976931348623157E308" text="%airportFound">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="airportFound" promptText="%airportFoundPrompt">
-                     <VBox.margin>
-                        <Insets bottom="7.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Label maxWidth="1.7976931348623157E308" text="%luggageType">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="luggageType" promptText="%luggageTypePrompt">
-                     <VBox.margin>
-                        <Insets bottom="7.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Label maxWidth="1.7976931348623157E308" text="%brand">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="brand" promptText="Eastsport">
-                     <VBox.margin>
-                        <Insets bottom="7.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Label maxWidth="1.7976931348623157E308" text="%arrivedWithFlight">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="arrivedWithFlight" promptText="AA1234">
-                     <VBox.margin>
-                        <Insets bottom="7.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Label maxWidth="1.7976931348623157E308" text="%tag">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="tag" promptText="1234567890">
-                     <VBox.margin>
-                        <Insets bottom="7.0" />
-                     </VBox.margin>
-                  </TextField>
-               </children>
-            </VBox>
-            <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="310.0" minHeight="500.0" minWidth="310.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-               <children>
-                  <Label maxWidth="1.7976931348623157E308" text="%locationFound">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="locationFound" promptText="%locationFoundPrompt">
-                     <VBox.margin>
-                        <Insets bottom="7.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Label maxWidth="1.7976931348623157E308" text="%colors" VBox.vgrow="NEVER">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Label>
-                  <HBox prefWidth="200.0">
-                     <children>
-                        <TextField fx:id="primaryColor" promptText="%colorsPrompt1" />
-                        <TextField fx:id="secondaryColor" promptText="%colorsPrompt2">
-                           <HBox.margin>
-                              <Insets left="25.0" />
-                           </HBox.margin>
+                        <Label maxWidth="1.7976931348623157E308" text="%date">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+                        <DatePicker fx:id="date" maxWidth="1.7976931348623157E308" prefHeight="31.0" prefWidth="349.0" promptText="14-11-2017">
+                            <VBox.margin>
+                                <Insets bottom="7.0" />
+                            </VBox.margin>
+                        </DatePicker>
+                        <Label maxWidth="1.7976931348623157E308" text="%time">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+                        <HBox prefWidth="200.0">
+                            <children>
+                                <TextField fx:id="time" promptText="HH:mm:ss">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </TextField>
+                            </children>
+                            <padding>
+                                <Insets bottom="5.0" />
+                            </padding>
+                            <VBox.margin>
+                                <Insets bottom="7.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <Label maxWidth="1.7976931348623157E308" text="%airportFound">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="airportFound" promptText="%airportFoundPrompt">
+                            <VBox.margin>
+                                <Insets bottom="7.0" />
+                            </VBox.margin>
                         </TextField>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="7.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <Label maxWidth="1.7976931348623157E308" text="%luggageSizeInCm">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-                  <HBox alignment="CENTER" prefWidth="200.0">
-                     <children>
-                        <TextField fx:id="sizeHeigth" promptText="%luggageSizeInCmPromptHeight">
-                           <HBox.margin>
-                              <Insets right="5.0" />
-                           </HBox.margin>
+                        <Label maxWidth="1.7976931348623157E308" text="%luggageType">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="luggageType" promptText="%luggageTypePrompt">
+                            <VBox.margin>
+                                <Insets bottom="7.0" />
+                            </VBox.margin>
                         </TextField>
-                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="28.0" text="X" />
-                        <TextField fx:id="sizeWidth" promptText="%luggageSizeInCmPromptWidth">
-                           <HBox.margin>
-                              <Insets left="5.0" right="5.0" />
-                           </HBox.margin>
+                        <Label maxWidth="1.7976931348623157E308" text="%brand">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="brand" promptText="Eastsport">
+                            <VBox.margin>
+                                <Insets bottom="7.0" />
+                            </VBox.margin>
                         </TextField>
-                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="28.0" text="X" />
-                        <TextField fx:id="sizeDepth" promptText="%luggageSizeInCmPromptDepth">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
+                        <Label maxWidth="1.7976931348623157E308" text="%arrivedWithFlight">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="arrivedWithFlight" promptText="AA1234">
+                            <VBox.margin>
+                                <Insets bottom="7.0" />
+                            </VBox.margin>
                         </TextField>
                      </children>
                      <VBox.margin>

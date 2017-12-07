@@ -14,199 +14,199 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" fx:id="rootPane" maxHeight="768.0" maxWidth="1024.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-border-color: black; -fx-border-width: 1 0 0 0;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.luggagem.HomeScreenFXMLController">
-   <children>
-      <BorderPane layoutX="341.0" layoutY="92.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 0 0 1 0;" BorderPane.alignment="CENTER">
-               <children>
-                  <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/Naamloos-2.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#handleHomeAction" style="-fx-background-color: white;">
-                           <graphic>
-                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/user_male2-512.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Label fx:id="nameLabel">
-                           <HBox.margin>
-                              <Insets left="5.0" right="100.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <Button mnemonicParsing="false" onAction="#handleLogOutAction" style="-fx-background-color: white;">
-                           <HBox.margin>
-                              <Insets right="43.0" />
-                           </HBox.margin>
-                           <graphic>
-                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/logout_button.png" />
-                                 </image>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </ImageView>
-                           </graphic>
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                     </children>
-                  </HBox>
-               </children>
-            </HBox>
-         </top>
-         <left>
-            <VBox maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 0 1 0 0;" BorderPane.alignment="CENTER">
-               <children>
-                  <VBox alignment="CENTER" prefHeight="107.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                     <children>
-                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleGevondenBagageAction" style="-fx-background-color: white;" text="%luggageFound">
-                           <graphic>
-                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/8175-200.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
-                     <children>
-                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleVerlorenBagageAction" style="-fx-background-color: white;" text="%luggageLost">
-                           <graphic>
-                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/8175-200.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
-                     <children>
-                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleBeschadigdeBagageAction" style="-fx-background-color: white;" text="%luggageDamaged">
-                           <graphic>
-                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/8175-200.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
-                     <children>
-                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleDatabaseAction" style="-fx-background-color: white;" text="%database">
-                           <graphic>
-                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/36146-200.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
-                     <children>
-                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleRapportageAction" style="-fx-background-color: white;" text="%reports">
-                           <graphic>
-                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/48895-200.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
-                     <children>
-                        <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleGebruikersbeheerAction" style="-fx-background-color: white;" text="%adminPanel">
-                           <graphic>
-                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/2000px-New_user_icon-01.svg.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </VBox>
-               </children>
-               <padding>
-                  <Insets bottom="15.0" top="15.0" />
-               </padding>
-               <BorderPane.margin>
-                  <Insets />
-               </BorderPane.margin>
-            </VBox>
-         </left>
-         <center>
-            <StackPane fx:id="workspace" BorderPane.alignment="CENTER" />
-         </center>
-      </BorderPane>
-   </children>
+    <children>
+        <BorderPane layoutX="341.0" layoutY="92.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <top>
+                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 0 0 1 0;" BorderPane.alignment="CENTER">
+                    <children>
+                        <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/Naamloos-2.png" />
+                            </image>
+                            <HBox.margin>
+                                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                            </HBox.margin>
+                        </ImageView>
+                        <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Button mnemonicParsing="false" onAction="#handleHomeAction" style="-fx-background-color: white;">
+                                    <graphic>
+                                        <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../images/user_male2-512.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </Button>
+                                <Label fx:id="nameLabel">
+                                    <HBox.margin>
+                                        <Insets left="5.0" right="100.0" />
+                                    </HBox.margin>
+                                    <font>
+                                        <Font size="24.0" />
+                                    </font>
+                                </Label>
+                                <Button mnemonicParsing="false" onAction="#handleLogOutAction" style="-fx-background-color: white;">
+                                    <HBox.margin>
+                                        <Insets right="43.0" />
+                                    </HBox.margin>
+                                    <graphic>
+                                        <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../images/logout_button.png" />
+                                            </image>
+                                            <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                            </cursor>
+                                        </ImageView>
+                                    </graphic>
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </children>
+                </HBox>
+            </top>
+            <left>
+                <VBox maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 0 1 0 0;" BorderPane.alignment="CENTER">
+                    <children>
+                        <VBox alignment="CENTER" prefHeight="107.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleGevondenBagageAction" style="-fx-background-color: white;" text="%luggageFound">
+                                    <graphic>
+                                        <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../images/8175-200.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </VBox>
+                        <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                            <children>
+                                <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleVerlorenBagageAction" style="-fx-background-color: white;" text="%luggageLost">
+                                    <graphic>
+                                        <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../images/8175-200.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </VBox>
+                        <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                            <children>
+                                <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleBeschadigdeBagageAction" style="-fx-background-color: white;" text="%luggageDamaged">
+                                    <graphic>
+                                        <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../images/8175-200.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </VBox>
+                        <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                            <children>
+                                <Button contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleDatabaseAction" style="-fx-background-color: white;" text="%database">
+                                    <graphic>
+                                        <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../images/36146-200.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </VBox>
+                        <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                            <children>
+                                <Button fx:id="reportsButton" contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleRapportageAction" style="-fx-background-color: white;" text="%reports">
+                                    <graphic>
+                                        <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../images/48895-200.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </VBox>
+                        <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                            <children>
+                                <Button fx:id="accountManagementButton" contentDisplay="TOP" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleGebruikersbeheerAction" style="-fx-background-color: white;" text="%adminPanel">
+                                    <graphic>
+                                        <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../images/2000px-New_user_icon-01.svg.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </VBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="15.0" top="15.0" />
+                    </padding>
+                    <BorderPane.margin>
+                        <Insets />
+                    </BorderPane.margin>
+                </VBox>
+            </left>
+            <center>
+                <StackPane fx:id="workspace" BorderPane.alignment="CENTER" />
+            </center>
+        </BorderPane>
+    </children>
 </AnchorPane>

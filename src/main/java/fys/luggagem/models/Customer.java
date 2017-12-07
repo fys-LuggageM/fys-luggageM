@@ -1,5 +1,10 @@
 package fys.luggagem.models;
 
+import fys.luggagem.MyJDBC;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author Jordan van Beijnhem <jordan.van.beijnhem@hva.nl>
@@ -62,7 +67,7 @@ public class Customer {
     }
 
     public void setCustomerNr(int customerNr) {
-        this.customerNr = 1;
+        this.customerNr = customerNr;
     }
 
     public void setFirstName(String firstName) {
@@ -117,5 +122,30 @@ public class Customer {
         this.country = null;
         this.phoneNumber = null;
         this.emailAdres = null;
+    }
+
+    public static List<Customer> getAllCustomers(MyJDBC myJDBC, List<Customer> customerList) {
+        customerList.clear();
+        try {
+            ResultSet rs = myJDBC.executeResultSetQuery("SELECT * FROM customer");
+            while (rs.next()) {
+                Customer customer = new Customer();
+                customer.setCustomerNr(rs.getInt(1));
+                customer.setFirstName(rs.getString(2));
+                customer.setPreposition(rs.getString(3));
+                customer.setLastName(rs.getString(4));
+                customer.setAdres(rs.getString(5));
+                customer.setCity(rs.getString(6));
+                customer.setPostalCode(rs.getString(7));
+                customer.setCountry(rs.getString(8));
+                customer.setPhoneNumber(rs.getString(9));
+                customer.setEmailAdres(rs.getString(10));
+                customerList.add(customer);
+            }
+        } catch (SQLException sq) {
+            myJDBC.error(sq);
+        }
+
+        return customerList;
     }
 }
