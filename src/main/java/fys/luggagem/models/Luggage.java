@@ -155,12 +155,11 @@ public class Luggage {
         luggageList.clear();
         Connection conn = myJDBC.getConnection();
         PreparedStatement ps = null;
-        String matchingLuggage = "SELECT labelnr, luggage_type, brand, primary_color, secondary_color FROM luggage\n" +
-"    WHERE (labelnr = ?) OR (luggage_type = ? AND brand = ? AND primary_color = ? AND secondary_color = ?)";
+        String matchingLuggage = "SELECT labelnr, luggage_type, brand, primary_color, secondary_color FROM luggage\n"
+                + "    WHERE (labelnr = ?) OR (luggage_type = ? AND brand = ? AND primary_color = ? AND secondary_color = ?)";
         try {
 
             ps = conn.prepareStatement(matchingLuggage);
-//            ps.setInt(1, db.getRegNrLost());
             ps.setString(1, getLabelNr());
             ps.setString(2, getLuggageType());
             ps.setString(3, getBrand());
@@ -168,7 +167,6 @@ public class Luggage {
             ps.setString(5, getSecondaryColor());
 
             ResultSet rs = ps.executeQuery();
-
 
             while (rs.next()) {
                 Luggage luggage = new Luggage();
