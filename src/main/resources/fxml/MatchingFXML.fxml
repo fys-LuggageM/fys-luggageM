@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+
 <AnchorPane id="AnchorPane" maxHeight="600.0" maxWidth="800.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.luggagem.MatchingController">
     <children>
         <GridPane hgap="10.0" layoutX="-13.0" layoutY="6.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="-6.0" AnchorPane.leftAnchor="-13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="6.0">
@@ -25,6 +26,7 @@
             <children>
                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
                     <children>
+
                         <Label style="-fx-font-weight: bold;" text="Found matches:">
                             <font>
                                 <Font size="24.0" />
@@ -48,6 +50,7 @@
                                 <Insets top="10.0" />
                             </padding>
                         </Label>
+
                         <Label fx:id="type" prefHeight="17.0" prefWidth="176.0" text="Label">
                             <font>
                                 <Font size="14.0" />

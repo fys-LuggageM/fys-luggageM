@@ -5,6 +5,7 @@ import fys.luggagem.models.Data;
 import fys.luggagem.models.Luggage;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -81,14 +82,16 @@ public class VerlorenBagageController implements Initializable {
     private TextArea notesField;
 
     @FXML
-    public void handleSaveAction(ActionEvent event) {
+    public void handleSaveAction(ActionEvent event) throws SQLException {
         //TODO build a check method for required fields
-        String sql = "INSERT INTO customer VALUES (546, '" + customer.getFirstName() + "', '"
-                + (customer.getPreposition() != null ? customer.getPreposition() : "NULL") + "', '" + customer.getLastName()
-                + "', '" + customer.getAdres() + "', '" + customer.getCity() + "', '" + customer.getPostalCode()
-                + "', '" + customer.getCountry() + "', '" + customer.getPhoneNumber() + "', '"
-                + customer.getEmailAdres() + "');";
-        myJDBC.executeUpdateQuery(sql);
+//        String sql = "INSERT INTO customer VALUES (546, '" + customer.getFirstName() + "', '"
+//                + (customer.getPreposition() != null ? customer.getPreposition() : "NULL") + "', '" + customer.getLastName()
+//                + "', '" + customer.getAdres() + "', '" + customer.getCity() + "', '" + customer.getPostalCode()
+//                + "', '" + customer.getCountry() + "', '" + customer.getPhoneNumber() + "', '"
+//                + customer.getEmailAdres() + "');";
+//        myJDBC.executeUpdateQuery(sql);
+        Luggage luggage = createNewFoundLuggage();
+        luggage.foundLuggageToDatabase();
         customer.clear();
     }
 
@@ -142,8 +145,10 @@ public class VerlorenBagageController implements Initializable {
         cityField.setText(customer.getCity());
     }
 
-    private void createNewFoundLuggage() {
+    private Luggage createNewFoundLuggage() throws SQLException {
+        myJDBC.newRegnrFoundLuggage();
         Luggage foundLuggage = new Luggage();
+        foundLuggage.setRegistrationNr(myJDBC.getLuggageRegistrationNr());
         foundLuggage.setIATA(IATA); //test value
         foundLuggage.setLuggageType(!luggageTypeField.getText().isEmpty() ? luggageTypeField.getText() : null);
         foundLuggage.setBrand(!brandField.getText().isEmpty() ? brandField.getText() : null);
@@ -152,8 +157,10 @@ public class VerlorenBagageController implements Initializable {
         foundLuggage.setLabelNr(!tagField.getText().isEmpty() ? tagField.getText() : null);
         foundLuggage.setPrimaryColor(!primaryColorField.getText().isEmpty() ? primaryColorField.getText() : null);
         foundLuggage.setSecondaryColor(!secondaryColorField.getText().isEmpty() ? secondaryColorField.getText() : null);
-        foundLuggage.setDestination(customer.getFirstName() + (customer.getPreposition() != null
+        foundLuggage.setTravellerName(customer.getFirstName() + (customer.getPreposition() != null
                 ? " " + customer.getPreposition() : "") + " " + customer.getLastName());
         foundLuggage.setNotes(!notesField.getText().isEmpty() ? notesField.getText() : null);
+
+        return foundLuggage;
     }
 }

@@ -216,6 +216,7 @@
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
+
                         <Label fx:id="reportLabel" maxWidth="1.7976931348623157E308">
                            <font>
                               <Font size="16.0" />

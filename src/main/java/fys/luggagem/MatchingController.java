@@ -83,11 +83,6 @@ public class MatchingController implements Initializable {
                 primary.setText(luggage.getPrimaryColor());
                 secondary.setText(luggage.getSecondaryColor());
             }
-//            System.out.println("\n" + labelnr + "\n");
-//            System.out.println(type + "\n");
-//            System.out.println(brand + "\n");
-//            System.out.println(primColor + "\n");
-//            System.out.println(secColor + "\n");
 
         } catch (SQLException e) {
             System.err.println("deze query is hemeaal kaput" + e);
