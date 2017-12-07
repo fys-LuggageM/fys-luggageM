@@ -1,8 +1,13 @@
 package fys.luggagem;
 
 import fys.luggagem.models.Customer;
+import fys.luggagem.models.Data;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,36 +21,38 @@ import javafx.scene.control.TextField;
 public class NewCustomerFXMLController implements Initializable {
 
     private Customer customer = MainApp.getCustomer();
-    
+    private MyJDBC db = MainApp.myJDBC;
+    private Data data = MainApp.getData();
+
     @FXML
     private TextField firstNameField;
-    
+
     @FXML
     private TextField prepositionField;
-    
+
     @FXML
     private TextField lastNameField;
-    
+
     @FXML
     private TextField adresField;
-    
+
     @FXML
     private TextField cityField;
-    
+
     @FXML
     private TextField postalCodeField;
-    
+
     @FXML
     private TextField countryField;
-    
+
     @FXML
     private TextField phoneNumberField;
-    
+
     @FXML
     private TextField emailAdresField;
-    
+
     @FXML
-    public void handleSaveAction() throws IOException {
+    public void handleSaveAction() throws IOException, SQLException {
         customer.setFirstName(firstNameField.getText());
         customer.setPreposition(prepositionField.getText());
         customer.setLastName(lastNameField.getText());
@@ -55,12 +62,83 @@ public class NewCustomerFXMLController implements Initializable {
         customer.setCountry(countryField.getText());
         customer.setPhoneNumber(phoneNumberField.getText());
         customer.setEmailAdres(emailAdresField.getText());
-        MainApp.loadFXMLFile(this.getClass().getResource("/fxml/VerlorenBagageFXML.fxml"));
+        setCustomer();
+        MainApp.loadFXMLFile(this.getClass().getResource(data.getLastScene()));
+
+    }
+
+    private void setCustomer() throws SQLException {
+        Connection conn = db.getConnection();
+
+        // create new unique customerNr and assing it to the customer object
+        setCustomerNr();
+
+        String insertCustomer = "INSERT INTO customer"
+                + "(customernr, first_name, preposition, last_name, adres, city, postal_code, country, phone, email) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        PreparedStatement ps = null;
+        try {
+            conn.setAutoCommit(false);
+            ps = conn.prepareStatement(insertCustomer);
+            ps.setInt(1, customer.getCustomerNr());
+            ps.setString(2, customer.getFirstName());
+            if (customer.getPreposition() != null) {
+                ps.setString(3, customer.getPreposition());
+            } else {
+                ps.setString(3, "");
+            }
+            ps.setString(4, customer.getLastName());
+            ps.setString(5, customer.getAdres());
+            ps.setString(6, customer.getCity());
+            ps.setString(7, customer.getPostalCode());
+            ps.setString(8, customer.getCountry());
+            ps.setString(9, customer.getPhoneNumber());
+            ps.setString(10, customer.getEmailAdres());
+            ps.executeUpdate();
+            conn.commit();
+        } catch (SQLException e) {
+            System.err.println("SQLException: " + e.getSQLState() + "\nDifferent exception: " + e.getMessage());
+        }
+    }
+
+    private void setCustomerNr() throws SQLException {
+        int highestCustomerNr;
+
+        Connection conn = db.getConnection();
+
+        String getHighestCustomerNr = "SELECT MAX(customernr) FROM customer";
+
+        PreparedStatement ps = null;
+        try {
+            // set autocommit false
+            conn.setAutoCommit(false);
+
+            // add query to prepared statement
+            ps = conn.prepareStatement(getHighestCustomerNr);
+
+            // execute prepared statement
+            ResultSet result = ps.executeQuery();
+
+            // get results from the query
+            if (result.next()) {
+                highestCustomerNr = result.getInt(1);
+
+                // increment customernr
+                highestCustomerNr++;
+                customer.setCustomerNr(highestCustomerNr);
+                System.out.print(customer.getCustomerNr() + "\n");
+
+            }
+        } catch (SQLException e) {
+            System.err.println("SQLException: " + e.getMessage());
+        }
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
     }
 
 }

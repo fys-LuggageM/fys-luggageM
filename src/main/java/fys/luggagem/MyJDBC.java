@@ -14,7 +14,7 @@ public class MyJDBC {
     private static final String DB_DEFAULT_DATABASE = "sys";
     private static final String DB_DEFAULT_SERVER_URL = "localhost:3306";
     private static final String DB_DEFAULT_ACCOUNT = "root";
-    private static final String DB_DEFAULT_PASSWORD = "Chuck!313"; //insert password
+    private static final String DB_DEFAULT_PASSWORD = ""; //insert password
 
     private final static String DB_DRIVER_URL = "com.mysql.jdbc.Driver";
     private final static String DB_DRIVER_PREFIX = "jdbc:mysql://";
@@ -339,16 +339,16 @@ public class MyJDBC {
     public void getRegistrationnr() {
         System.out.print(registrationNr);
     }
-    
-    public int getRegNrDamaged(){
+
+    public int getRegNrDamaged() {
         return registrationNrDamaged;
     }
-    
-    public int getRegNrLost(){
+
+    public int getRegNrLost() {
         return registrationNrLost;
     }
-    
-    public int getRegNrFound(){
+
+    public int getRegNrFound() {
         return registrationNrFound;
     }
 
@@ -359,7 +359,7 @@ public class MyJDBC {
         String selectMaxRegNR = "SELECT MAX(registrationnr) FROM luggage";
 
         // insert query to create new registrationNr
-            String insertNewRegNR = "INSERT INTO luggage (registrationnr, case_type, airport_IATA) VALUES (?, 3, 'AMS')";
+        String insertNewRegNR = "INSERT INTO luggage (registrationnr, case_type) VALUES (?, 3)";
 
 //        String INSERT_PICTURE = "insert into test(id, image01, image02, image03) values (?, ?, ?, ?)";
         // prepared statement

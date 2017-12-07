@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="fys.luggagem.ExistingCustomerFXMLController">
+    <children>
+        <GridPane layoutX="287.0" layoutY="255.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" />
+                <ColumnConstraints hgrow="NEVER" />
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints vgrow="ALWAYS" />
+            </rowConstraints>
+            <children>
+                <VBox maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <children>
+                        <Label text="Zoeken:">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="searchField">
+                            <VBox.margin>
+                                <Insets bottom="25.0" />
+                            </VBox.margin>
+                        </TextField>
+                        <TableView fx:id="customerTableView" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="customerNr" prefWidth="75.0" style="-fx-alignment: center;" text="Klantnr" />
+                                <TableColumn fx:id="firstName" prefWidth="92.0" style="-fx-alignment: center;" text="Voornaam" />
+                                <TableColumn fx:id="preposition" prefWidth="110.0" style="-fx-alignment: center;" text="Tussenvoegsel" />
+                                <TableColumn fx:id="lastName" prefWidth="114.0" style="-fx-alignment: center;" text="Achternaam" />
+                                <TableColumn fx:id="adres" prefWidth="85.0" style="-fx-alignment: center;" text="Adres" />
+                                <TableColumn fx:id="postalCode" prefWidth="111.0" style="-fx-alignment: center;" text="Postcode" />
+                                <TableColumn fx:id="emailAdres" prefWidth="75.0" style="-fx-alignment: center;" text="Emailadres" />
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                        </TableView>
+                    </children>
+                </VBox>
+            </children>
+        </GridPane>
+    </children>
+</AnchorPane>

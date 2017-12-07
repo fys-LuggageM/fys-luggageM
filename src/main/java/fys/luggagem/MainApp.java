@@ -11,13 +11,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
 
-    static MyJDBC myJDBC;
+    public static MyJDBC myJDBC;
     static Customer customer = new Customer();
     static Data data = new Data();
     Scene window;
@@ -47,6 +46,18 @@ public class MainApp extends Application {
         return null;
     }
 
+    public static File selectFileToRead(String xlsx) {
+        Stage stage = new Stage();
+        FileChooser filechooser = new FileChooser();
+        filechooser.setTitle("Select file to read");
+        filechooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel", "*.xlsx"));
+        File selectedFile = filechooser.showOpenDialog(stage);
+        if (selectedFile != null) {
+            return selectedFile;
+        }
+        return null;
+    }
+
     public static void setScene(URL location) throws IOException {
         FXMLLoader loader = new FXMLLoader(location);
         loader.setResources(data.getResourceBundle());
@@ -63,7 +74,7 @@ public class MainApp extends Application {
         }
         data.getScene().setRoot(root);
     }
-    
+
     public static void loadFXMLFile(URL fxmlFileName) {
         try {
             FXMLLoader loader = new FXMLLoader(fxmlFileName);
@@ -79,7 +90,7 @@ public class MainApp extends Application {
     public static Data getData() {
         return data;
     }
-    
+
     public static Customer getCustomer() {
         return customer;
     }
