@@ -16,7 +16,7 @@ import javafx.stage.Stage;
  * @author jordan
  */
 public class Data {
-    
+
     private String name;
     private Scene window;
     private String language;
@@ -27,34 +27,34 @@ public class Data {
     private StackPane workspace;
     private int permissions;
     private String lastScene;
-    
+
     public Data() {
         language = "en";
         country = "US";
         locale = new Locale(language, country);
         resource = ResourceBundle.getBundle("bundles.Bundle", locale);
     }
-    
-    public void setLastScene(String lastScene){
+
+    public void setLastScene(String lastScene) {
         this.lastScene = lastScene;
     }
-    
-    public String getLastScene(){
+
+    public String getLastScene() {
         return lastScene;
     }
-    
+
     public void setName(String n) {
         name = n;
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
     public void setScene(Scene scene) {
         window = scene;
     }
-    
+
     public Scene getScene() {
         return window;
     }
@@ -79,7 +79,7 @@ public class Data {
         locale = new Locale(language, country);
         resource = ResourceBundle.getBundle("bundles.Bundle", locale);
     }
-    
+
     public ResourceBundle getResourceBundle() {
         return resource;
     }
@@ -107,5 +107,5 @@ public class Data {
     public void setPermissions(int permissions) {
         this.permissions = permissions;
     }
-    
+
 }

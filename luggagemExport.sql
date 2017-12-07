@@ -1,88 +1,113 @@
--- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: 127.0.0.1
--- Gegenereerd op: 05 dec 2017 om 13:45
--- Serverversie: 10.1.21-MariaDB
--- PHP-versie: 7.1.1
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
+-- Host: localhost    Database: luggagem
+-- ------------------------------------------------------
+-- Server version	5.7.20-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Database: `luggagem`
+-- Table structure for table `account`
 --
 
--- --------------------------------------------------------
-
---
--- Tabelstructuur voor tabel `account`
---
-
+DROP TABLE IF EXISTS `account`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `account` (
   `Employee_code` int(11) NOT NULL,
   `email` varchar(45) DEFAULT NULL,
   `password` varchar(64) DEFAULT NULL,
   `salt` varchar(64) DEFAULT NULL,
   `user_level` int(11) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT '1'
+  `active` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`Employee_code`),
+  KEY `fk_Account_Medewerker_idx` (`Employee_code`),
+  CONSTRAINT `fk_Account_Medewerker` FOREIGN KEY (`Employee_code`) REFERENCES `employee` (`code`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Gegevens worden geëxporteerd voor tabel `account`
+-- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`Employee_code`, `email`, `password`, `salt`, `user_level`, `active`) VALUES
-(500500, 'pathedude@gmail.com', '6F71EF86333B48BDAD9CC03E697A58FEC0E53E7BA4B2C7A33593D34D1263775B', 'F9064373F9B3C8F0A1C610DA2346341F89062E58055B10480A19AD965273DEE9', 3, 1),
-(500501, 'admin@corendol.nl', '6F71EF86333B48BDAD9CC03E697A58FEC0E53E7BA4B2C7A33593D34D1263775B', 'F9064373F9B3C8F0A1C610DA2346341F89062E58055B10480A19AD965273DEE9', 3, 1);
-
--- --------------------------------------------------------
+LOCK TABLES `account` WRITE;
+/*!40000 ALTER TABLE `account` DISABLE KEYS */;
+INSERT INTO `account` VALUES (500500,'pathedude@gmail.com','6F71EF86333B48BDAD9CC03E697A58FEC0E53E7BA4B2C7A33593D34D1263775B','F9064373F9B3C8F0A1C610DA2346341F89062E58055B10480A19AD965273DEE9',1,1),(500501,'admin@corendol.nl','6F71EF86333B48BDAD9CC03E697A58FEC0E53E7BA4B2C7A33593D34D1263775B','F9064373F9B3C8F0A1C610DA2346341F89062E58055B10480A19AD965273DEE9',3,1);
+/*!40000 ALTER TABLE `account` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Tabelstructuur voor tabel `airport`
+-- Table structure for table `airport`
 --
 
+DROP TABLE IF EXISTS `airport`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `airport` (
   `IATA` varchar(5) NOT NULL,
   `name` varchar(45) DEFAULT NULL,
   `country` varchar(45) DEFAULT NULL,
   `timezone` varchar(45) DEFAULT NULL,
-  `city` varchar(45) DEFAULT NULL
+  `city` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`IATA`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Gegevens worden geëxporteerd voor tabel `airport`
+-- Dumping data for table `airport`
 --
 
-INSERT INTO `airport` (`IATA`, `name`, `country`, `timezone`, `city`) VALUES
-('AMS', 'Amsterdam Schiphol Airport', 'Netherlands', 'GMT+1', 'Amsterdam');
-
--- --------------------------------------------------------
+LOCK TABLES `airport` WRITE;
+/*!40000 ALTER TABLE `airport` DISABLE KEYS */;
+INSERT INTO `airport` VALUES ('AMS','Amsterdam Schiphol Airport','Netherlands','GMT+1','Amsterdam');
+/*!40000 ALTER TABLE `airport` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Tabelstructuur voor tabel `changes`
+-- Table structure for table `changes`
 --
 
+DROP TABLE IF EXISTS `changes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `changes` (
   `date` date NOT NULL,
   `time` time NOT NULL,
   `Employee_code` int(11) NOT NULL,
-  `Luggage_registrationnr` int(11) NOT NULL
+  `Luggage_registrationnr` int(11) NOT NULL,
+  PRIMARY KEY (`Employee_code`,`Luggage_registrationnr`),
+  KEY `fk_Changes_lost_Medewerker1_idx` (`Employee_code`),
+  KEY `fk_Changes_lost_Verloren_bagage1_idx` (`Luggage_registrationnr`),
+  CONSTRAINT `fk_Changes_lost_Medewerker1` FOREIGN KEY (`Employee_code`) REFERENCES `employee` (`code`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Changes_lost_Verloren_bagage1` FOREIGN KEY (`Luggage_registrationnr`) REFERENCES `luggage` (`registrationnr`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Tabelstructuur voor tabel `customer`
+-- Dumping data for table `changes`
 --
 
+LOCK TABLES `changes` WRITE;
+/*!40000 ALTER TABLE `changes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `changes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `customer`
+--
+
+DROP TABLE IF EXISTS `customer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `customer` (
   `customernr` int(11) NOT NULL,
   `first_name` varchar(45) DEFAULT NULL,
@@ -93,201 +118,160 @@ CREATE TABLE `customer` (
   `postal_code` varchar(45) DEFAULT NULL,
   `country` varchar(45) DEFAULT NULL,
   `phone` varchar(45) DEFAULT NULL,
-  `email` varchar(45) DEFAULT NULL
+  `email` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`customernr`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Gegevens worden geëxporteerd voor tabel `customer`
+-- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`customernr`, `first_name`, `preposition`, `last_name`, `adres`, `city`, `postal_code`, `country`, `phone`, `email`) VALUES
-(1, 'Jan', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
--- --------------------------------------------------------
+LOCK TABLES `customer` WRITE;
+/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+INSERT INTO `customer` VALUES (1,'Jan',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Tabelstructuur voor tabel `employee`
+-- Table structure for table `employee`
 --
 
+DROP TABLE IF EXISTS `employee`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `employee` (
   `code` int(11) NOT NULL,
   `first_name` varchar(45) DEFAULT NULL,
   `preposition` varchar(45) DEFAULT NULL,
   `last_name` varchar(45) DEFAULT NULL,
-  `Luchthaven_IATA` varchar(5) NOT NULL
+  `Luchthaven_IATA` varchar(5) NOT NULL,
+  PRIMARY KEY (`code`),
+  KEY `fk_Medewerker_Luchthaven1_idx` (`Luchthaven_IATA`),
+  CONSTRAINT `fk_Medewerker_Luchthaven1` FOREIGN KEY (`Luchthaven_IATA`) REFERENCES `airport` (`IATA`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Gegevens worden geëxporteerd voor tabel `employee`
+-- Dumping data for table `employee`
 --
 
-INSERT INTO `employee` (`code`, `first_name`, `preposition`, `last_name`, `Luchthaven_IATA`) VALUES
-(500500, 'Pathe', NULL, 'Dude', 'AMS'),
-(500501, 'Admin', NULL, NULL, 'AMS');
-
--- --------------------------------------------------------
+LOCK TABLES `employee` WRITE;
+/*!40000 ALTER TABLE `employee` DISABLE KEYS */;
+INSERT INTO `employee` VALUES (500500,'Pathe',NULL,'Dude','AMS'),(500501,'Admin',NULL,NULL,'AMS');
+/*!40000 ALTER TABLE `employee` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Tabelstructuur voor tabel `luggage`
+-- Table structure for table `luggage`
 --
 
+DROP TABLE IF EXISTS `luggage`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `luggage` (
   `registrationnr` int(11) NOT NULL,
   `date` datetime DEFAULT CURRENT_TIMESTAMP,
-  `flightnr` varchar(45) DEFAULT NULL,
-  `labelnr` varchar(45) DEFAULT NULL,
-  `destination` varchar(45) DEFAULT NULL,
   `luggage_type` varchar(45) DEFAULT NULL,
   `brand` varchar(45) DEFAULT NULL,
+  `flightnr` varchar(45) DEFAULT NULL,
+  `labelnr` varchar(45) DEFAULT NULL,
+  `location_found` varchar(45) DEFAULT NULL,
   `primary_color` varchar(45) DEFAULT NULL,
   `secondary_color` varchar(45) DEFAULT NULL,
-  `notes` varchar(45) DEFAULT NULL,
-  `case_type` int(11) DEFAULT NULL,
+  `size` varchar(45) DEFAULT NULL,
+  `weight` varchar(45) DEFAULT NULL,
   `traveller_name` varchar(45) DEFAULT NULL,
+  `traveller_city` varchar(45) DEFAULT NULL,
+  `notes` varchar(45) DEFAULT NULL,
+  `destination` varchar(45) DEFAULT NULL,
+  `case_type` int(11) DEFAULT NULL,
   `case_status` tinyint(1) NOT NULL DEFAULT '1',
   `airport_IATA` varchar(5) DEFAULT NULL,
-  `customer_customernr` int(11) DEFAULT NULL
+  `customer_customernr` int(11) DEFAULT NULL,
+  PRIMARY KEY (`registrationnr`),
+  KEY `fk_airport_IATA_idx` (`airport_IATA`),
+  KEY `fk_luggage_customer1_idx` (`customer_customernr`),
+  CONSTRAINT `fk_airport_IATA` FOREIGN KEY (`airport_IATA`) REFERENCES `airport` (`IATA`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_luggage_customer1` FOREIGN KEY (`customer_customernr`) REFERENCES `customer` (`customernr`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Gegevens worden geëxporteerd voor tabel `luggage`
+-- Dumping data for table `luggage`
 --
 
-INSERT INTO `luggage` (`registrationnr`, `date`, `flightnr`, `labelnr`, `destination`, `luggage_type`, `brand`, `primary_color`, `secondary_color`, `notes`, `case_type`, `traveller_name`, `case_status`, `airport_IATA`, `customer_customernr`) VALUES
-(1, '2017-12-05 12:32:27', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3, NULL, 1, 'AMS', NULL);
-
--- --------------------------------------------------------
+LOCK TABLES `luggage` WRITE;
+/*!40000 ALTER TABLE `luggage` DISABLE KEYS */;
+INSERT INTO `luggage` VALUES (1,'2017-12-05 12:32:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3,1,'AMS',NULL),(201622309,'2017-12-07 10:50:00','Business Case','Ivy','TK2414','2771896151','belt-06','Blue','','50x40x15','10kg','M. Messi','Barcelona','',NULL,1,1,NULL,NULL),(201623700,'2017-12-07 18:25:00','Box','','','1153481443','','Cream','','','','P. Curie','Versaille','',NULL,1,1,NULL,NULL),(201624729,'2017-12-07 06:30:00','Suitcase','Travel Gear','','3217712035','','Lightbrown','Yellow','100x60x40','30kg','M. van Basten','Alkmaar','ajax stickers',NULL,1,1,NULL,NULL);
+/*!40000 ALTER TABLE `luggage` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Tabelstructuur voor tabel `luggage_damaged`
+-- Table structure for table `luggage_damaged`
 --
 
+DROP TABLE IF EXISTS `luggage_damaged`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `luggage_damaged` (
   `image01` longblob,
   `image02` longblob,
   `image03` longblob,
-  `Luggage_registrationnr` int(11) NOT NULL
+  `Luggage_registrationnr` int(11) NOT NULL,
+  PRIMARY KEY (`Luggage_registrationnr`),
+  CONSTRAINT `fk_Luggage_damaged_Luggage1` FOREIGN KEY (`Luggage_registrationnr`) REFERENCES `luggage` (`registrationnr`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Tabelstructuur voor tabel `match`
+-- Dumping data for table `luggage_damaged`
 --
 
+LOCK TABLES `luggage_damaged` WRITE;
+/*!40000 ALTER TABLE `luggage_damaged` DISABLE KEYS */;
+/*!40000 ALTER TABLE `luggage_damaged` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `match`
+--
+
+DROP TABLE IF EXISTS `match`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `match` (
   `Luggage_registrationnr_foud` int(11) NOT NULL,
   `Luggage_registrationnr_lost` int(11) NOT NULL,
   `Employee_code` int(11) NOT NULL,
   `date` datetime DEFAULT CURRENT_TIMESTAMP,
-  `status` int(11) DEFAULT NULL
+  `status` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Luggage_registrationnr_foud`,`Luggage_registrationnr_lost`),
+  KEY `fk_Match_Luggage1_idx` (`Luggage_registrationnr_foud`),
+  KEY `fk_Match_Luggage2_idx` (`Luggage_registrationnr_lost`),
+  KEY `fk_Match_Medewerker1_idx` (`Employee_code`),
+  CONSTRAINT `fk_Match_Luggage1` FOREIGN KEY (`Luggage_registrationnr_foud`) REFERENCES `luggage` (`registrationnr`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Match_Luggage2` FOREIGN KEY (`Luggage_registrationnr_lost`) REFERENCES `luggage` (`registrationnr`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Match_Medewerker1` FOREIGN KEY (`Employee_code`) REFERENCES `employee` (`code`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Indexen voor geëxporteerde tabellen
+-- Dumping data for table `match`
 --
 
---
--- Indexen voor tabel `account`
---
-ALTER TABLE `account`
-  ADD PRIMARY KEY (`Employee_code`),
-  ADD KEY `fk_Account_Medewerker_idx` (`Employee_code`);
+LOCK TABLES `match` WRITE;
+/*!40000 ALTER TABLE `match` DISABLE KEYS */;
+/*!40000 ALTER TABLE `match` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
---
--- Indexen voor tabel `airport`
---
-ALTER TABLE `airport`
-  ADD PRIMARY KEY (`IATA`);
-
---
--- Indexen voor tabel `changes`
---
-ALTER TABLE `changes`
-  ADD PRIMARY KEY (`Employee_code`,`Luggage_registrationnr`),
-  ADD KEY `fk_Changes_lost_Medewerker1_idx` (`Employee_code`),
-  ADD KEY `fk_Changes_lost_Verloren_bagage1_idx` (`Luggage_registrationnr`);
-
---
--- Indexen voor tabel `customer`
---
-ALTER TABLE `customer`
-  ADD PRIMARY KEY (`customernr`);
-
---
--- Indexen voor tabel `employee`
---
-ALTER TABLE `employee`
-  ADD PRIMARY KEY (`code`),
-  ADD KEY `fk_Medewerker_Luchthaven1_idx` (`Luchthaven_IATA`);
-
---
--- Indexen voor tabel `luggage`
---
-ALTER TABLE `luggage`
-  ADD PRIMARY KEY (`registrationnr`),
-  ADD KEY `fk_airport_IATA_idx` (`airport_IATA`),
-  ADD KEY `fk_luggage_customer1_idx` (`customer_customernr`);
-
---
--- Indexen voor tabel `luggage_damaged`
---
-ALTER TABLE `luggage_damaged`
-  ADD PRIMARY KEY (`Luggage_registrationnr`);
-
---
--- Indexen voor tabel `match`
---
-ALTER TABLE `match`
-  ADD PRIMARY KEY (`Luggage_registrationnr_foud`,`Luggage_registrationnr_lost`),
-  ADD KEY `fk_Match_Luggage1_idx` (`Luggage_registrationnr_foud`),
-  ADD KEY `fk_Match_Luggage2_idx` (`Luggage_registrationnr_lost`),
-  ADD KEY `fk_Match_Medewerker1_idx` (`Employee_code`);
-
---
--- Beperkingen voor geëxporteerde tabellen
---
-
---
--- Beperkingen voor tabel `account`
---
-ALTER TABLE `account`
-  ADD CONSTRAINT `fk_Account_Medewerker` FOREIGN KEY (`Employee_code`) REFERENCES `employee` (`code`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Beperkingen voor tabel `changes`
---
-ALTER TABLE `changes`
-  ADD CONSTRAINT `fk_Changes_lost_Medewerker1` FOREIGN KEY (`Employee_code`) REFERENCES `employee` (`code`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Changes_lost_Verloren_bagage1` FOREIGN KEY (`Luggage_registrationnr`) REFERENCES `luggage` (`registrationnr`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Beperkingen voor tabel `employee`
---
-ALTER TABLE `employee`
-  ADD CONSTRAINT `fk_Medewerker_Luchthaven1` FOREIGN KEY (`Luchthaven_IATA`) REFERENCES `airport` (`IATA`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Beperkingen voor tabel `luggage`
---
-ALTER TABLE `luggage`
-  ADD CONSTRAINT `fk_airport_IATA` FOREIGN KEY (`airport_IATA`) REFERENCES `airport` (`IATA`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_luggage_customer1` FOREIGN KEY (`customer_customernr`) REFERENCES `customer` (`customernr`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Beperkingen voor tabel `luggage_damaged`
---
-ALTER TABLE `luggage_damaged`
-  ADD CONSTRAINT `fk_Luggage_damaged_Luggage1` FOREIGN KEY (`Luggage_registrationnr`) REFERENCES `luggage` (`registrationnr`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Beperkingen voor tabel `match`
---
-ALTER TABLE `match`
-  ADD CONSTRAINT `fk_Match_Luggage1` FOREIGN KEY (`Luggage_registrationnr_foud`) REFERENCES `luggage` (`registrationnr`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Match_Luggage2` FOREIGN KEY (`Luggage_registrationnr_lost`) REFERENCES `luggage` (`registrationnr`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Match_Medewerker1` FOREIGN KEY (`Employee_code`) REFERENCES `employee` (`code`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2017-12-07 16:37:51

@@ -37,6 +37,7 @@ public class GevondenBagageController implements Initializable {
     private Data data = MainApp.getData();
     private String imageURL;
     DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+    
     private List<ExcelImport> foundLuggageList;
     private int index = 0;
 
@@ -69,11 +70,7 @@ public class GevondenBagageController implements Initializable {
     @FXML
     private TextField weight;
     @FXML
-    private TextField firstName;
-    @FXML
-    private TextField insertion;
-    @FXML
-    private TextField lastName;
+    private TextField name;
     @FXML
     private TextField city;
     @FXML
@@ -91,6 +88,8 @@ public class GevondenBagageController implements Initializable {
         date.setValue(LocalDate.now());
         // Set the time
         time.setText(timeFormat.format(new Date()));
+        getNextRegistrationNumber();
+        
 
     }
 
@@ -98,9 +97,21 @@ public class GevondenBagageController implements Initializable {
         foundLuggageList = list;
         registrationNumber.setText(foundLuggageList.get(index).getRegistrationNr());
         time.setText(foundLuggageList.get(index).getTimeFound());
+//        date.setValue(foundLuggageList.get(index).getDateFound());
         luggageType.setText(foundLuggageList.get(index).getLuggageType());
         brand.setText(foundLuggageList.get(index).getBrand());
         arrivedWithFlight.setText(foundLuggageList.get(index).getFlightNr());
+        tag.setText(foundLuggageList.get(index).getLuggageTag());
+        locationFound.setText(foundLuggageList.get(index).getLocationFound());
+        primaryColor.setText(foundLuggageList.get(index).getPrimaryColor());
+        secondaryColor.setText(foundLuggageList.get(index).getSecondaryColor());
+        sizeHeigth.setText(foundLuggageList.get(index).getLuggageSizeHeigth());
+        sizeWidth.setText(foundLuggageList.get(index).getLuggageSizeWidth());
+        sizeDepth.setText(foundLuggageList.get(index).getLuggageSizeDepth());
+        weight.setText(foundLuggageList.get(index).getLuggageWeight());
+        name.setText(foundLuggageList.get(index).getTravellerNameAndCityName());
+        city.setText(foundLuggageList.get(index).getTravellerNameAndCityCity());
+        comments.setText(foundLuggageList.get(index).getComments());
     }
 
     @FXML
@@ -111,6 +122,17 @@ public class GevondenBagageController implements Initializable {
         luggageType.setText(foundLuggageList.get(index).getLuggageType());
         brand.setText(foundLuggageList.get(index).getBrand());
         arrivedWithFlight.setText(foundLuggageList.get(index).getFlightNr());
+        tag.setText(foundLuggageList.get(index).getLuggageTag());
+        locationFound.setText(foundLuggageList.get(index).getLocationFound());
+        primaryColor.setText(foundLuggageList.get(index).getPrimaryColor());
+        secondaryColor.setText(foundLuggageList.get(index).getSecondaryColor());
+        sizeHeigth.setText(foundLuggageList.get(index).getLuggageSizeHeigth());
+        sizeWidth.setText(foundLuggageList.get(index).getLuggageSizeWidth());
+        sizeDepth.setText(foundLuggageList.get(index).getLuggageSizeDepth());
+        weight.setText(foundLuggageList.get(index).getLuggageWeight());
+        name.setText(foundLuggageList.get(index).getTravellerNameAndCityName());
+        city.setText(foundLuggageList.get(index).getTravellerNameAndCityCity());
+        comments.setText(foundLuggageList.get(index).getComments());
     }
 
     @FXML
@@ -121,6 +143,17 @@ public class GevondenBagageController implements Initializable {
         luggageType.setText(foundLuggageList.get(index).getLuggageType());
         brand.setText(foundLuggageList.get(index).getBrand());
         arrivedWithFlight.setText(foundLuggageList.get(index).getFlightNr());
+        tag.setText(foundLuggageList.get(index).getLuggageTag());
+        locationFound.setText(foundLuggageList.get(index).getLocationFound());
+        primaryColor.setText(foundLuggageList.get(index).getPrimaryColor());
+        secondaryColor.setText(foundLuggageList.get(index).getSecondaryColor());
+        sizeHeigth.setText(foundLuggageList.get(index).getLuggageSizeHeigth());
+        sizeWidth.setText(foundLuggageList.get(index).getLuggageSizeWidth());
+        sizeDepth.setText(foundLuggageList.get(index).getLuggageSizeDepth());
+        weight.setText(foundLuggageList.get(index).getLuggageWeight());
+        name.setText(foundLuggageList.get(index).getTravellerNameAndCityName());
+        city.setText(foundLuggageList.get(index).getTravellerNameAndCityCity());
+        comments.setText(foundLuggageList.get(index).getComments());
     }
 
     @FXML
@@ -133,7 +166,7 @@ public class GevondenBagageController implements Initializable {
             List<ExcelImport> foundLuggage = ExcelImport.importFoundLuggageFromExcel(filename);
 
             setFoundLuggageList(foundLuggage);
-            
+
         } else {
             saveStatus.setText("Excel import has been cancelled.");
         }
@@ -142,34 +175,6 @@ public class GevondenBagageController implements Initializable {
 
     @FXML
     private void save(ActionEvent event) {
-
-        // Check if the required fields are filled with text. 
-//        if ((sizeHeigth.getText() != null && sizeWidth.getText() != null && sizeDepth.getText() == null)) {
-//            // Change the saveStatus label to a red line of text with the error
-//            saveStatus.setTextFill(Paint.valueOf("red"));
-//            saveStatus.setText(data.getResourceBundle().getString("saveFailed"));
-//            sizeHeigth.setStyle("-fx-border-color: red;");
-//        } else if (sizeHeigth.getText() == null && sizeWidth.getText() != null && sizeDepth.getText() == null) {
-//            // Change the saveStatus label to a red line of text with the error
-//            saveStatus.setTextFill(Paint.valueOf("red"));
-//            saveStatus.setText(data.getResourceBundle().getString("saveFailed"));
-//        } else if (sizeHeigth.getText() == null && sizeWidth.getText() == null && sizeDepth.getText() != null) {
-//            // Change the saveStatus label to a red line of text with the error
-//            saveStatus.setTextFill(Paint.valueOf("red"));
-//            saveStatus.setText(data.getResourceBundle().getString("saveFailed"));
-//        } else if (sizeHeigth.getText() != null && sizeWidth.getText() != null && sizeDepth.getText() == null) {
-//            // Change the saveStatus label to a red line of text with the error
-//            saveStatus.setTextFill(Paint.valueOf("red"));
-//            saveStatus.setText(data.getResourceBundle().getString("saveFailed"));
-//        } else if (sizeHeigth.getText() == null && sizeWidth.getText() != null && sizeDepth.getText() != null) {
-//            // Change the saveStatus label to a red line of text with the error
-//            saveStatus.setTextFill(Paint.valueOf("red"));
-//            saveStatus.setText(data.getResourceBundle().getString("saveFailed"));
-//        } else if (sizeHeigth.getText() != null && sizeWidth.getText() == null && sizeDepth.getText() != null) {
-//            // Change the saveStatus label to a red line of text with the error
-//            saveStatus.setTextFill(Paint.valueOf("red"));
-//            saveStatus.setText(data.getResourceBundle().getString("saveFailed"));
-//        } else {
         //Make the red line of text with the error disappear
         saveStatus.setText(data.getResourceBundle().getString("saveReset"));
         // Image inside alert dialog resized to 100x100
@@ -191,37 +196,57 @@ public class GevondenBagageController implements Initializable {
         // When pressed OK on the alert dialog box
         if (result.get() == ButtonType.OK) {
 
-            String betweenName = "";
-            if (insertion.getText() != null || !insertion.getText().trim().isEmpty()) {
-                betweenName = insertion.getText();
-            }
-
-            getNextRegistrationNumber();
-
+//            getNextRegistrationNumber();
             String databaseRegistrationNumber = registrationNumber.getText();
-            String databaseDate = date.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            String databaseDate = date.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             String databaseTime = time.getText();
-            String databaseAirportName = airportFound.getText();
+            String databaseDateAndTime = databaseDate + " " + databaseTime;
             String databaseLuggageType = luggageType.getText();
+//            String databaseAirportName = airportFound.getText();
             String databaseBrand = brand.getText();
             String databaseFlightNumber = arrivedWithFlight.getText();
             String databaseLabelNumber = tag.getText();
             String databaseLocationFound = locationFound.getText();
             String databasePrimaryColor = primaryColor.getText();
             String databaseSecondaryColor = secondaryColor.getText();
-
-            String databaseLuggageSize = (sizeHeigth.getText() + "x" + sizeWidth.getText() + "x" + sizeDepth.getText());
+            
+            String databaseLuggageSize;
+            String databaseLuggageSizeHeight = sizeHeigth.getText();
+            String databaseLuggageSizeWidth = sizeWidth.getText();
+            String databaseLuggageSizeDepth = sizeDepth.getText();
+            
+            if (databaseLuggageSizeHeight.matches("[0-9]+") 
+                    && databaseLuggageSizeWidth.matches("[0-9]+") 
+                    && databaseLuggageSizeDepth.matches("[0-9]+")) {
+                databaseLuggageSize = (sizeHeigth.getText() + "x" + sizeWidth.getText() + "x" + sizeDepth.getText());
+            } else {
+                databaseLuggageSize = "";
+            }
 
             String databaseWeight = weight.getText();
-            String databaseTravellerName = (firstName.getText() + betweenName + lastName.getText());
-            String databaseTravellerDestination = city.getText();
+            String databaseTravellerName = name.getText();
+            String databaseTravellerCity = city.getText();
             String databaseNotes = comments.getText();
             String databaseCaseType = "1";
 
-            String queryLuggage = "INSERT INTO `luggagem`.`luggage_found` "
-                    + "(`registrationnr`, `date`, `time`, `luggage_type`, `brand`, `flightnr`, `labelnr`, `location_found`, `primary_color`, `secondary_color`, `luggage_size`, `luggage_weight`, `traveller_name`, `traveller_destination`, `notes`, `case_type`)"
+            String queryLuggage = "INSERT INTO `luggagem`.`luggage` "
+                    + "(`registrationnr`, `date`, `luggage_type`, `brand`, `flightnr`, `labelnr`, `location_found`, `primary_color`, `secondary_color`, `size`, `weight`, `traveller_name`, `traveller_city`, `notes`, `case_type`)"
                     + "VALUES"
-                    + "('" + databaseRegistrationNumber + "', '" + databaseDate + "', '" + databaseTime + "', '" + databaseLuggageType + "', '" + databaseBrand + "', '" + databaseFlightNumber + "', '" + databaseLabelNumber + "', '" + databaseLocationFound + "', '" + databasePrimaryColor + "', '" + databaseSecondaryColor + "', '" + databaseLuggageSize + "', '" + databaseWeight + "', '" + databaseTravellerName + "', '" + databaseTravellerDestination + "', '" + databaseNotes + "', '" + databaseCaseType + "');";
+                    + "('" + databaseRegistrationNumber + "', '"
+                    + databaseDateAndTime + "', '"
+                    + databaseLuggageType + "', '"
+                    + databaseBrand + "', '"
+                    + databaseFlightNumber + "', '"
+                    + databaseLabelNumber + "', '"
+                    + databaseLocationFound + "', '"
+                    + databasePrimaryColor + "', '"
+                    + databaseSecondaryColor + "', '"
+                    + databaseLuggageSize + "', '"
+                    + databaseWeight + "', '"
+                    + databaseTravellerName + "', '"
+                    + databaseTravellerCity + "', '"
+                    + databaseNotes + "', '"
+                    + databaseCaseType + "');";
             int doQueryLuggageTable = MainApp.myJDBC.executeUpdateQuery(queryLuggage);
             if (doQueryLuggageTable == -1) {
                 saveStatus.setTextFill(Paint.valueOf("red"));
@@ -246,14 +271,14 @@ public class GevondenBagageController implements Initializable {
                 sizeWidth.clear();
                 sizeDepth.clear();
                 weight.clear();
-                firstName.clear();
-                lastName.clear();
+                name.clear();
                 city.clear();
                 comments.clear();
 
                 // Automatically set time and date after the clear
                 time.setText(timeFormat.format(new Date()));
                 date.setValue(LocalDate.now());
+                getNextRegistrationNumber();
 
             }
 
@@ -263,12 +288,16 @@ public class GevondenBagageController implements Initializable {
     }
 
     private void getNextRegistrationNumber() {
-        // Get next Registration Number
-        String query = "SELECT MAX(registrationnr)"
-                + "FROM luggage_found";
-        String result = MainApp.myJDBC.executeStringQuery(query);
-        result = Integer.toString(Integer.parseInt(result) + 1);
-        registrationNumber.setText(result);
+
+        if (true) {
+            // Get next Registration Number
+            String query = "SELECT MAX(registrationnr)"
+                    + "FROM luggage";
+            String result = MainApp.myJDBC.executeStringQuery(query);
+            result = Integer.toString(Integer.parseInt(result) + 1);
+            registrationNumber.setText(result);
+        }
+
     }
 
 }
