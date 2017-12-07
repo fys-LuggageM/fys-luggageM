@@ -105,7 +105,7 @@ public class FXMLDocumentController implements Initializable {
         // Add a custom icon
         data.getStage().getIcons().add(new Image(this.getClass().getResource("/images/corendon_star_logo.png").toString()));
     }
-    
+
     private void userCheck(String username, String password) throws IOException {
         try {
             ResultSet resultSet = MainApp.myJDBC.executeResultSetQuery("SELECT * FROM Account");

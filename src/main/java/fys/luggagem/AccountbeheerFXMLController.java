@@ -3,39 +3,35 @@ package fys.luggagem;
 import fys.luggagem.models.Data;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import java.sql.ResultSet;
-import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 
 public class AccountbeheerFXMLController implements Initializable {
 
@@ -49,8 +45,6 @@ public class AccountbeheerFXMLController implements Initializable {
 
     @FXML
     private Label resetPasswordInfo;
-
-    private TextField createUsername;
 
     @FXML
     private TextField createUserRealname;
@@ -79,36 +73,6 @@ public class AccountbeheerFXMLController implements Initializable {
     private final ToggleGroup accountButtons = new ToggleGroup();
 
     @FXML
-    private AnchorPane rootPane;
-
-    @FXML
-    private GridPane accountbeheer;
-
-    @FXML
-    private Label resetUserLabel;
-    @FXML
-    private Label resetPasswordLabel;
-    @FXML
-    private Text resetPasswordHeader;
-    @FXML
-    private Button resetPasswordButton;
-    @FXML
-    private Label createUserRealNameLabel;
-    @FXML
-    private Button createAccountButton;
-    @FXML
-    private Label createUserPasswordLabel;
-    @FXML
-    private Text createAccountHeader;
-    @FXML
-    private Label deactivateUserLabel;
-    @FXML
-    private Text deactivateUserHeader;
-    @FXML
-    private Button deactivateUserButton;
-    @FXML
-    private Text searchLabel;
-    @FXML
     private TextField createUserBetweenName;
     @FXML
     private TextField createUserLastname;
@@ -117,26 +81,9 @@ public class AccountbeheerFXMLController implements Initializable {
 
     private ObservableList<User> userList = FXCollections.observableArrayList();
 
-    private ObservableList<String> Airports
-            = FXCollections.observableArrayList(
-                    "AMS"
-            );
+    private ObservableList<String> Airports = FXCollections.observableArrayList();
     @FXML
     private TableView TableViewUsers;
-    @FXML
-    private TableColumn<?, ?> username;
-    @FXML
-    private TableColumn<?, ?> firstName;
-    @FXML
-    private TableColumn<?, ?> preposition;
-    @FXML
-    private TableColumn<?, ?> lastName;
-    @FXML
-    private TableColumn<?, ?> airport;
-    @FXML
-    private TableColumn<?, ?> permissions;
-    @FXML
-    private TableColumn<?, ?> active;
     @FXML
     private TextField createUserEmail;
     @FXML
@@ -447,7 +394,7 @@ public class AccountbeheerFXMLController implements Initializable {
                         break;
                 }
 
-                if (!result.getString("preposition").isEmpty() && result.getString("preposition") != null) {
+                if (result.getString("preposition") != null && !result.getString("preposition").isEmpty()) {
                     TBpreposition = result.getString("preposition");
                 }
                 User storingUsers = new User(TBusername, TBfirstName, TBlastName, TBIATA, RealActive, realPermissions);
@@ -465,6 +412,23 @@ public class AccountbeheerFXMLController implements Initializable {
         }
     }
 
+    private void setupAiportBox() {
+        try {
+            // Do an SQL query to get all airports
+            String query = "SELECT IATA FROM airport;";
+            ResultSet result = MainApp.myJDBC.executeResultSetQuery(query);
+            // Loop over de resultset
+            while (result.next()) {
+                // Voeg de individuele results to aan de database
+                Airports.add(result.getString("IATA"));
+            }
+            // Set the items of the airportbox to the observable list
+            airportBox.setItems(Airports);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountbeheerFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Set toggleGroup for roleAdmin
@@ -474,8 +438,6 @@ public class AccountbeheerFXMLController implements Initializable {
         roleEmployee.setSelected(true);
 
         setupTableView();
-
-        //
-        airportBox.setItems(Airports);
+        setupAiportBox();
     }
 }

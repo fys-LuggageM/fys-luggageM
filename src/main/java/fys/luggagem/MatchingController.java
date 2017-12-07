@@ -48,7 +48,7 @@ public class MatchingController implements Initializable {
             System.out.println(brand + "\n");
             System.out.println(primColor + "\n");
             System.out.println(secColor + "\n");
-            
+
         } catch (SQLException e) {
             System.err.println("deze query is hemeaal kaput" + e);
         }

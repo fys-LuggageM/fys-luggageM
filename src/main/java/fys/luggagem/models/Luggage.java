@@ -8,8 +8,9 @@ import fys.luggagem.MyJDBC;
  * @author jordan
  */
 public class Luggage {
+
     private MyJDBC myJDBC = MainApp.myJDBC;
-    
+
     private int registrationNr;
     private String flightNr;
     private String labelNr;
@@ -24,9 +25,9 @@ public class Luggage {
     private int caseStatus;
     private String IATA;
     private int customerNr;
-    
+
     public Luggage() {
-        
+
     }
 
     public int getRegistrationNr() {
@@ -140,8 +141,8 @@ public class Luggage {
     public void setCustomerNr(int customerNr) {
         this.customerNr = customerNr;
     }
-    
+
     public void foundLuggageToDatabase(Luggage foundLuggage) {
-        
+
     }
 }
