@@ -66,7 +66,7 @@ public class MainApp extends Application {
             Scene scene = new Scene(root);
             data.setScene(scene);
             data.getStage().setScene(scene);
-            data.getStage().setFullScreen(false);
+            data.getStage().setFullScreen(true);
             data.getStage().setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
             data.getStage().setWidth(data.getStage().getWidth());
             data.getStage().setHeight(data.getStage().getHeight());
