@@ -17,9 +17,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.luggagem.AccountbeheerFXMLController">
+
+<AnchorPane id="AnchorPane" maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.luggagem.AccountbeheerFXMLController">
     <children>
-        <GridPane fx:id="accountbeheer" layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <GridPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="0.0" />
                 <ColumnConstraints hgrow="NEVER" maxWidth="1.7976931348623157E308" minWidth="10.0" />
@@ -52,12 +53,15 @@
                                 <Cursor fx:constant="TEXT" />
                             </cursor>
                         </TextField>
-                        <Label fx:id="resetUserLabel" text="%username" GridPane.rowIndex="1">
+
+                        <Label text="%username" GridPane.rowIndex="1">
+
                             <font>
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                        <Label fx:id="resetPasswordLabel" text="%newPassword" GridPane.rowIndex="2">
+
+                        <Label text="%newPassword" GridPane.rowIndex="2">
                             <font>
                                 <Font size="16.0" />
                             </font>
@@ -67,7 +71,8 @@
                                 <Cursor fx:constant="TEXT" />
                             </cursor>
                         </TextField>
-                        <Text fx:id="resetPasswordHeader" strokeType="OUTSIDE" strokeWidth="0.0" text="%resetPassword" wrappingWidth="335.4700622558594">
+
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%resetPassword" wrappingWidth="335.4700622558594">
                             <font>
                                 <Font size="32.0" />
                             </font>
@@ -81,7 +86,8 @@
                                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button fx:id="resetPasswordButton" mnemonicParsing="false" onAction="#resetPasswordAction" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="%resetPassword" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+
+                                <Button mnemonicParsing="false" onAction="#resetPasswordAction" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="%resetPassword" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
@@ -104,7 +110,9 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Label fx:id="createUserRealNameLabel" text="%realName" GridPane.rowIndex="1">
+
+                        <Label text="%realName" GridPane.rowIndex="1">
+
                             <font>
                                 <Font size="16.0" />
                             </font>
@@ -130,7 +138,7 @@
                                 <Insets top="3.0" />
                             </GridPane.margin>
                         </HBox>
-                        <Text fx:id="createAccountHeader" strokeType="OUTSIDE" strokeWidth="0.0" text="%createAccount" wrappingWidth="335.4700622558594">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%createAccount" wrappingWidth="335.4700622558594">
                             <font>
                                 <Font size="32.0" />
                             </font>
@@ -173,14 +181,15 @@
                                         <Font size="10.0" />
                                     </font>
                                 </Label>
-                                <Button fx:id="createAccountButton" mnemonicParsing="false" onAction="#createAccount" prefWidth="150.0" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="%createAccount" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+
+                                <Button mnemonicParsing="false" onAction="#createAccount" prefWidth="150.0" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="%createAccount" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </Button>
                             </children>
                         </GridPane>
-                        <Label fx:id="createUserPasswordLabel" text="%password" GridPane.rowIndex="2">
+                        <Label text="%password" GridPane.rowIndex="2">
                             <font>
                                 <Font size="16.0" />
                             </font>
@@ -227,12 +236,14 @@
                                 <Cursor fx:constant="TEXT" />
                             </cursor>
                         </TextField>
-                        <Label fx:id="deactivateUserLabel" text="%username" GridPane.rowIndex="1">
+
+                        <Label text="%username" GridPane.rowIndex="1">
                             <font>
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                        <Text fx:id="deactivateUserHeader" strokeType="OUTSIDE" strokeWidth="0.0" text="%deactivateUser" wrappingWidth="335.4700622558594">
+
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%deactivateUser" wrappingWidth="335.4700622558594">
                             <font>
                                 <Font size="32.0" />
                             </font>
@@ -247,7 +258,7 @@
                             </rowConstraints>
                             <children>
                                 <Label fx:id="deactivateUserInfo" prefHeight="17.0" prefWidth="280.0" />
-                                <Button fx:id="deactivateUserButton" mnemonicParsing="false" onAction="#deactivateUser" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="%deactivateUser" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                                <Button mnemonicParsing="false" onAction="#deactivateUser" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="%deactivateUser" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
@@ -282,7 +293,7 @@
                                         <Cursor fx:constant="TEXT" />
                                     </cursor>
                                 </TextField>
-                                <Text fx:id="searchLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="%search" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%search" />
                             </children>
                         </GridPane>
                         <TableView fx:id="TableViewUsers" editable="true" prefHeight="168.0" prefWidth="763.0" GridPane.rowIndex="1">

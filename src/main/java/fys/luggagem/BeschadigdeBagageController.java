@@ -211,7 +211,7 @@ public class BeschadigdeBagageController implements Initializable {
             ps.executeUpdate();
             conn.commit();
         } catch (SQLException e) {
-            System.err.print("SQL error setfields: " + e);
+            System.err.print("SQL error setfields: @@@@@@ " + e);
         }
     }
 

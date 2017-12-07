@@ -4,6 +4,12 @@ import fys.luggagem.MainApp;
 import fys.luggagem.MyJDBC;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
 
 /**
  *
@@ -12,10 +18,12 @@ import java.sql.SQLException;
 public class Luggage {
 
     private MyJDBC myJDBC = MainApp.myJDBC;
+
     private final String foundLuggageToDatabaseQuery = 
             "UPDATE luggage SET flightnr = ?, labelnr = ?, destination = ?, luggage_type = ?, brand = ?,"
             + " primary_color = ?, secondary_color = ?, traveller_name = ?, notes = ? "
             + "WHERE registrationnr = " + myJDBC.getLuggageRegistrationNr() + ";";
+
 
     private int registrationNr;
     private String flightNr;
@@ -148,6 +156,7 @@ public class Luggage {
         this.customerNr = customerNr;
     }
 
+
     public void foundLuggageToDatabase() {
         try {
             PreparedStatement ps = null;
@@ -174,5 +183,38 @@ public class Luggage {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+    public List<Luggage> getMatchingLuggage(MyJDBC myJDBC, List<Luggage> luggageList) {
+        luggageList.clear();
+        Connection conn = myJDBC.getConnection();
+        PreparedStatement ps = null;
+        String matchingLuggage = "SELECT labelnr, luggage_type, brand, primary_color, secondary_color FROM luggage\n"
+                + "    WHERE (labelnr = ?) OR (luggage_type = ? AND brand = ? AND primary_color = ? AND secondary_color = ?)";
+        try {
+
+            ps = conn.prepareStatement(matchingLuggage);
+            ps.setString(1, getLabelNr());
+            ps.setString(2, getLuggageType());
+            ps.setString(3, getBrand());
+            ps.setString(4, getPrimaryColor());
+            ps.setString(5, getSecondaryColor());
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Luggage luggage = new Luggage();
+//                luggage.setRegistrationNr(rs.getInt(1));
+                luggage.setLabelNr(rs.getString(1));
+                luggage.setLuggageType(rs.getString(2));
+                luggage.setBrand(rs.getString(3));
+                luggage.setPrimaryColor(rs.getString(4));
+                luggage.setSecondaryColor(rs.getString(5));
+                luggageList.add(luggage);
+            }
+        } catch (SQLException sq) {
+            myJDBC.error(sq);
+        }
+
+        return luggageList;
     }
 }
