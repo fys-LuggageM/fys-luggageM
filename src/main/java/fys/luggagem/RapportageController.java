@@ -20,6 +20,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.CategoryAxis;
@@ -256,50 +257,66 @@ public class RapportageController implements Initializable {
 
     @FXML
     private void handleExportPdfButtonAction(ActionEvent event) throws IOException {
-//
-//        if (pieChartData == null) {
-//            exportLabel.setText(exportNoSelection);
-//
-//        } else {
-//            createChartImage();
-//        }
-//else {
-//
-        Alert alertPdf = new Alert(Alert.AlertType.CONFIRMATION);
-        alertPdf.initOwner(data.getStage());
-        alertPdf.setTitle(exportAlertTitle);
-        alertPdf.setHeaderText(exportAlertTitle);
-        alertPdf.setContentText(exportAlertContent);
-        Optional<ButtonType> result = alertPdf.showAndWait();
 
-        if (result.get() == ButtonType.OK) {
-            File file = MainApp.selectFileToSave("*.pdf");
+        if (comboYear.getValue() == null && comboMonth.getValue() == null) {
+            exportLabel.setText(exportNoSelection);
 
-            String filename = file.getAbsolutePath();
-            PDFExport.makePdf(filename, screenTitle, createChartImage());
-
-            exportLabel.setText(exportSave + " " + "'" + filename + "'");
         } else {
-            exportLabel.setText(exportCancel);
+
+            Alert alertPdf = new Alert(Alert.AlertType.CONFIRMATION);
+            alertPdf.initOwner(data.getStage());
+            alertPdf.setTitle(exportAlertTitle);
+            alertPdf.setHeaderText(exportAlertTitle);
+            alertPdf.setContentText(exportAlertContent);
+            Optional<ButtonType> result = alertPdf.showAndWait();
+
+            if (result.get() == ButtonType.OK) {
+                File file = MainApp.selectFileToSave("*.pdf");
+
+                String filename = file.getAbsolutePath();
+                PDFExport.makePdfTwoImage(filename, screenTitle, createPieChartImage(), createLineChartImage());
+
+                exportLabel.setText(exportSave + " " + "'" + filename + "'");
+            } else {
+                exportLabel.setText(exportCancel);
+            }
         }
     }
 
-    private BufferedImage createChartImage() throws IOException {
-        BufferedImage exportImage = null;
+    private BufferedImage createPieChartImage() throws IOException {
+        BufferedImage exportPieImage = null;
         if (tabVerloren.isSelected()) {
-            WritableImage image = verlorenAnchorPane.snapshot(new SnapshotParameters(), null);
+            WritableImage image = verlorenPieChart.snapshot(new SnapshotParameters(), null);
 
-            exportImage = SwingFXUtils.fromFXImage(image, null);
+            exportPieImage = SwingFXUtils.fromFXImage(image, null);
         } else if (tabGevonden.isSelected()) {
-            WritableImage image = gevondenAnchorPane.snapshot(new SnapshotParameters(), null);
+            WritableImage image = gevondenPieChart.snapshot(new SnapshotParameters(), null);
 
-            exportImage = SwingFXUtils.fromFXImage(image, null);
+            exportPieImage = SwingFXUtils.fromFXImage(image, null);
         } else if (tabBeschadigde.isSelected()) {
-            WritableImage image = beschadigdeAnchorPane.snapshot(new SnapshotParameters(), null);
+            WritableImage image = beschadigdePieChart.snapshot(new SnapshotParameters(), null);
 
-            exportImage = SwingFXUtils.fromFXImage(image, null);
+            exportPieImage = SwingFXUtils.fromFXImage(image, null);
         }
-        return exportImage;
+        return exportPieImage;
+    }
+
+    private BufferedImage createLineChartImage() throws IOException {
+        BufferedImage exportLineImage = null;
+        if (tabVerloren.isSelected()) {
+            WritableImage image = verlorenLineChart.snapshot(new SnapshotParameters(), null);
+
+            exportLineImage = SwingFXUtils.fromFXImage(image, null);
+        } else if (tabGevonden.isSelected()) {
+            WritableImage image = gevondenLineChart.snapshot(new SnapshotParameters(), null);
+
+            exportLineImage = SwingFXUtils.fromFXImage(image, null);
+        } else if (tabBeschadigde.isSelected()) {
+            WritableImage image = beschadigdeLineChart.snapshot(new SnapshotParameters(), null);
+
+            exportLineImage = SwingFXUtils.fromFXImage(image, null);
+        }
+        return exportLineImage;
     }
 
     private void comboBoxController() {
@@ -406,6 +423,7 @@ public class RapportageController implements Initializable {
                             gevondenBagage));
 
                     gevondenPieChart.setAnimated(false);
+                    gevondenPieChart.setLegendSide(Side.LEFT);
 
                     if (comboYear.getValue() != null && comboMonth.getValue() == null) {
                         gevondenPieChart.setTitle(gevondenChartTitle + " " + comboYear.getValue());
@@ -427,6 +445,7 @@ public class RapportageController implements Initializable {
                     verlorenPieChartData.add(new PieChart.Data(name + " - " + verlorenBagage + " " + luggageChartLegend,
                             verlorenBagage));
                     verlorenPieChart.setAnimated(false);
+                    verlorenPieChart.setLegendSide(Side.LEFT);
 
                     if (comboYear.getValue() != null && comboMonth.getValue() == null) {
                         verlorenPieChart.setTitle(verlorenChartTitle + " " + comboYear.getValue());
@@ -448,6 +467,7 @@ public class RapportageController implements Initializable {
                     beschadigdePieChartData.add(new PieChart.Data(name + " - " + beschadigdeBagage + " "
                             + luggageChartLegend, beschadigdeBagage));
                     beschadigdePieChart.setAnimated(false);
+                    beschadigdePieChart.setLegendSide(Side.LEFT);
 
                     if (comboYear.getValue() != null && comboMonth.getValue() == null) {
                         beschadigdePieChart.setTitle(beschadigdeChartTitle + " " + comboYear.getValue());
