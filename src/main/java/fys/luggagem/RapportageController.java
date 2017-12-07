@@ -1,6 +1,7 @@
 package fys.luggagem;
 
 import fys.luggagem.models.Data;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -10,10 +11,12 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -33,6 +36,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javax.imageio.ImageIO;
 
@@ -109,9 +113,11 @@ public class RapportageController implements Initializable {
 
     private String month;
 
-    private final int labelLineLength = 10;
+    private final int labelLineLength = 6;
 
 //Localisatie Strings
+    private final String screenTitle = data.getResourceBundle().getString("reports");
+
     private final String verlorenChartTitle = data.getResourceBundle().getString("lostChartTitle");
 
     private final String gevondenChartTitle = data.getResourceBundle().getString("foundChartTitle");
@@ -131,6 +137,8 @@ public class RapportageController implements Initializable {
     private final String exportCancel = data.getResourceBundle().getString("exportCancel");
 
     private final String exportSave = data.getResourceBundle().getString("exportSave");
+
+    private final String luggageChartLegend = data.getResourceBundle().getString("luggageChartLegend");
 
     // SQL Query's
     private final String comboYearQuery = "SELECT YEAR(luggage.date), "
@@ -257,45 +265,41 @@ public class RapportageController implements Initializable {
 //        }
 //else {
 //
-//            Alert alertPdf = new Alert(Alert.AlertType.CONFIRMATION);
-//            alertPdf.initOwner(data.getStage());
-//            alertPdf.setTitle(exportAlertTitle);
-//            alertPdf.setHeaderText(exportAlertTitle);
-//            alertPdf.setContentText(exportAlertContent);
-//            Optional<ButtonType> result = alertPdf.showAndWait();
-//
-//            if (result.get() == ButtonType.OK) {
-//                File file = MainApp.selectFileToSave("*.pdf");
-//
-//                String filename = file.getAbsolutePath();
-//                PDFExport.makePdf(filename);
-//
-//                exportLabel.setText(exportSave + " " + "'" + filename + "'");
-//            } else {
-//                exportLabel.setText(exportCancel);
-//            }
+        Alert alertPdf = new Alert(Alert.AlertType.CONFIRMATION);
+        alertPdf.initOwner(data.getStage());
+        alertPdf.setTitle(exportAlertTitle);
+        alertPdf.setHeaderText(exportAlertTitle);
+        alertPdf.setContentText(exportAlertContent);
+        Optional<ButtonType> result = alertPdf.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            File file = MainApp.selectFileToSave("*.pdf");
+
+            String filename = file.getAbsolutePath();
+            PDFExport.makePdf(filename, screenTitle, createChartImage());
+
+            exportLabel.setText(exportSave + " " + "'" + filename + "'");
+        } else {
+            exportLabel.setText(exportCancel);
+        }
     }
 
-    private void createChartImage() throws IOException {
+    private BufferedImage createChartImage() throws IOException {
+        BufferedImage exportImage = null;
         if (tabVerloren.isSelected()) {
             WritableImage image = verlorenAnchorPane.snapshot(new SnapshotParameters(), null);
 
-            File file = MainApp.selectFileToSave("*.png");
-
-            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+            exportImage = SwingFXUtils.fromFXImage(image, null);
         } else if (tabGevonden.isSelected()) {
             WritableImage image = gevondenAnchorPane.snapshot(new SnapshotParameters(), null);
 
-            File file = MainApp.selectFileToSave("*.png");
-
-            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+            exportImage = SwingFXUtils.fromFXImage(image, null);
         } else if (tabBeschadigde.isSelected()) {
             WritableImage image = beschadigdeAnchorPane.snapshot(new SnapshotParameters(), null);
 
-            File file = MainApp.selectFileToSave("*.png");
-
-            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+            exportImage = SwingFXUtils.fromFXImage(image, null);
         }
+        return exportImage;
     }
 
     private void comboBoxController() {
@@ -335,6 +339,7 @@ public class RapportageController implements Initializable {
                 comboMonth.getItems().addAll(
                         month
                 );
+
             }
 
         } catch (SQLException ex) {
@@ -397,7 +402,9 @@ public class RapportageController implements Initializable {
                     String name = resultSet.getString("name");
                     int gevondenBagage = resultSet.getInt("SUM(case_type = 1)");
 
-                    gevondenPieChartData.add(new PieChart.Data(name, gevondenBagage));
+                    gevondenPieChartData.add(new PieChart.Data(name + " - " + gevondenBagage + " " + luggageChartLegend,
+                            gevondenBagage));
+
                     gevondenPieChart.setAnimated(false);
 
                     if (comboYear.getValue() != null && comboMonth.getValue() == null) {
@@ -417,7 +424,8 @@ public class RapportageController implements Initializable {
                     String name = resultSet.getString("name");
                     int verlorenBagage = resultSet.getInt("SUM(case_type = 2)");
 
-                    verlorenPieChartData.add(new PieChart.Data(name, verlorenBagage));
+                    verlorenPieChartData.add(new PieChart.Data(name + " - " + verlorenBagage + " " + luggageChartLegend,
+                            verlorenBagage));
                     verlorenPieChart.setAnimated(false);
 
                     if (comboYear.getValue() != null && comboMonth.getValue() == null) {
@@ -437,7 +445,8 @@ public class RapportageController implements Initializable {
                     String name = resultSet.getString("name");
                     int beschadigdeBagage = resultSet.getInt("SUM(case_type = 3)");
 
-                    beschadigdePieChartData.add(new PieChart.Data(name, beschadigdeBagage));
+                    beschadigdePieChartData.add(new PieChart.Data(name + " - " + beschadigdeBagage + " "
+                            + luggageChartLegend, beschadigdeBagage));
                     beschadigdePieChart.setAnimated(false);
 
                     if (comboYear.getValue() != null && comboMonth.getValue() == null) {
@@ -457,6 +466,7 @@ public class RapportageController implements Initializable {
             Logger.getLogger(RapportageController.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     private void populateLineChart(LineChart chart) {
@@ -543,11 +553,13 @@ public class RapportageController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(RapportageController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb
     ) {
         comboBoxController();
+
     }
 }
