@@ -196,15 +196,17 @@ public class Luggage {
         Connection conn = myJDBC.getConnection();
         PreparedStatement ps = null;
         String matchingLuggage = "SELECT labelnr, luggage_type, brand, primary_color, secondary_color, case_status FROM luggage\n"
-                + "    WHERE (labelnr = ? AND case_status = 1) OR (luggage_type = ? AND brand = ? AND primary_color = ? AND secondary_color = ? AND case_status = 1)";
+                + "    WHERE (labelnr = ? AND case_status = 1 AND registrationnr != ?) OR (luggage_type = ? AND brand = ? AND primary_color = ? AND secondary_color = ? AND case_status = 1 AND registrationnr != ?)";
         try {
 
             ps = conn.prepareStatement(matchingLuggage);
             ps.setString(1, getLabelNr());
-            ps.setString(2, getLuggageType());
-            ps.setString(3, getBrand());
-            ps.setString(4, getPrimaryColor());
-            ps.setString(5, getSecondaryColor());
+            ps.setInt(2, myJDBC.getLuggageRegistrationNr());
+            ps.setString(3, getLuggageType());
+            ps.setString(4, getBrand());
+            ps.setString(5, getPrimaryColor());
+            ps.setString(6, getSecondaryColor());
+            ps.setInt(7, myJDBC.getLuggageRegistrationNr());
 
             ResultSet rs = ps.executeQuery();
 
