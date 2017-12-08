@@ -189,8 +189,8 @@ public class Luggage {
         luggageList.clear();
         Connection conn = myJDBC.getConnection();
         PreparedStatement ps = null;
-        String matchingLuggage = "SELECT labelnr, luggage_type, brand, primary_color, secondary_color FROM luggage\n"
-                + "    WHERE (labelnr = ?) OR (luggage_type = ? AND brand = ? AND primary_color = ? AND secondary_color = ?)";
+        String matchingLuggage = "SELECT labelnr, luggage_type, brand, primary_color, secondary_color, case_status FROM luggage\n"
+                + "    WHERE (labelnr = ? AND case_status = 1) OR (luggage_type = ? AND brand = ? AND primary_color = ? AND secondary_color = ? AND case_status = 1)";
         try {
 
             ps = conn.prepareStatement(matchingLuggage);
