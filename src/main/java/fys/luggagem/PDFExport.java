@@ -81,5 +81,10 @@ public class PDFExport {
             doc.save(filename);
         }
     }
+    
+    public static PDDocument pdf() {
+        PDDocument pdf = new PDDocument();
+        return pdf;
+    }
 
 }

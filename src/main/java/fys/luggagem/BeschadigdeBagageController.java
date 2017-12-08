@@ -3,6 +3,8 @@ package fys.luggagem;
 import fys.luggagem.models.Customer;
 import fys.luggagem.models.Data;
 import fys.luggagem.models.Email;
+import fys.luggagem.models.Luggage;
+import fys.luggagem.models.Print;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,6 +27,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -47,6 +50,7 @@ public class BeschadigdeBagageController implements Initializable {
     private URI imageURL01;
     private URI imageURL02;
     private URI imageURL03;
+    String email;
 
     //Will store the new/highest registrationNr
     private int registrationNr;
@@ -264,9 +268,14 @@ public class BeschadigdeBagageController implements Initializable {
                     }              
                 }
             });
+            
+            // ask to send email or print confirmation
+            setEmailContent();
+            createChoiceAlert();
             // clear all input field and set placeholder for images
             placeholderURL = this.getClass().getResource("/images/placeholder-600x400.png").toString();
             Image placeholder = new Image(placeholderURL);
+            customer.clear();
             notes.clear();
             image01.setImage(placeholder);
             image02.setImage(placeholder);
@@ -291,5 +300,50 @@ public class BeschadigdeBagageController implements Initializable {
 
         saveImages.disableProperty().bind(bb);
 
+    }
+
+    private void setEmailContent() {
+        email = "Dear Customer, \n\n"
+                + "You have brought it to our attention that your luggage has been damaged. \n"
+                + "We have noted the following details: \n\n"
+                + "Your name: " + customer.getFirstName()
+                + (customer.getPreposition() != null && !customer.getPreposition().isEmpty()
+                ? " " + customer.getPreposition() + " " : " ")
+                + customer.getLastName() + "\n\n"
+                + notes.getText() + "\n"
+                + "\n\nIf this information is not correct, contact us as soon as possible.\n\n"
+                + "We're sorry for the inconvience!\n\n"
+                + "Kind regards,\n\n"
+                + data.getName();
+    }
+
+    private void createChoiceAlert() {
+
+        String imageURL = this.getClass().getResource("/images/share-option.png").toString();
+        Image image = new Image("/images/share-option.png", 64, 64, false, true);
+
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setGraphic(new ImageView(image));
+        alert.initOwner(data.getStage());
+        alert.setTitle("");
+        alert.setHeaderText("Bevestiging");
+        alert.setContentText("Hoe wilt u de bevestiging delen met de klant?");
+
+        ButtonType buttonTypeOne = new ButtonType("Email");
+        ButtonType buttonTypeTwo = new ButtonType("Printen");
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeOne) {
+            Email.sendEmail(customer.getEmailAdres(), "Lost Luggage", email);
+        } else if (result.get() == buttonTypeTwo) {
+            data.getStage().setIconified(true);
+            Print.printPdf();
+            data.getStage().setIconified(false);
+        } else {
+
+        }
     }
 }

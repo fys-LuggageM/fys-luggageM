@@ -32,7 +32,7 @@
                   </Button>
                </children>
             </HBox>
-                <Label maxWidth="400.0" minWidth="400.0" prefWidth="400.0" text="Naam:">
+                <Label maxWidth="400.0" minWidth="400.0" prefWidth="400.0" text="%name">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
@@ -51,7 +51,7 @@
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </HBox>
-                <Label maxWidth="400.0" minWidth="400.0" prefWidth="400.0" text="Adres:">
+                <Label maxWidth="400.0" minWidth="400.0" prefWidth="400.0" text="%adres">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
@@ -61,7 +61,7 @@
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </TextField>
-                <Label maxWidth="400.0" minWidth="400.0" prefWidth="400.0" text="Stad en postcode:">
+                <Label maxWidth="400.0" minWidth="400.0" prefWidth="400.0" text="%cityAndCode">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
@@ -79,7 +79,7 @@
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </HBox>
-                <Label maxWidth="400.0" minWidth="400.0" prefWidth="400.0" text="Land:">
+                <Label maxWidth="400.0" minWidth="400.0" prefWidth="400.0" text="%country">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
@@ -89,7 +89,7 @@
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </TextField>
-                <Label maxWidth="400.0" minWidth="400.0" prefWidth="400.0" text="Telefoonnummer:">
+                <Label maxWidth="400.0" minWidth="400.0" prefWidth="400.0" text="%phoneNumber">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
@@ -99,7 +99,7 @@
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </TextField>
-                <Label maxWidth="400.0" minWidth="400.0" prefWidth="400.0" text="Emailadres:">
+                <Label maxWidth="400.0" minWidth="400.0" prefWidth="400.0" text="%email">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
@@ -111,7 +111,7 @@
                 </TextField>
                 <HBox alignment="TOP_RIGHT" maxWidth="400.0" minWidth="400.0" prefWidth="400.0">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#handleSaveAction" text="Aanmaken">
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveAction" text="%createCustomer">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
