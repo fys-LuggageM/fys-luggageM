@@ -2,6 +2,7 @@ package fys.luggagem;
 
 import fys.luggagem.models.Customer;
 import fys.luggagem.models.Data;
+import fys.luggagem.models.Email;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,7 +29,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
@@ -76,6 +76,12 @@ public class BeschadigdeBagageController implements Initializable {
     public void handleNewCustomerAction(ActionEvent event) throws IOException {
         data.setLastScene("/fxml/BeschadigdeBagageFXML.fxml");
         MainApp.loadFXMLFile(this.getClass().getResource("/fxml/NewCustomerFXML.fxml"));
+    }
+
+    @FXML
+    public void handleExistingCustomerAction(ActionEvent event) {
+        data.setLastScene("/fxml/VerlorenBagageFXML.fxml");
+        MainApp.loadFXMLFile(this.getClass().getResource("/fxml/ExistingCustomerFXML.fxml"));
     }
 
     @FXML
@@ -255,7 +261,7 @@ public class BeschadigdeBagageController implements Initializable {
                         uploadImageQuery(event);
                     } catch (IOException | SQLException ex) {
                         Logger.getLogger(BeschadigdeBagageController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    }              
                 }
             });
             // clear all input field and set placeholder for images
