@@ -2,6 +2,7 @@ package fys.luggagem;
 
 import fys.luggagem.models.Customer;
 import fys.luggagem.models.Data;
+import fys.luggagem.models.Email;
 import fys.luggagem.models.Luggage;
 import java.io.IOException;
 import java.net.URL;
@@ -25,6 +26,7 @@ public class VerlorenBagageController implements Initializable {
     private MyJDBC myJDBC = MainApp.myJDBC;
     private Customer customer = MainApp.getCustomer();
     private String IATA = "AMS";
+    private String email;
 
     @FXML
     private ComboBox airportBox;
@@ -82,15 +84,10 @@ public class VerlorenBagageController implements Initializable {
 
     @FXML
     public void handleSaveAction(ActionEvent event) throws SQLException {
-        //TODO build a check method for required fields
-//        String sql = "INSERT INTO customer VALUES (546, '" + customer.getFirstName() + "', '"
-//                + (customer.getPreposition() != null ? customer.getPreposition() : "NULL") + "', '" + customer.getLastName()
-//                + "', '" + customer.getAdres() + "', '" + customer.getCity() + "', '" + customer.getPostalCode()
-//                + "', '" + customer.getCountry() + "', '" + customer.getPhoneNumber() + "', '"
-//                + customer.getEmailAdres() + "');";
-//        myJDBC.executeUpdateQuery(sql);
         Luggage luggage = createNewFoundLuggage();
         luggage.foundLuggageToDatabase(customer);
+        setEmailContent(luggage);
+        Email.sendEmail("test@test.com", "Lost Luggage", email);
         customer.clear();
     }
 
@@ -152,7 +149,7 @@ public class VerlorenBagageController implements Initializable {
         foundLuggage.setIATA(IATA); //test value
         foundLuggage.setLuggageType(!luggageTypeField.getText().isEmpty() ? luggageTypeField.getText() : null);
         foundLuggage.setBrand(!brandField.getText().isEmpty() ? brandField.getText() : null);
-        foundLuggage.setDestination(!destinationField.getText().isEmpty() ? flightField.getText() : null);
+        foundLuggage.setDestination(!destinationField.getText().isEmpty() ? destinationField.getText() : null);
         foundLuggage.setFlightNr(!flightField.getText().isEmpty() ? flightField.getText() : null);
         foundLuggage.setLabelNr(!tagField.getText().isEmpty() ? tagField.getText() : null);
         foundLuggage.setPrimaryColor(!primaryColorField.getText().isEmpty() ? primaryColorField.getText() : null);
@@ -162,5 +159,29 @@ public class VerlorenBagageController implements Initializable {
         foundLuggage.setNotes(!notesField.getText().isEmpty() ? notesField.getText() : null);
 
         return foundLuggage;
+    }
+
+    private void setEmailContent(Luggage luggage) {
+        email = "Dear Customer, \n\n"
+                + "You have brought it to our attention that you have lost your luggage. \n"
+                + "We have noted the following details: \n\n"
+                + "\tRegistration number: " + luggage.getRegistrationNr() + "\n"
+                + "\tAirport: " + luggage.getIATA() + "\n"
+                + "\tLuggage Type: " + luggage.getLuggageType() + "\n"
+                + "\tBrand: " + luggage.getBrand() + "\n"
+                + "\tDestination: " + luggage.getDestination() + "\n"
+                + "\tFlight number: " + luggage.getFlightNr() + "\n"
+                + "\tLabel number: " + luggage.getLabelNr() + "\n"
+                + "\tColor: " + luggage.getPrimaryColor()
+                + (luggage.getSecondaryColor() != null ? " and " + luggage.getSecondaryColor() : "") + "\n"
+                + "\tYour name: " + customer.getFirstName()
+                + (customer.getPreposition() != null && !customer.getPreposition().isEmpty()
+                ? " " + customer.getPreposition() + " " : " ")
+                + customer.getLastName() + "\n"
+                + "\tExtra notes: " + luggage.getNotes()
+                + "\n\nIf this information is not correct, contact us as soon as possible.\n\n"
+                + "We're sorry for the inconvience!\n\n"
+                + "Kind regards,\n\n"
+                + "Pathe Dude";
     }
 }
