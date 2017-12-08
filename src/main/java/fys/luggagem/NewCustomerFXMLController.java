@@ -67,6 +67,11 @@ public class NewCustomerFXMLController implements Initializable {
 
     }
 
+    @FXML
+    private void handleCloseAction() {
+        MainApp.loadFXMLFile(this.getClass().getResource(data.getLastScene()));
+    }
+    
     private void setCustomer() throws SQLException {
         Connection conn = db.getConnection();
 

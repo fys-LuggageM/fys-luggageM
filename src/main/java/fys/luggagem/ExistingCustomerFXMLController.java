@@ -1,6 +1,7 @@
 package fys.luggagem;
 
 import fys.luggagem.models.Customer;
+import fys.luggagem.models.Data;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -24,6 +25,7 @@ public class ExistingCustomerFXMLController implements Initializable {
 
     private ObservableList<Customer> customerList = FXCollections.observableArrayList();
     private MyJDBC myJDBC = MainApp.myJDBC;
+    private Data data = MainApp.getData();
     private Customer targetCustomer = MainApp.getCustomer();
 
     @FXML
@@ -32,6 +34,11 @@ public class ExistingCustomerFXMLController implements Initializable {
     @FXML
     private TableView customerTableView;
 
+    @FXML
+    private void handleCloseAction() {
+        MainApp.loadFXMLFile(this.getClass().getResource(data.getLastScene()));
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         customerTableView.setItems(this.customerList);

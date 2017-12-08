@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 public class Data {
 
     private String name;
+    private int employeeNr;
     private Scene window;
     private String language;
     private String country;
@@ -108,4 +109,11 @@ public class Data {
         this.permissions = permissions;
     }
 
+    public int getEmployeeNr() {
+        return employeeNr;
+    }
+
+    public void setEmployeeNr(int employeeNr) {
+        this.employeeNr = employeeNr;
+    }
 }

@@ -18,11 +18,15 @@ import java.util.List;
 public class Luggage {
 
     private MyJDBC myJDBC = MainApp.myJDBC;
+    private Data data = MainApp.getData();
 
     private final String foundLuggageToDatabaseQuery = 
-            "UPDATE luggage SET flightnr = ?, labelnr = ?, destination = ?, luggage_type = ?, brand = ?,"
-            + " primary_color = ?, secondary_color = ?, traveller_name = ?, notes = ? "
+            "UPDATE luggage SET flightnr = ?, labelnr = ?, destination = ?, luggage_type = ?, brand = ?, "
+            + "primary_color = ?, secondary_color = ?, customer_firstname = ?, customer_preposition = ?, "
+            + "customer_lastname = ?, notes = ? "
             + "WHERE registrationnr = " + myJDBC.getLuggageRegistrationNr() + ";";
+    private final String changesLogToDatabase = "INSERT INTO changes (changeid, Employee_code, Luggage_registrationnr) "
+            + "VALUES (0, " + data.getEmployeeNr() + ", " + myJDBC.getLuggageRegistrationNr() + ");";
 
 
     private int registrationNr;
@@ -166,29 +170,31 @@ public class Luggage {
     }
 
 
-    public void foundLuggageToDatabase() {
+    public void foundLuggageToDatabase(Customer customer) {
         try {
-            PreparedStatement ps = null;
+            PreparedStatement ps01 = null;
             myJDBC.getConnection().setAutoCommit(false);
             
-            ps = myJDBC.getConnection().prepareStatement(foundLuggageToDatabaseQuery);
+            ps01 = myJDBC.getConnection().prepareStatement(foundLuggageToDatabaseQuery);
             
-            ps.setString(1, this.flightNr);
-            ps.setString(2, this.labelNr);
-            ps.setString(3, this.destination);
-            ps.setString(4, this.luggageType);
-            ps.setString(5, this.brand);
-            ps.setString(6, this.primaryColor);
-            ps.setString(7, this.secondaryColor);
-            ps.setString(8, this.travellerName);
-            ps.setString(9, this.notes);
-//            ps.setInt(10, this.registrationNr);
+            ps01.setString(1, this.flightNr);
+            ps01.setString(2, this.labelNr);
+            ps01.setString(3, this.destination);
+            ps01.setString(4, this.luggageType);
+            ps01.setString(5, this.brand);
+            ps01.setString(6, this.primaryColor);
+            ps01.setString(7, this.secondaryColor);
+            ps01.setString(8, customer.getFirstName());
+            ps01.setString(9, customer.getPreposition());
+            ps01.setString(10, customer.getLastName());
+            ps01.setString(11, this.notes);
             
             System.out.println(this.registrationNr);
-            System.out.println(ps.toString());
+            System.out.println(ps01.toString());
             
-            ps.executeUpdate();
-            myJDBC.getConnection().commit();
+            ps01.executeUpdate();
+            myJDBC.executeUpdateQuery(changesLogToDatabase);
+            myJDBC.getConnection().commit();        
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -198,8 +204,8 @@ public class Luggage {
         luggageList.clear();
         Connection conn = myJDBC.getConnection();
         PreparedStatement ps = null;
-        String matchingLuggage = "SELECT labelnr, luggage_type, brand, primary_color, secondary_color FROM luggage\n"
-                + "    WHERE (labelnr = ?) OR (luggage_type = ? AND brand = ? AND primary_color = ? AND secondary_color = ?)";
+        String matchingLuggage = "SELECT labelnr, luggage_type, brand, primary_color, secondary_color, case_status FROM luggage\n"
+                + "    WHERE (labelnr = ? AND case_status = 1) OR (luggage_type = ? AND brand = ? AND primary_color = ? AND secondary_color = ? AND case_status = 1)";
         try {
 
             ps = conn.prepareStatement(matchingLuggage);
