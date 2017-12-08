@@ -89,9 +89,16 @@ public class VerlorenBagageController implements Initializable {
 //                + "', '" + customer.getCountry() + "', '" + customer.getPhoneNumber() + "', '"
 //                + customer.getEmailAdres() + "');";
 //        myJDBC.executeUpdateQuery(sql);
+    
         Luggage luggage = createNewFoundLuggage();
         luggage.foundLuggageToDatabase(customer);
         customer.clear();
+        goToMatching();
+
+    }
+
+    private void goToMatching() {
+        MainApp.loadFXMLFile(this.getClass().getResource("/fxml/MatchingFXML.fxml"));
     }
 
     @FXML
