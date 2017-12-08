@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -37,7 +38,7 @@ public class GevondenBagageController implements Initializable {
     private Data data = MainApp.getData();
     private String imageURL;
     DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-    
+
     private List<ExcelImport> foundLuggageList;
     private int index = 0;
 
@@ -70,17 +71,21 @@ public class GevondenBagageController implements Initializable {
     @FXML
     private TextField weight;
     @FXML
-    private TextField name;
-    @FXML
     private TextField city;
     @FXML
     private TextArea comments;
     @FXML
     private Label saveStatus;
     @FXML
-    private TextField airportFound;
+    private ComboBox airportFound;
     @FXML
     private TextField time;
+    @FXML
+    private TextField firstName;
+    @FXML
+    private TextField insertion;
+    @FXML
+    private TextField lastName;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -89,8 +94,8 @@ public class GevondenBagageController implements Initializable {
         // Set the time
         time.setText(timeFormat.format(new Date()));
         getNextRegistrationNumber();
-        
-
+        airportFound.getItems().addAll("AMS", "RTM");
+        airportFound.getSelectionModel().select("AMS");
     }
 
     public void setFoundLuggageList(List<ExcelImport> list) {
@@ -109,7 +114,7 @@ public class GevondenBagageController implements Initializable {
         sizeWidth.setText(foundLuggageList.get(index).getLuggageSizeWidth());
         sizeDepth.setText(foundLuggageList.get(index).getLuggageSizeDepth());
         weight.setText(foundLuggageList.get(index).getLuggageWeight());
-        name.setText(foundLuggageList.get(index).getTravellerNameAndCityName());
+//        name.setText(foundLuggageList.get(index).getTravellerNameAndCityName());
         city.setText(foundLuggageList.get(index).getTravellerNameAndCityCity());
         comments.setText(foundLuggageList.get(index).getComments());
     }
@@ -130,7 +135,7 @@ public class GevondenBagageController implements Initializable {
         sizeWidth.setText(foundLuggageList.get(index).getLuggageSizeWidth());
         sizeDepth.setText(foundLuggageList.get(index).getLuggageSizeDepth());
         weight.setText(foundLuggageList.get(index).getLuggageWeight());
-        name.setText(foundLuggageList.get(index).getTravellerNameAndCityName());
+//        name.setText(foundLuggageList.get(index).getTravellerNameAndCityName());
         city.setText(foundLuggageList.get(index).getTravellerNameAndCityCity());
         comments.setText(foundLuggageList.get(index).getComments());
     }
@@ -151,7 +156,7 @@ public class GevondenBagageController implements Initializable {
         sizeWidth.setText(foundLuggageList.get(index).getLuggageSizeWidth());
         sizeDepth.setText(foundLuggageList.get(index).getLuggageSizeDepth());
         weight.setText(foundLuggageList.get(index).getLuggageWeight());
-        name.setText(foundLuggageList.get(index).getTravellerNameAndCityName());
+//        name.setText(foundLuggageList.get(index).getTravellerNameAndCityName());
         city.setText(foundLuggageList.get(index).getTravellerNameAndCityCity());
         comments.setText(foundLuggageList.get(index).getComments());
     }
@@ -202,21 +207,21 @@ public class GevondenBagageController implements Initializable {
             String databaseTime = time.getText();
             String databaseDateAndTime = databaseDate + " " + databaseTime;
             String databaseLuggageType = luggageType.getText();
-//            String databaseAirportName = airportFound.getText();
+            String databaseAirportName = airportFound.getValue().toString();
             String databaseBrand = brand.getText();
             String databaseFlightNumber = arrivedWithFlight.getText();
             String databaseLabelNumber = tag.getText();
             String databaseLocationFound = locationFound.getText();
             String databasePrimaryColor = primaryColor.getText();
             String databaseSecondaryColor = secondaryColor.getText();
-            
+
             String databaseLuggageSize;
             String databaseLuggageSizeHeight = sizeHeigth.getText();
             String databaseLuggageSizeWidth = sizeWidth.getText();
             String databaseLuggageSizeDepth = sizeDepth.getText();
-            
-            if (databaseLuggageSizeHeight.matches("[0-9]+") 
-                    && databaseLuggageSizeWidth.matches("[0-9]+") 
+
+            if (databaseLuggageSizeHeight.matches("[0-9]+")
+                    && databaseLuggageSizeWidth.matches("[0-9]+")
                     && databaseLuggageSizeDepth.matches("[0-9]+")) {
                 databaseLuggageSize = (sizeHeigth.getText() + "x" + sizeWidth.getText() + "x" + sizeDepth.getText());
             } else {
@@ -224,29 +229,37 @@ public class GevondenBagageController implements Initializable {
             }
 
             String databaseWeight = weight.getText();
-            String databaseTravellerName = name.getText();
+            String databaseTravellerFirstName = firstName.getText();
+            String databaseTravellerInsertion = insertion.getText();
+            String databaseTravellerLastName = lastName.getText();
             String databaseTravellerCity = city.getText();
             String databaseNotes = comments.getText();
             String databaseCaseType = "1";
+            String databaseCaseStatus = "1";
 
             String queryLuggage = "INSERT INTO `luggagem`.`luggage` "
-                    + "(`registrationnr`, `date`, `luggage_type`, `brand`, `flightnr`, `labelnr`, `location_found`, `primary_color`, `secondary_color`, `size`, `weight`, `traveller_name`, `traveller_city`, `notes`, `case_type`)"
+                    + "(`registrationnr`, `date`, `flightnr`, `labelnr`, `destination`, `luggage_type`, `brand`, `location_found`, `primary_color`, `secondary_color`, `size`, `weight`, `case_type`, `customer_firstname`, `customer_preposition`, `customer_lastname`, `case_status`, `airport_IATA`, `notes`)"
                     + "VALUES"
                     + "('" + databaseRegistrationNumber + "', '"
                     + databaseDateAndTime + "', '"
-                    + databaseLuggageType + "', '"
-                    + databaseBrand + "', '"
                     + databaseFlightNumber + "', '"
                     + databaseLabelNumber + "', '"
+                    + databaseTravellerCity + "', '"
+                    + databaseLuggageType + "', '"
+                    + databaseBrand + "', '"
                     + databaseLocationFound + "', '"
                     + databasePrimaryColor + "', '"
                     + databaseSecondaryColor + "', '"
                     + databaseLuggageSize + "', '"
                     + databaseWeight + "', '"
-                    + databaseTravellerName + "', '"
-                    + databaseTravellerCity + "', '"
-                    + databaseNotes + "', '"
-                    + databaseCaseType + "');";
+                    + databaseCaseType + "', '"
+                    + databaseTravellerFirstName + "', '"
+                    + databaseTravellerInsertion + "', '"
+                    + databaseTravellerLastName + "', '"
+                    + databaseCaseStatus + "', '"
+                    + databaseAirportName + "', '"                
+                    + databaseNotes + "');";
+
             int doQueryLuggageTable = MainApp.myJDBC.executeUpdateQuery(queryLuggage);
             if (doQueryLuggageTable == -1) {
                 saveStatus.setTextFill(Paint.valueOf("red"));
@@ -259,7 +272,6 @@ public class GevondenBagageController implements Initializable {
                 // clear all textfields.
                 registrationNumber.clear();
                 time.clear();
-                airportFound.clear();
                 luggageType.clear();
                 brand.clear();
                 arrivedWithFlight.clear();
@@ -271,7 +283,9 @@ public class GevondenBagageController implements Initializable {
                 sizeWidth.clear();
                 sizeDepth.clear();
                 weight.clear();
-                name.clear();
+                firstName.clear();
+                insertion.clear();
+                lastName.clear();
                 city.clear();
                 comments.clear();
 
