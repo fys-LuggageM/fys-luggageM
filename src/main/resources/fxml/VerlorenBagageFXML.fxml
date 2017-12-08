@@ -34,8 +34,8 @@
                     <children>
                         <HBox prefHeight="35.0" prefWidth="200.0" spacing="25.0">
                             <children>
-                                <Button fx:id="newCustomerButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleNewCustomerAction" prefHeight="35.0" prefWidth="135.0" text="New Customer" HBox.hgrow="ALWAYS" />
-                                <Button fx:id="existingCustomerButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleExistingCustomerAction" text="Existing Customer" HBox.hgrow="ALWAYS" />
+                                <Button fx:id="newCustomerButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleNewCustomerAction" prefHeight="35.0" prefWidth="135.0" text="%newCustomer" HBox.hgrow="ALWAYS" />
+                                <Button fx:id="existingCustomerButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleExistingCustomerAction" text="%existingCustomer" HBox.hgrow="ALWAYS" />
                             </children>
                             <VBox.margin>
                                 <Insets bottom="10.0" />
@@ -47,7 +47,7 @@
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                        <ComboBox fx:id="airportBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Choose airport">
+                        <ComboBox fx:id="airportBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="%airportChoose">
                             <VBox.margin>
                                 <Insets bottom="10.0" />
                             </VBox.margin>
@@ -82,12 +82,12 @@
                                 <Insets bottom="10.0" />
                             </VBox.margin>
                         </TextField>
-                        <Label maxWidth="1.7976931348623157E308" text="%arrivedWithFlight">
+                        <Label maxWidth="1.7976931348623157E308" text="%destination">
                             <font>
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="destinationField" promptText="AA1234">
+                        <TextField fx:id="destinationField" promptText="Amsterdam">
                             <VBox.margin>
                                 <Insets bottom="10.0" />
                             </VBox.margin>
@@ -130,17 +130,17 @@
                         </Label>
                         <HBox prefWidth="200.0">
                             <children>
-                                <TextField fx:id="initialsField" disable="true" editable="false" minWidth="50.0" promptText="A.B.">
+                                <TextField fx:id="initialsField" disable="true" editable="false" minWidth="50.0">
                                     <HBox.margin>
                                         <Insets right="25.0" />
                                     </HBox.margin>
                                 </TextField>
-                                <TextField fx:id="prepositionField" disable="true" minWidth="50.0" promptText="van">
+                                <TextField fx:id="prepositionField" disable="true" minWidth="50.0">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
                                 </TextField>
-                                <TextField fx:id="lastNameField" disable="true" minWidth="125.0" prefWidth="225.0" promptText="Houten">
+                                <TextField fx:id="lastNameField" disable="true" minWidth="125.0" prefWidth="225.0">
                                     <HBox.margin>
                                         <Insets left="25.0" />
                                     </HBox.margin>
@@ -155,7 +155,7 @@
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="cityField" disable="true" promptText="Amsterdam">
+                        <TextField fx:id="cityField" disable="true">
                             <VBox.margin>
                                 <Insets bottom="15.0" />
                             </VBox.margin>

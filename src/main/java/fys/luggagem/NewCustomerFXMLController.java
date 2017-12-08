@@ -9,8 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import javafx.beans.binding.BooleanBinding;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 /**
@@ -24,6 +26,9 @@ public class NewCustomerFXMLController implements Initializable {
     private MyJDBC db = MainApp.myJDBC;
     private Data data = MainApp.getData();
 
+    @FXML
+    private Button saveButton;
+    
     @FXML
     private TextField firstNameField;
 
@@ -71,7 +76,7 @@ public class NewCustomerFXMLController implements Initializable {
     private void handleCloseAction() {
         MainApp.loadFXMLFile(this.getClass().getResource(data.getLastScene()));
     }
-    
+
     private void setCustomer() throws SQLException {
         Connection conn = db.getConnection();
 
@@ -143,7 +148,12 @@ public class NewCustomerFXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        BooleanBinding bb = firstNameField.textProperty().isEmpty().or(lastNameField.textProperty().isEmpty()).or(
+                adresField.textProperty().isEmpty()).or(cityField.textProperty().isEmpty()).or(
+                postalCodeField.textProperty().isEmpty()).or(countryField.textProperty().isEmpty()).or(
+                phoneNumberField.textProperty().isEmpty()).or(emailAdresField.textProperty().isEmpty());
+        
+        saveButton.disableProperty().bind(bb);
     }
 
 }

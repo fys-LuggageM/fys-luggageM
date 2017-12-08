@@ -5,8 +5,10 @@
  */
 package fys.luggagem.models;
 
+import fys.luggagem.MainApp;
 import javax.mail.PasswordAuthentication;
 import java.util.Properties;
+import javafx.scene.Cursor;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -22,6 +24,7 @@ public class Email {
 
     private static final String username = "luggagemcustomerservice@gmail.com";
     private static final String password = "LuggageM";
+    private static Data data = MainApp.getData();
 
     public static void sendEmail(String recipient, String subject, String content) {
 
@@ -50,7 +53,7 @@ public class Email {
             Transport.send(message);
 
             System.out.println("Done");
-
+            
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }

@@ -126,7 +126,7 @@ public class ExistingCustomerFXMLController implements Initializable {
         targetCustomer.setCountry(selectedCustomer.getCountry());
         targetCustomer.setPhoneNumber(selectedCustomer.getPhoneNumber());
         targetCustomer.setEmailAdres(selectedCustomer.getEmailAdres());
-        MainApp.loadFXMLFile(this.getClass().getResource("/fxml/VerlorenBagageFXML.fxml"));
+        MainApp.loadFXMLFile(this.getClass().getResource(data.getLastScene()));
     }
 
 }
