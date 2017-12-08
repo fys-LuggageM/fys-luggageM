@@ -95,8 +95,11 @@
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                  <Button fx:id="confirmButton" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#confirmUpload" style="-fx-background-color: #5cb85c;" text="Confirm match" />
-                  <Label fx:id="confirmLabel" />
+                  <Button fx:id="confirmButton" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#confirmUpload" style="-fx-background-color: #5cb85c; -fx-text-fill: white;" text="Confirm match">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin></Button>
+                  <Label fx:id="confirmLabel" prefHeight="17.0" prefWidth="94.0" />
                     </children>
                     <padding>
                         <Insets left="25.0" />
