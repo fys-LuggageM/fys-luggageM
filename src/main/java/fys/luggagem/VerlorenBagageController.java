@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -91,7 +90,7 @@ public class VerlorenBagageController implements Initializable {
 //                + customer.getEmailAdres() + "');";
 //        myJDBC.executeUpdateQuery(sql);
         Luggage luggage = createNewFoundLuggage();
-        luggage.foundLuggageToDatabase();
+        luggage.foundLuggageToDatabase(customer);
         customer.clear();
     }
 
@@ -103,6 +102,7 @@ public class VerlorenBagageController implements Initializable {
 
     @FXML
     public void handleExistingCustomerAction(ActionEvent event) {
+        data.setLastScene("/fxml/VerlorenBagageFXML.fxml");
         MainApp.loadFXMLFile(this.getClass().getResource("/fxml/ExistingCustomerFXML.fxml"));
     }
 
