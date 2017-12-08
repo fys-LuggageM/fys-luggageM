@@ -48,6 +48,15 @@ public class Luggage {
 
     }
 
+    public Luggage(int registrationNr, String flightNr, String labelNr, String luggageType, String brand, String IATA) {
+        this.registrationNr = registrationNr;
+        this.flightNr = flightNr;
+        this.labelNr = labelNr;
+        this.luggageType = luggageType;
+        this.brand = brand;
+        this.IATA = IATA;
+    }
+
     public int getRegistrationNr() {
         return registrationNr;
     }
