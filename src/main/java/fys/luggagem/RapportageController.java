@@ -189,12 +189,30 @@ public class RapportageController implements Initializable {
     @FXML
     private void handleLoadingButtonAction(ActionEvent event) {
 
-        setReportLabelText();
-
         if (comboYear.getValue() != null) {
             comboMonth.setVisible(true);
         }
+        drawReportLabelText();
+        drawFoundLuggageCharts();
+        drawLostLuggageCharts();
+        drawDamagedLuggageCharts();
 
+        exportLabel.setText("");
+    }
+
+    @FXML
+    private void drawReportLabelText() {
+        if (comboYear.getValue() != null && comboMonth.getValue() == null) {
+            reportLabel.setText(reportLabelText + " " + comboYear.getValue() + "?");
+        } else if (comboYear.getValue() != null) {
+            reportLabel.setText(reportLabelText + " " + comboMonth.getValue() + " " + comboYear.getValue() + "?");
+        } else {
+            reportLabel.setText("");
+        }
+    }
+
+    @FXML
+    private void drawFoundLuggageCharts() {
         if (tabGevonden.isSelected()) {
             populatePieChart(gevondenPieChart);
             gevondenPieChart.setVisible(true);
@@ -212,7 +230,12 @@ public class RapportageController implements Initializable {
                 gevondenLineChart.getData().clear();
 
             }
-        } else if (tabVerloren.isSelected()) {
+        }
+    }
+
+    @FXML
+    private void drawLostLuggageCharts() {
+        if (tabVerloren.isSelected()) {
             populatePieChart(verlorenPieChart);
             verlorenPieChart.setVisible(true);
 
@@ -228,8 +251,12 @@ public class RapportageController implements Initializable {
                 verlorenLineChart.setTitle(chooseAYear);
                 verlorenLineChart.getData().clear();
             }
+        }
+    }
 
-        } else if (tabBeschadigde.isSelected()) {
+    @FXML
+    private void drawDamagedLuggageCharts() {
+        if (tabBeschadigde.isSelected()) {
             populatePieChart(beschadigdePieChart);
             beschadigdePieChart.setVisible(true);
 
@@ -245,19 +272,6 @@ public class RapportageController implements Initializable {
                 beschadigdeLineChart.setTitle(chooseAYear);
                 beschadigdeLineChart.getData().clear();
             }
-        }
-
-        exportLabel.setText("");
-    }
-
-    @FXML
-    private void setReportLabelText() {
-        if (comboYear.getValue() != null && comboMonth.getValue() == null) {
-            reportLabel.setText(reportLabelText + " " + comboYear.getValue() + "?");
-        } else if (comboYear.getValue() != null) {
-            reportLabel.setText(reportLabelText + " " + comboMonth.getValue() + " " + comboYear.getValue() + "?");
-        } else {
-            reportLabel.setText("");
         }
     }
 
@@ -332,7 +346,7 @@ public class RapportageController implements Initializable {
         return exportLineImage;
     }
 
-    private void setcomboBoxController() {
+    private void setComboBoxController() {
 
         comboMonth.setVisible(false);
 
@@ -601,7 +615,7 @@ public class RapportageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb
     ) {
-        setcomboBoxController();
+        setComboBoxController();
 
     }
 }
