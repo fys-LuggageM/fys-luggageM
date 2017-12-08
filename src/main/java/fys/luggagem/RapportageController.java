@@ -1,5 +1,6 @@
 package fys.luggagem;
 
+import static fys.luggagem.MainApp.myJDBC;
 import fys.luggagem.models.Data;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -11,17 +12,13 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Side;
-import javafx.scene.Parent;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
@@ -32,14 +29,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -114,8 +108,6 @@ public class RapportageController implements Initializable {
 
     private String month;
 
-    private final int labelLineLength = 6;
-
 //Localisatie Strings
     private final String screenTitle = data.getResourceBundle().getString("reports");
 
@@ -140,6 +132,14 @@ public class RapportageController implements Initializable {
     private final String exportSave = data.getResourceBundle().getString("exportSave");
 
     private final String luggageChartLegend = data.getResourceBundle().getString("luggageChartLegend");
+
+    private final String airportsChartLabel = data.getResourceBundle().getString("airportsChartLabel");
+
+    private final String gevondenChartLabel = data.getResourceBundle().getString("foundChartLabel");
+
+    private final String verlorenChartLegendLabel = data.getResourceBundle().getString("lostChartLabel");
+
+    private final String beschadigdeChartLabel = data.getResourceBundle().getString("damagedChartLabel");
 
     // SQL Query's
     private final String comboYearQuery = "SELECT YEAR(luggage.date), "
@@ -186,16 +186,13 @@ public class RapportageController implements Initializable {
             + "INNER JOIN airport ON luggage.airport_IATA=airport.IATA "
             + "WHERE (YEAR(date),MONTH(date)) =";
 
-    private final MyJDBC db = new MyJDBC("luggagem");
-
     @FXML
     private void handleLoadingButtonAction(ActionEvent event) {
-        if (comboYear.getValue() != null && comboMonth.getValue() == null) {
-            reportLabel.setText(reportLabelText + " " + comboYear.getValue() + "?");
-        } else if (comboYear.getValue() != null) {
-            reportLabel.setText(reportLabelText + " " + comboMonth.getValue() + " " + comboYear.getValue() + "?");
-        } else {
-            reportLabel.setText("");
+
+        setReportLabelText();
+
+        if (comboYear.getValue() != null) {
+            comboMonth.setVisible(true);
         }
 
         if (tabGevonden.isSelected()) {
@@ -208,7 +205,8 @@ public class RapportageController implements Initializable {
             if (comboYear.getValue() != null && comboMonth.getValue() == null) {
                 gevondenLineChart.setTitle(gevondenChartTitle + " " + comboYear.getValue());
             } else if (comboYear.getValue() != null) {
-                gevondenLineChart.setTitle(gevondenChartTitle + " " + comboMonth.getValue() + " " + comboYear.getValue());
+                gevondenLineChart.setTitle(gevondenChartTitle + " " + comboMonth.getValue() + " "
+                        + comboYear.getValue());
             } else {
                 gevondenLineChart.setTitle(chooseAYear);
                 gevondenLineChart.getData().clear();
@@ -224,7 +222,8 @@ public class RapportageController implements Initializable {
             if (comboYear.getValue() != null && comboMonth.getValue() == null) {
                 verlorenLineChart.setTitle(verlorenChartTitle + " " + comboYear.getValue());
             } else if (comboYear.getValue() != null) {
-                verlorenLineChart.setTitle(verlorenChartTitle + " " + comboMonth.getValue() + " " + comboYear.getValue());
+                verlorenLineChart.setTitle(verlorenChartTitle + " " + comboMonth.getValue() + " "
+                        + comboYear.getValue());
             } else {
                 verlorenLineChart.setTitle(chooseAYear);
                 verlorenLineChart.getData().clear();
@@ -240,7 +239,8 @@ public class RapportageController implements Initializable {
             if (comboYear.getValue() != null && comboMonth.getValue() == null) {
                 beschadigdeLineChart.setTitle(beschadigdeChartTitle + " " + comboYear.getValue());
             } else if (comboYear.getValue() != null) {
-                beschadigdeLineChart.setTitle(beschadigdeChartTitle + " " + comboMonth.getValue() + " " + comboYear.getValue());
+                beschadigdeLineChart.setTitle(beschadigdeChartTitle + " " + comboMonth.getValue() + " "
+                        + comboYear.getValue());
             } else {
                 beschadigdeLineChart.setTitle(chooseAYear);
                 beschadigdeLineChart.getData().clear();
@@ -248,6 +248,17 @@ public class RapportageController implements Initializable {
         }
 
         exportLabel.setText("");
+    }
+
+    @FXML
+    private void setReportLabelText() {
+        if (comboYear.getValue() != null && comboMonth.getValue() == null) {
+            reportLabel.setText(reportLabelText + " " + comboYear.getValue() + "?");
+        } else if (comboYear.getValue() != null) {
+            reportLabel.setText(reportLabelText + " " + comboMonth.getValue() + " " + comboYear.getValue() + "?");
+        } else {
+            reportLabel.setText("");
+        }
     }
 
     @FXML
@@ -285,12 +296,12 @@ public class RapportageController implements Initializable {
 
     private BufferedImage createPieChartImage() throws IOException {
         BufferedImage exportPieImage = null;
-        if (tabVerloren.isSelected()) {
-            WritableImage image = verlorenPieChart.snapshot(new SnapshotParameters(), null);
+        if (tabGevonden.isSelected()) {
+            WritableImage image = gevondenPieChart.snapshot(new SnapshotParameters(), null);
 
             exportPieImage = SwingFXUtils.fromFXImage(image, null);
-        } else if (tabGevonden.isSelected()) {
-            WritableImage image = gevondenPieChart.snapshot(new SnapshotParameters(), null);
+        } else if (tabVerloren.isSelected()) {
+            WritableImage image = verlorenPieChart.snapshot(new SnapshotParameters(), null);
 
             exportPieImage = SwingFXUtils.fromFXImage(image, null);
         } else if (tabBeschadigde.isSelected()) {
@@ -303,14 +314,16 @@ public class RapportageController implements Initializable {
 
     private BufferedImage createLineChartImage() throws IOException {
         BufferedImage exportLineImage = null;
-        if (tabVerloren.isSelected()) {
-            WritableImage image = verlorenLineChart.snapshot(new SnapshotParameters(), null);
-
-            exportLineImage = SwingFXUtils.fromFXImage(image, null);
-        } else if (tabGevonden.isSelected()) {
+        if (tabGevonden.isSelected()) {
             WritableImage image = gevondenLineChart.snapshot(new SnapshotParameters(), null);
 
             exportLineImage = SwingFXUtils.fromFXImage(image, null);
+
+        } else if (tabVerloren.isSelected()) {
+            WritableImage image = verlorenLineChart.snapshot(new SnapshotParameters(), null);
+
+            exportLineImage = SwingFXUtils.fromFXImage(image, null);
+
         } else if (tabBeschadigde.isSelected()) {
             WritableImage image = beschadigdeLineChart.snapshot(new SnapshotParameters(), null);
 
@@ -319,7 +332,9 @@ public class RapportageController implements Initializable {
         return exportLineImage;
     }
 
-    private void comboBoxController() {
+    private void setcomboBoxController() {
+
+        comboMonth.setVisible(false);
 
         fillComboYear();
         fillComboMonth();
@@ -327,7 +342,7 @@ public class RapportageController implements Initializable {
 
     private void fillComboYear() {
         try {
-            resultSet = db.executeResultSetQuery(comboYearQuery);
+            resultSet = myJDBC.executeResultSetQuery(comboYearQuery);
 
             while (resultSet.next()) {
                 year = resultSet.getString("YEAR(luggage.date)");
@@ -344,7 +359,7 @@ public class RapportageController implements Initializable {
 
     private void fillComboMonth() {
         try {
-            resultSet = db.executeResultSetQuery(comboMonthQuery);
+            resultSet = myJDBC.executeResultSetQuery(comboMonthQuery);
 
             comboMonth.getItems().add(
                     null
@@ -366,50 +381,58 @@ public class RapportageController implements Initializable {
     }
 
     private void populatePieChart(PieChart chart) {
-        verlorenPieChart.setVisible(false);
         gevondenPieChart.setVisible(false);
+        verlorenPieChart.setVisible(false);
         beschadigdePieChart.setVisible(false);
 
-        verlorenLineChart.setVisible(false);
         gevondenLineChart.setVisible(false);
+        verlorenLineChart.setVisible(false);
         beschadigdeLineChart.setVisible(false);
 
-        verlorenPieChartData = FXCollections.observableArrayList();
+        gevondenLineChartXAxis.setLabel(airportsChartLabel);
+        verlorenLineChartXAxis.setLabel(airportsChartLabel);
+        beschadigdeLineChartXAxis.setLabel(airportsChartLabel);
+
+        gevondenLineChartYAxis.setLabel(gevondenChartLabel);
+        verlorenLineChartYAxis.setLabel(verlorenChartLegendLabel);
+        beschadigdeLineChartYAxis.setLabel(beschadigdeChartLabel);
+
         gevondenPieChartData = FXCollections.observableArrayList();
+        verlorenPieChartData = FXCollections.observableArrayList();
         beschadigdePieChartData = FXCollections.observableArrayList();
 
         try {
 
             if (comboYear.getValue() == null) {
-                verlorenPieChart.setTitle(chooseAYear);
                 gevondenPieChart.setTitle(chooseAYear);
+                verlorenPieChart.setTitle(chooseAYear);
                 beschadigdePieChart.setTitle(chooseAYear);
 
                 reportLabel.setText("");
 
             } else if (tabGevonden.isSelected()) {
-                resultSet = db.executeResultSetQuery(gevondenYearResultQuery + comboYear.getValue()
+                resultSet = myJDBC.executeResultSetQuery(gevondenYearResultQuery + comboYear.getValue()
                         + groupResultQuery);
 
             } else if (tabVerloren.isSelected()) {
-                resultSet = db.executeResultSetQuery(verlorenYearResultQuery + comboYear.getValue()
+                resultSet = myJDBC.executeResultSetQuery(verlorenYearResultQuery + comboYear.getValue()
                         + groupResultQuery);
 
             } else if (tabBeschadigde.isSelected()) {
-                resultSet = db.executeResultSetQuery(beschadigdeYearResultQuery + comboYear.getValue()
+                resultSet = myJDBC.executeResultSetQuery(beschadigdeYearResultQuery + comboYear.getValue()
                         + groupResultQuery);
 
             }
 
             if (comboYear.getValue() != null && comboMonth.getValue() != null) {
                 if (tabGevonden.isSelected()) {
-                    resultSet = db.executeResultSetQuery(gevondenMonthResultQuery
+                    resultSet = myJDBC.executeResultSetQuery(gevondenMonthResultQuery
                             + "(" + comboYear.getValue() + "," + comboMonth.getValue() + ")" + groupResultQuery);
                 } else if (tabVerloren.isSelected()) {
-                    resultSet = db.executeResultSetQuery(verlorenMonthResultQuery
+                    resultSet = myJDBC.executeResultSetQuery(verlorenMonthResultQuery
                             + "(" + comboYear.getValue() + "," + comboMonth.getValue() + ")" + groupResultQuery);
                 } else if (tabBeschadigde.isSelected()) {
-                    resultSet = db.executeResultSetQuery(beschadigdeMonthResultQuery
+                    resultSet = myJDBC.executeResultSetQuery(beschadigdeMonthResultQuery
                             + "(" + comboYear.getValue() + "," + comboMonth.getValue() + ")" + groupResultQuery);
                 }
             }
@@ -422,7 +445,7 @@ public class RapportageController implements Initializable {
                     gevondenPieChartData.add(new PieChart.Data(name + " - " + gevondenBagage + " " + luggageChartLegend,
                             gevondenBagage));
 
-                    gevondenPieChart.setAnimated(false);
+                    gevondenPieChart.setAnimated(true);
                     gevondenPieChart.setLegendSide(Side.LEFT);
 
                     if (comboYear.getValue() != null && comboMonth.getValue() == null) {
@@ -433,7 +456,7 @@ public class RapportageController implements Initializable {
                     }
 
                     gevondenPieChart.setData(gevondenPieChartData);
-                    gevondenPieChart.setLabelLineLength(labelLineLength);
+                    gevondenPieChart.setLabelsVisible(false);
 
                 }
             }
@@ -444,7 +467,7 @@ public class RapportageController implements Initializable {
 
                     verlorenPieChartData.add(new PieChart.Data(name + " - " + verlorenBagage + " " + luggageChartLegend,
                             verlorenBagage));
-                    verlorenPieChart.setAnimated(false);
+                    verlorenPieChart.setAnimated(true);
                     verlorenPieChart.setLegendSide(Side.LEFT);
 
                     if (comboYear.getValue() != null && comboMonth.getValue() == null) {
@@ -454,7 +477,7 @@ public class RapportageController implements Initializable {
                     }
 
                     verlorenPieChart.setData(verlorenPieChartData);
-                    verlorenPieChart.setLabelLineLength(labelLineLength);
+                    verlorenPieChart.setLabelsVisible(false);
 
                 }
             }
@@ -466,7 +489,7 @@ public class RapportageController implements Initializable {
 
                     beschadigdePieChartData.add(new PieChart.Data(name + " - " + beschadigdeBagage + " "
                             + luggageChartLegend, beschadigdeBagage));
-                    beschadigdePieChart.setAnimated(false);
+                    beschadigdePieChart.setAnimated(true);
                     beschadigdePieChart.setLegendSide(Side.LEFT);
 
                     if (comboYear.getValue() != null && comboMonth.getValue() == null) {
@@ -477,7 +500,7 @@ public class RapportageController implements Initializable {
                     }
 
                     beschadigdePieChart.setData(beschadigdePieChartData);
-                    beschadigdePieChart.setLabelLineLength(labelLineLength);
+                    beschadigdePieChart.setLabelsVisible(false);
 
                 }
             }
@@ -499,12 +522,12 @@ public class RapportageController implements Initializable {
             if (tabGevonden.isSelected()) {
                 //data voor gevonden bagage linechart
                 if (comboYear.getValue() != null) {
-                    resultSet = db.executeResultSetQuery(gevondenYearResultQuery + comboYear.getValue()
+                    resultSet = myJDBC.executeResultSetQuery(gevondenYearResultQuery + comboYear.getValue()
                             + groupResultQuery);
                 }
 
                 if (comboYear.getValue() != null && comboMonth.getValue() != null) {
-                    resultSet = db.executeResultSetQuery(gevondenMonthResultQuery
+                    resultSet = myJDBC.executeResultSetQuery(gevondenMonthResultQuery
                             + "(" + comboYear.getValue() + "," + comboMonth.getValue() + ")" + groupResultQuery);
                 }
 
@@ -518,13 +541,13 @@ public class RapportageController implements Initializable {
             if (tabVerloren.isSelected()) {
                 //data voor verloren bagage linechart
                 if (comboYear.getValue() != null) {
-                    resultSet = db.executeResultSetQuery(verlorenYearResultQuery + comboYear.getValue()
+                    resultSet = myJDBC.executeResultSetQuery(verlorenYearResultQuery + comboYear.getValue()
                             + groupResultQuery);
 
                 }
 
                 if (comboYear.getValue() != null && comboMonth.getValue() != null) {
-                    resultSet = db.executeResultSetQuery(verlorenMonthResultQuery
+                    resultSet = myJDBC.executeResultSetQuery(verlorenMonthResultQuery
                             + "(" + comboYear.getValue() + "," + comboMonth.getValue() + ")" + groupResultQuery);
                 }
                 while (resultSet.next()) {
@@ -538,12 +561,12 @@ public class RapportageController implements Initializable {
             if (tabBeschadigde.isSelected()) {
                 //data voor beschadigde bagage linechart
                 if (comboYear.getValue() != null) {
-                    resultSet = db.executeResultSetQuery(beschadigdeYearResultQuery + comboYear.getValue()
+                    resultSet = myJDBC.executeResultSetQuery(beschadigdeYearResultQuery + comboYear.getValue()
                             + groupResultQuery);
 
                 }
                 if (comboYear.getValue() != null && comboMonth.getValue() != null) {
-                    resultSet = db.executeResultSetQuery(beschadigdeMonthResultQuery
+                    resultSet = myJDBC.executeResultSetQuery(beschadigdeMonthResultQuery
                             + "(" + comboYear.getValue() + "," + comboMonth.getValue() + ")" + groupResultQuery);
                 }
                 while (resultSet.next()) {
@@ -553,15 +576,14 @@ public class RapportageController implements Initializable {
                     beschadigdeSeries.getData().add(new XYChart.Data(naam, beschadigdeBagage));
                 }
             }
-
-            if (tabVerloren.isSelected()) {
-                verlorenLineChart.setAnimated(false);
-                verlorenLineChart.getData().clear();
-                verlorenLineChart.getData().add(verlorenSeries);
-            } else if (tabGevonden.isSelected()) {
+            if (tabGevonden.isSelected()) {
                 gevondenLineChart.setAnimated(false);
                 gevondenLineChart.getData().clear();
                 gevondenLineChart.getData().add(gevondenSeries);
+            } else if (tabVerloren.isSelected()) {
+                verlorenLineChart.setAnimated(false);
+                verlorenLineChart.getData().clear();
+                verlorenLineChart.getData().add(verlorenSeries);
 
             } else if (tabBeschadigde.isSelected()) {
                 beschadigdeLineChart.setAnimated(false);
@@ -579,7 +601,7 @@ public class RapportageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb
     ) {
-        comboBoxController();
+        setcomboBoxController();
 
     }
 }

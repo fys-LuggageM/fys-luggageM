@@ -1,17 +1,12 @@
 package fys.luggagem;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Optional;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImage;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 /**
@@ -70,8 +65,8 @@ public class PDFExport {
             try (PDPageContentStream content = new PDPageContentStream(doc, page)) {
 
                 content.drawImage(logoImg, 10, 755, 150, 30);
-                content.drawImage(pdfScreenshotImage, 20, 350, 500, 400);
-                content.drawImage(pdfScreenshotImage2, 20, 0, 500, 400);
+                content.drawImage(pdfScreenshotImage, 50, 350, 500, 400);
+                content.drawImage(pdfScreenshotImage2, 50, 0, 500, 400);
 
                 content.beginText();
                 content.setFont(PDType1Font.HELVETICA, 24);

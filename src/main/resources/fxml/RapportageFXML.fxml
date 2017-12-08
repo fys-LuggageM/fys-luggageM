@@ -127,7 +127,7 @@
                                                     </rowConstraints>
                                        <children>
                                           <PieChart fx:id="gevondenPieChart" />
-                                          <LineChart fx:id="gevondenLineChart" title="-" GridPane.columnIndex="1">
+                                          <LineChart fx:id="gevondenLineChart" GridPane.columnIndex="1">
                                              <xAxis>
                                                 <CategoryAxis fx:id="gevondenLineChartXAxis" side="BOTTOM" />
                                              </xAxis>
