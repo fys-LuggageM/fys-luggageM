@@ -37,7 +37,7 @@
                     <children>
                         <HBox prefHeight="29.0" prefWidth="262.0">
                             <children>
-                                <Button maxWidth="131.0" mnemonicParsing="false" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="%customer" HBox.hgrow="ALWAYS">
+                                <Button maxWidth="131.0" mnemonicParsing="false" onAction="#handleExistingCustomerAction" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="%customer" HBox.hgrow="ALWAYS">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
@@ -121,11 +121,7 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <VBox maxHeight="1.7976931348623157E308" prefHeight="350.0" prefWidth="100.0">
-                            <children>
-                                <Button mnemonicParsing="false" onAction="#goMatching" text="Button" />
-                            </children>
-                        </VBox>
+                        <VBox maxHeight="1.7976931348623157E308" prefHeight="350.0" prefWidth="100.0" />
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                             <children>
                                 <Label fx:id="savedConfirmation" alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #5cb85c; -fx-text-fill: #f9f9f9;" text="%succesful" textAlignment="CENTER" visible="false">
