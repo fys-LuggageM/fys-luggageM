@@ -1,5 +1,6 @@
 package fys.luggagem;
 
+import static fys.luggagem.MainApp.data;
 import fys.luggagem.models.Data;
 import fys.luggagem.models.Luggage;
 import java.io.IOException;
@@ -13,13 +14,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class DatabaseController implements Initializable {
 
@@ -55,6 +61,8 @@ public class DatabaseController implements Initializable {
     private TableColumn<?, ?> luggageType;
     @FXML
     private TableColumn<?, ?> IATA;
+
+    private String currentlyActiveTable;
 
     @FXML
     private void handleBeschadigdeButtonAction(ActionEvent event) {
@@ -113,6 +121,7 @@ public class DatabaseController implements Initializable {
             }
 
             TableViewLuggage.setItems(damagedLuggageList);
+            currentlyActiveTable = "damagedLuggage";
 
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
@@ -151,6 +160,7 @@ public class DatabaseController implements Initializable {
             }
 
             TableViewLuggage.setItems(lostLuggageList);
+            currentlyActiveTable = "lostLuggage";
 
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
@@ -189,6 +199,7 @@ public class DatabaseController implements Initializable {
             }
 
             TableViewLuggage.setItems(foundLuggageList);
+            currentlyActiveTable = "foundLuggage";
 
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
@@ -202,8 +213,16 @@ public class DatabaseController implements Initializable {
             TableRow<Luggage> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
-                    Luggage rowData = row.getItem();
-                    System.out.println(rowData);
+                    try {
+                        Luggage rowData = row.getItem();
+                        Parent parent = FXMLLoader.load(getClass().getResource("/fxml/DatabaseFoundEdit.fxml"),data.getResourceBundle());
+                        Stage stage = new Stage(StageStyle.DECORATED);
+                        stage.setTitle("Edit found luggage");
+                        stage.setScene(new Scene(parent));
+                        stage.show();
+                    } catch (IOException ex) {
+                        Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             });
             return row;
