@@ -16,6 +16,7 @@ public class MyJDBC {
     private static final String DB_DEFAULT_ACCOUNT = "root";
     private static final String DB_DEFAULT_PASSWORD = ""; //insert password
 
+
     private final static String DB_DRIVER_URL = "com.mysql.jdbc.Driver";
     private final static String DB_DRIVER_PREFIX = "jdbc:mysql://";
     private final static String DB_DRIVER_PARAMETERS = "?useSSL=false";
@@ -25,6 +26,7 @@ public class MyJDBC {
     private int registrationNrDamaged;
     private int registrationNrFound;
     private int registrationNrLost;
+    private int luggageRegistrationNr;
 
     // set for verbose logging of all queries
     private boolean verbose = true;
@@ -84,9 +86,8 @@ public class MyJDBC {
 
     /**
      * *
-     * elects proper loading of the named driver for database connections. This
-     * is relevant if there are multiple drivers installed that match the JDBC
-     * type
+     * elects proper loading of the named driver for database connections. This is relevant if there are multiple
+     * drivers installed that match the JDBC type
      *
      * @param driverName the name of the driver to be activated.
      * @return indicates whether a suitable driver is available
@@ -133,9 +134,8 @@ public class MyJDBC {
 
     /**
      * *
-     * Executes an SQL query that yields a ResultSet with the outcome of the
-     * query. This outcome may be a single row with a single column in case of a
-     * scalar outcome.
+     * Executes an SQL query that yields a ResultSet with the outcome of the query. This outcome may be a single row
+     * with a single column in case of a scalar outcome.
      *
      * @param sql the full sql text of the query.
      * @return a ResultSet object that can iterate along all rows
@@ -213,9 +213,8 @@ public class MyJDBC {
 
     /**
      * *
-     * echoes an exception and its stack trace on the system console. remembers
-     * the message of the first error that occurs for later reference. closes
-     * the connection such that no further operations are possible.
+     * echoes an exception and its stack trace on the system console. remembers the message of the first error that
+     * occurs for later reference. closes the connection such that no further operations are possible.
      *
      * @param e
      */
@@ -352,6 +351,14 @@ public class MyJDBC {
         return registrationNrFound;
     }
 
+    public int getLuggageRegistrationNr() {
+        return luggageRegistrationNr;
+    }
+
+    public void setLuggageRegistrationNr(int luggageRegistrationNr) {
+        this.luggageRegistrationNr = luggageRegistrationNr;
+    }
+
     public void newRegnrDamagedLuggage() throws SQLException {
         Connection conn = connection;
 
@@ -428,7 +435,7 @@ public class MyJDBC {
 
                 // increment registrationNr by 1 for a new registrationNr
                 registrationNr++;
-                registrationNrLost = registrationNr;
+                luggageRegistrationNr = registrationNr;
 
                 try {
                     // execute insert query for new registrationNr
@@ -475,7 +482,7 @@ public class MyJDBC {
 
                 // increment registrationNr by 1 for a new registrationNr
                 registrationNr++;
-                registrationNrFound = registrationNr;
+                luggageRegistrationNr = registrationNr;
 
                 try {
                     // execute insert query for new registrationNr
