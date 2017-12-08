@@ -48,8 +48,8 @@
                   <Label text="%colors" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
                      <children>
-                        <TextField prefHeight="25.0" prefWidth="294.0" promptText="%colorsPrompt1" />
-                        <TextField prefHeight="25.0" prefWidth="304.0" promptText="%colorsPrompt2" />
+                        <TextField fx:id="color1Field" prefHeight="25.0" prefWidth="294.0" promptText="%colorsPrompt1" />
+                        <TextField fx:id="colorField2" prefHeight="25.0" prefWidth="304.0" promptText="%colorsPrompt2" />
                      </children>
                   </HBox>
                   <Label text="%luggageSizeInCm" GridPane.columnIndex="1" GridPane.rowIndex="6" />
@@ -65,15 +65,15 @@
                   <Label text="%weightInKg" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                   <TextField GridPane.columnIndex="2" GridPane.rowIndex="7" />
                   <Label text="%city" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <TextField GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <TextField GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <TextField GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <TextField GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <TextField fx:id="registrationNumberField" disable="true" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="IATAField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <TextField fx:id="brandField" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <TextField fx:id="destinationField" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                   <TextField GridPane.columnIndex="2" GridPane.rowIndex="8" />
                   <Label text="%notes" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                   <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="9" />
                   <Label text="  " GridPane.rowIndex="7" />
-                  <Button mnemonicParsing="false" text="Bevestigen" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+                  <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeStage" text="Bevestigen" GridPane.columnIndex="2" GridPane.rowIndex="10" />
                </children>
             </GridPane>
          </center>

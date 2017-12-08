@@ -206,16 +206,16 @@ public class DatabaseController implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        setupFoundLuggageTable();
+    private void loadpopupFXML() {
         TableViewLuggage.setRowFactory(tv -> {
             TableRow<Luggage> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     try {
                         Luggage rowData = row.getItem();
-                        Parent parent = FXMLLoader.load(getClass().getResource("/fxml/DatabaseFoundEdit.fxml"),data.getResourceBundle());
+                        MainApp.data.setLuggageRegistrationNumber(rowData.getRegistrationNr());
+                        Parent parent = FXMLLoader.load(getClass().getResource("/fxml/DatabaseFoundEdit.fxml"), data.getResourceBundle());
+                        
                         Stage stage = new Stage(StageStyle.DECORATED);
                         stage.setTitle("Edit found luggage");
                         stage.setScene(new Scene(parent));
@@ -227,5 +227,11 @@ public class DatabaseController implements Initializable {
             });
             return row;
         });
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        setupFoundLuggageTable();
+        loadpopupFXML();
     }
 }

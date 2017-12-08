@@ -28,6 +28,15 @@ public class Data {
     private StackPane workspace;
     private int permissions;
     private String lastScene;
+    private int luggageRegistrationNumber;
+
+    public int getLuggageRegistrationNumber() {
+        return luggageRegistrationNumber;
+    }
+
+    public void setLuggageRegistrationNumber(int luggageRegistrationNumber) {
+        this.luggageRegistrationNumber = luggageRegistrationNumber;
+    }
 
     public Data() {
         language = "en";
