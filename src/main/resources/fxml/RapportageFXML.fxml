@@ -68,8 +68,8 @@
                     <rowConstraints>
                         <RowConstraints maxHeight="41.0" minHeight="41.0" prefHeight="41.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="41.0" minHeight="41.0" prefHeight="41.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="532.0" minHeight="400.0" prefHeight="508.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="30.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="400.0" prefHeight="508.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
                         <GridPane alignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
@@ -82,7 +82,7 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button fx:id="loadingButton" alignment="CENTER" maxWidth="1.7976931348623157E308" onAction="#handleLoadingButtonAction" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: black;" text="%loadingButtonText" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                <Button fx:id="loadingButton" alignment="CENTER" maxWidth="1.7976931348623157E308" onAction="#handleLoadingButtonAction" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: black; -fx-background-color: d81e05;" text="%loadingButtonText" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                     <font>
                                         <Font size="18.0" />
                                     </font>
@@ -127,7 +127,7 @@
                                                     </rowConstraints>
                                        <children>
                                           <PieChart fx:id="gevondenPieChart" />
-                                          <LineChart fx:id="gevondenLineChart" title="-" GridPane.columnIndex="1">
+                                          <LineChart fx:id="gevondenLineChart" GridPane.columnIndex="1">
                                              <xAxis>
                                                 <CategoryAxis fx:id="gevondenLineChartXAxis" side="BOTTOM" />
                                              </xAxis>
@@ -252,7 +252,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Button fx:id="exportPdfButton" maxWidth="200.0" minWidth="200.0" mnemonicParsing="false" onAction="#handleExportPdfButtonAction" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: black;" text="%exportPdfButtonText" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+                        <Button fx:id="exportPdfButton" maxWidth="200.0" minWidth="200.0" mnemonicParsing="false" onAction="#handleExportPdfButtonAction" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: black; -fx-background-color: d81e05;" text="%exportPdfButtonText" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
                             <font>
                                 <Font size="18.0" />
                             </font>

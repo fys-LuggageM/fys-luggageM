@@ -89,6 +89,12 @@ public class VerlorenBagageController implements Initializable {
         setEmailContent(luggage);
         Email.sendEmail("test@test.com", "Lost Luggage", email);
         customer.clear();
+        goToMatching();
+
+    }
+
+    private void goToMatching() {
+        MainApp.loadFXMLFile(this.getClass().getResource("/fxml/MatchingFXML.fxml"));
     }
 
     @FXML

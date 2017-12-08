@@ -100,24 +100,25 @@ public class MatchingController implements Initializable {
     @FXML
     private void confirmUpload(ActionEvent event){
         confirmLabel.setText("Match has been confirmed");
+        uploadMatch();
     }
     
     private void uploadMatch(){
         Connection conn = db.getConnection();
-//        String updateCaseStatus = "UPDATE luggage SET case_status = 1 WHERE registrationnr = ?";
-        String uploadMatch = "INSERT INTO matches registrationnr VALUES (?)";
+        String updateCaseStatus = "UPDATE luggage SET case_status = 0 WHERE registrationnr = ?";
+        String uploadMatch = "INSERT INTO matches (registrationnr) VALUES (?)";
         
         
         PreparedStatement ps = null;
-//        try{
-//            conn.setAutoCommit(false);
-//            ps = conn.prepareStatement(updateCaseStatus);
-//            ps.setInt(1, db.getLuggageRegistrationNr());
-//            ps.executeUpdate();
-//            conn.commit();
-//        } catch(SQLException e){
-//            System.err.println("SQL ex in uploadMatch->updateCaseStatus: " + e);
-//        }
+        try{
+            conn.setAutoCommit(false);
+            ps = conn.prepareStatement(updateCaseStatus);
+            ps.setInt(1, db.getLuggageRegistrationNr());
+            ps.executeUpdate();
+            conn.commit();
+        } catch(SQLException e){
+            System.err.println("SQL ex in uploadMatch->updateCaseStatus: " + e);
+        }
         
         try{
             conn.setAutoCommit(false);
@@ -132,7 +133,7 @@ public class MatchingController implements Initializable {
 
     private void getLuggageDetails() {
         Connection conn = db.getConnection();
-        String luggageDetails = "SELECT labelnr, luggage_type, brand, primary_color, secondary_color FROM luggage WHERE registrationnr = 1";
+        String luggageDetails = "SELECT labelnr, luggage_type, brand, primary_color, secondary_color FROM luggage WHERE registrationnr = ?";
 
         PreparedStatement ps = null;
         try {
