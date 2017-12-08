@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
@@ -80,11 +81,11 @@
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="airportFound" promptText="%airportFoundPrompt">
-                            <VBox.margin>
-                                <Insets bottom="7.0" />
-                            </VBox.margin>
-                        </TextField>
+                  <ComboBox fx:id="airportFound" promptText="%chooseAirport">
+                     <VBox.margin>
+                        <Insets bottom="7.0" />
+                     </VBox.margin>
+                  </ComboBox>
                         <Label maxWidth="1.7976931348623157E308" text="%luggageType">
                             <font>
                                 <Font name="System Bold" size="16.0" />
@@ -248,12 +249,12 @@
                         </TextArea>
                         <HBox alignment="CENTER_RIGHT">
                             <children>
-                                <Button minWidth="29.0" mnemonicParsing="false" onAction="#handlePreviousAction" prefHeight="37.0" prefWidth="36.0" text="&lt;">
+                                <Button disable="true" minWidth="29.0" mnemonicParsing="false" onAction="#handlePreviousAction" prefHeight="37.0" prefWidth="36.0" text="&lt;">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
                                 </Button>
-                                <Button minWidth="29.0" mnemonicParsing="false" onAction="#handleNextAction" prefHeight="37.0" prefWidth="36.0" text="&gt;">
+                                <Button disable="true" minWidth="29.0" mnemonicParsing="false" onAction="#handleNextAction" prefHeight="37.0" prefWidth="36.0" text="&gt;">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
@@ -261,7 +262,7 @@
                                         <Insets right="5.0" />
                                     </HBox.margin>
                                 </Button>
-                                <Button minWidth="67.0" mnemonicParsing="false" onAction="#importExcel" text="%importFromExcel">
+                                <Button disable="true" minWidth="67.0" mnemonicParsing="false" onAction="#importExcel" text="%importFromExcel">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
