@@ -15,7 +15,7 @@ import javafx.fxml.Initializable;
  *
  * @author ev1l0rd
  */
-public class DatabaseEditController implements Initializable {
+public class DatabaseFoundEditController implements Initializable {
 
     /**
      * Initializes the controller class.
