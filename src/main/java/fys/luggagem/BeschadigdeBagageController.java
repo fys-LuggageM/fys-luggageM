@@ -84,7 +84,7 @@ public class BeschadigdeBagageController implements Initializable {
 
     @FXML
     public void handleExistingCustomerAction(ActionEvent event) {
-        data.setLastScene("/fxml/VerlorenBagageFXML.fxml");
+        data.setLastScene("/fxml/BeschadigdeBagageFXML.fxml");
         MainApp.loadFXMLFile(this.getClass().getResource("/fxml/ExistingCustomerFXML.fxml"));
     }
 

@@ -237,6 +237,7 @@ public class GevondenBagageController implements Initializable {
             // Automatically set time and date after the clear
             time.setText(timeFormat.format(new Date()));
             date.setValue(LocalDate.now());
+            goToMatching();
 
         }
 
@@ -307,5 +308,8 @@ public class GevondenBagageController implements Initializable {
             System.err.print("SQL error setfields: @@@@@@ " + e);
         }
     }
-
+    
+    private void goToMatching() {
+        MainApp.loadFXMLFile(this.getClass().getResource("/fxml/MatchingFXML.fxml"));
+    }  
 }
