@@ -80,8 +80,8 @@ public class DatabaseEdit implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         registrationNumber = MainApp.data.getLuggageRegistrationNumber();
-        setCurrentLuggageFields();
         setupAiportBox();
+        setCurrentLuggageFields();
     }
 
     private void setCurrentLuggageFields() {
@@ -105,10 +105,10 @@ public class DatabaseEdit implements Initializable {
                 } catch (NullPointerException e) {
                 }
 
-                //try {
-                //IATAField.setText(result.getString("airport_IATA"));
-                //} catch (NullPointerException e) {
-                //}
+                try {
+                    airportField.setValue(result.getString("airport_IATA"));
+                } catch (NullPointerException e) {
+                }
                 try {
                     destinationField.setText(result.getString("destination"));
 
@@ -121,7 +121,7 @@ public class DatabaseEdit implements Initializable {
                     luggageHeightField.setText(luggageSizes[0]);
                     luggageWidthField.setText(luggageSizes[1]);
                     luggageDepthField.setText(luggageSizes[2]);
-                } catch (NullPointerException e) {
+                } catch (Exception e) {
                 }
 
                 try {
@@ -203,27 +203,27 @@ public class DatabaseEdit implements Initializable {
 
     @FXML
     private void commitChanges(ActionEvent event) {
-        String query = "UPDATE `luggagem`.`luggage` "
-                + "SET `flightnr`='?', "
-                + "`labelnr`='?', "
-                + "`destination`='?', "
-                + "`luggage_type`='?', "
-                + "`brand`='?', "
-                + "`location_found`='?', "
-                + "`primary_color`='?', "
-                + "`secondary_color`='?', "
-                + "`notes`='?', `size`='?', "
-                + "`weight`='?', "
-                + "`customer_firstname`='?', "
-                + "`customer_preposition`='?', "
-                + "`customer_lastname`='?', "
-                + "`airport_IATA`='?', "
-                + "`customer_customernr`='?'"
-                + " WHERE `registrationnr`='?';";
+        String query = "UPDATE luggage "
+                + "SET flightnr=?, "
+                + "labelnr=?, "
+                + "destination=?, "
+                + "luggage_type=?, "
+                + "brand=?, "
+                + "location_found=?, "
+                + "primary_color=?, "
+                + "secondary_color=?, "
+                + "notes=?, "
+                + "size=?, "
+                + "weight=?, "
+                + "customer_firstname=?, "
+                + "customer_preposition=?, "
+                + "customer_lastname=?, "
+                + "airport_IATA=? "
+                + " WHERE registrationnr=?;";
         String luggageSize = luggageHeightField.getText() + "x" + luggageWidthField.getText() + "x" + luggageDepthField.getText();
-        
+
         try {
-            PreparedStatement ps = null;
+            PreparedStatement ps;
             Connection conn = MainApp.myJDBC.getConnection();
             conn.setAutoCommit(false);
             ps = conn.prepareStatement(query);
@@ -242,16 +242,14 @@ public class DatabaseEdit implements Initializable {
             ps.setString(13, betweenNameField.getText());
             ps.setString(14, lastNameField.getText());
             ps.setString(15, airportField.getValue());
-            ps.setString(16, customerIDField.getText());
-            ps.setInt(17, registrationNumber);
+            ps.setInt(16, registrationNumber);
             ps.executeUpdate();
             conn.commit();
 
         } catch (SQLException e) {
             System.err.print("SQL error setfields: @@@@@@ " + e);
         }
-
-        MainApp.myJDBC.executeUpdateQuery(query);
+        
         closeStage(event);
     }
 
