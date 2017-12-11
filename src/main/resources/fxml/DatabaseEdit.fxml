@@ -92,7 +92,7 @@
                   <TextField fx:id="luggageTypeField" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                   <Label text="%luggageType" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <ComboBox fx:id="airportField" prefWidth="150.0" promptText="%airportFound" GridPane.columnIndex="2" GridPane.rowIndex="11" />
-                  <TextField fx:id="customerIDField" GridPane.columnIndex="2" GridPane.rowIndex="13" />
+                  <TextField fx:id="customerIDField" disable="true" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="13" />
                   <Label text="%customerNr" GridPane.columnIndex="1" GridPane.rowIndex="13" />
                   <Label text="%tag" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <TextField fx:id="labelNrField" GridPane.columnIndex="2" GridPane.rowIndex="3" />
