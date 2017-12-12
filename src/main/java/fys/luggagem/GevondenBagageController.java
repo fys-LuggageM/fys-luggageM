@@ -1,24 +1,26 @@
 package fys.luggagem;
 
+import static fys.luggagem.MainApp.data;
 import java.io.File;
 import fys.luggagem.models.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -33,7 +35,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Paint;
 
 /**
  * @author Mees Sour
@@ -44,9 +45,14 @@ public class GevondenBagageController implements Initializable {
     private String imageURL;
     private MyJDBC db = MainApp.myJDBC;
     DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-
+    private ObservableList<String> airportsList = FXCollections.observableArrayList();
     private List<ExcelImport> foundLuggageList;
     private int index = 0;
+    private ObservableList<String> colorList = FXCollections.observableArrayList();
+    private ObservableList<String> secondaryColorList = FXCollections.observableArrayList();
+    private ObservableList<String> luggageTypeList = FXCollections.observableArrayList();
+    private ObservableList<String> locationFoundList = FXCollections.observableArrayList();
+    private final String CASE_STATUS_FOUND_LUGGAGE = "1";
 
     @FXML
     private AnchorPane rootPane;
@@ -55,7 +61,7 @@ public class GevondenBagageController implements Initializable {
     @FXML
     private DatePicker date;
     @FXML
-    private TextField luggageType;
+    private ComboBox luggageType;
     @FXML
     private TextField brand;
     @FXML
@@ -63,11 +69,11 @@ public class GevondenBagageController implements Initializable {
     @FXML
     private TextField tag;
     @FXML
-    private TextField locationFound;
+    private ComboBox<String> locationFound;
     @FXML
-    private TextField primaryColor;
+    private ComboBox<String> primaryColor;
     @FXML
-    private TextField secondaryColor;
+    private ComboBox<String> secondaryColor;
     @FXML
     private TextField sizeHeigth;
     @FXML
@@ -83,7 +89,7 @@ public class GevondenBagageController implements Initializable {
     @FXML
     private Label saveStatus;
     @FXML
-    private ComboBox airportFound;
+    private ComboBox<String> airportFound;
     @FXML
     private TextField time;
     @FXML
@@ -99,9 +105,12 @@ public class GevondenBagageController implements Initializable {
         date.setValue(LocalDate.now());
         // Set the time
         time.setText(timeFormat.format(new Date()));
-//        getNextRegistrationNumber();
-        airportFound.getItems().addAll("AMS", "RTM");
-        airportFound.getSelectionModel().select("AMS");
+        // Fill the airport dropdown
+        setupAiportBox();
+        setupColorCombobox();
+        setupLuggageTypeCombobox();
+        setupLocationFound();
+        airportFound.getSelectionModel().selectFirst();
     }
 
     public void setFoundLuggageList(List<ExcelImport> list) {
@@ -109,13 +118,12 @@ public class GevondenBagageController implements Initializable {
         registrationNumber.setText(foundLuggageList.get(index).getRegistrationNr());
         time.setText(foundLuggageList.get(index).getTimeFound());
 //        date.setValue(foundLuggageList.get(index).getDateFound());
-        luggageType.setText(foundLuggageList.get(index).getLuggageType());
+//        luggageType.setText(foundLuggageList.get(index).getLuggageType());
         brand.setText(foundLuggageList.get(index).getBrand());
         arrivedWithFlight.setText(foundLuggageList.get(index).getFlightNr());
         tag.setText(foundLuggageList.get(index).getLuggageTag());
-        locationFound.setText(foundLuggageList.get(index).getLocationFound());
-        primaryColor.setText(foundLuggageList.get(index).getPrimaryColor());
-        secondaryColor.setText(foundLuggageList.get(index).getSecondaryColor());
+//        locationFound.setText(foundLuggageList.get(index).getLocationFound());
+
         sizeHeigth.setText(foundLuggageList.get(index).getLuggageSizeHeigth());
         sizeWidth.setText(foundLuggageList.get(index).getLuggageSizeWidth());
         sizeDepth.setText(foundLuggageList.get(index).getLuggageSizeDepth());
@@ -130,13 +138,11 @@ public class GevondenBagageController implements Initializable {
         index = index + 1 >= foundLuggageList.size() ? index : index + 1;
         registrationNumber.setText(foundLuggageList.get(index).getRegistrationNr());
         time.setText(foundLuggageList.get(index).getTimeFound());
-        luggageType.setText(foundLuggageList.get(index).getLuggageType());
+//        luggageType.setText(foundLuggageList.get(index).getLuggageType());
         brand.setText(foundLuggageList.get(index).getBrand());
         arrivedWithFlight.setText(foundLuggageList.get(index).getFlightNr());
         tag.setText(foundLuggageList.get(index).getLuggageTag());
-        locationFound.setText(foundLuggageList.get(index).getLocationFound());
-        primaryColor.setText(foundLuggageList.get(index).getPrimaryColor());
-        secondaryColor.setText(foundLuggageList.get(index).getSecondaryColor());
+//        locationFound.setText(foundLuggageList.get(index).getLocationFound());
         sizeHeigth.setText(foundLuggageList.get(index).getLuggageSizeHeigth());
         sizeWidth.setText(foundLuggageList.get(index).getLuggageSizeWidth());
         sizeDepth.setText(foundLuggageList.get(index).getLuggageSizeDepth());
@@ -151,13 +157,11 @@ public class GevondenBagageController implements Initializable {
         index = index - 1 < 0 ? index : index - 1;
         registrationNumber.setText(foundLuggageList.get(index).getRegistrationNr());
         time.setText(foundLuggageList.get(index).getTimeFound());
-        luggageType.setText(foundLuggageList.get(index).getLuggageType());
+//        luggageType.setText(foundLuggageList.get(index).getLuggageType());
         brand.setText(foundLuggageList.get(index).getBrand());
         arrivedWithFlight.setText(foundLuggageList.get(index).getFlightNr());
         tag.setText(foundLuggageList.get(index).getLuggageTag());
-        locationFound.setText(foundLuggageList.get(index).getLocationFound());
-        primaryColor.setText(foundLuggageList.get(index).getPrimaryColor());
-        secondaryColor.setText(foundLuggageList.get(index).getSecondaryColor());
+//        locationFound.setText(foundLuggageList.get(index).getLocationFound());
         sizeHeigth.setText(foundLuggageList.get(index).getLuggageSizeHeigth());
         sizeWidth.setText(foundLuggageList.get(index).getLuggageSizeWidth());
         sizeDepth.setText(foundLuggageList.get(index).getLuggageSizeDepth());
@@ -213,69 +217,69 @@ public class GevondenBagageController implements Initializable {
                 Logger.getLogger(GevondenBagageController.class.getName()).log(Level.SEVERE, null, ex);
             }
             setFields();
+            clearFields();
 
-            // clear all textfields.
-            registrationNumber.clear();
-            time.clear();
-            luggageType.clear();
-            brand.clear();
-            arrivedWithFlight.clear();
-            tag.clear();
-            locationFound.clear();
-            primaryColor.clear();
-            secondaryColor.clear();
-            sizeHeigth.clear();
-            sizeWidth.clear();
-            sizeDepth.clear();
-            weight.clear();
-            firstName.clear();
-            insertion.clear();
-            lastName.clear();
-            city.clear();
-            comments.clear();
-
-            // Automatically set time and date after the clear
             time.setText(timeFormat.format(new Date()));
             date.setValue(LocalDate.now());
             goToMatching();
-
         }
 
     }
 
     private void setFields() {
+        // make strings of texts and values from the textfields and comboboxes
         String databaseDate = date.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String databaseTime = time.getText();
         String databaseDateAndTime = databaseDate + " " + databaseTime;
-        String databaseLuggageType = luggageType.getText();
         String databaseAirportName = airportFound.getValue().toString();
         String databaseBrand = brand.getText();
         String databaseFlightNumber = arrivedWithFlight.getText();
         String databaseLabelNumber = tag.getText();
-        String databaseLocationFound = locationFound.getText();
-        String databasePrimaryColor = primaryColor.getText();
-        String databaseSecondaryColor = secondaryColor.getText();
-        String databaseLuggageSize;
-        String databaseLuggageSizeHeight = sizeHeigth.getText();
-        String databaseLuggageSizeWidth = sizeWidth.getText();
-        String databaseLuggageSizeDepth = sizeDepth.getText();
-
-        if (databaseLuggageSizeHeight.matches("[0-9]+")
-                && databaseLuggageSizeWidth.matches("[0-9]+")
-                && databaseLuggageSizeDepth.matches("[0-9]+")) {
-            databaseLuggageSize = (sizeHeigth.getText() + "x" + sizeWidth.getText() + "x" + sizeDepth.getText());
-        } else {
-            databaseLuggageSize = "";
-        }
-
         String databaseWeight = weight.getText();
         String databaseTravellerFirstName = firstName.getText();
         String databaseTravellerInsertion = insertion.getText();
         String databaseTravellerLastName = lastName.getText();
         String databaseTravellerCity = city.getText();
         String databaseNotes = comments.getText();
-        String databaseCaseStatus = "1";
-
+        String databaseCaseStatus = CASE_STATUS_FOUND_LUGGAGE;      
+        String databaseLuggageType;       
+        if (luggageType.getValue() != null) {
+             databaseLuggageType = luggageType.getValue().toString();
+        } else {
+            databaseLuggageType = "";
+        }       
+        String databaseLocationFound;       
+        if (locationFound.getValue() != null) {
+            databaseLocationFound = locationFound.getValue().toString();
+        } else {
+            databaseLocationFound = "";
+        }      
+        String databasePrimaryColor;
+        String databaseSecondaryColor;
+        if (primaryColor.getValue() != null) {
+            databasePrimaryColor = primaryColor.getValue().toString();
+        } else {
+            databasePrimaryColor = "";
+        }
+        if (secondaryColor.getValue() != null) {
+            databaseSecondaryColor = secondaryColor.getValue().toString();
+        } else {
+            databaseSecondaryColor = "";
+        }       
+        String databaseLuggageSize;
+        String databaseLuggageSizeHeight = sizeHeigth.getText();
+        String databaseLuggageSizeWidth = sizeWidth.getText();
+        String databaseLuggageSizeDepth = sizeDepth.getText();
+        if (databaseLuggageSizeHeight.matches("[0-9]+")
+                && databaseLuggageSizeWidth.matches("[0-9]+")
+                && databaseLuggageSizeDepth.matches("[0-9]+")) {
+            databaseLuggageSize = (sizeHeigth.getText() + "x" 
+                    + sizeWidth.getText() + "x" 
+                    + sizeDepth.getText());
+        } else {
+            databaseLuggageSize = "";
+        }
+        // update the fields in the created row with a designated registration number
         Connection conn = db.getConnection();
         String setInfo2 = "UPDATE luggage SET flightnr = ?, labelnr = ?, destination = ?, luggage_type = ?, brand = ?, location_found = ?, primary_color = ?, secondary_color = ?, size = ?, weight = ?, customer_firstname = ?, customer_preposition = ?, customer_lastname = ?, case_status = ?, airport_IATA = ?, notes = ? WHERE registrationnr = ?";
 
@@ -283,7 +287,7 @@ public class GevondenBagageController implements Initializable {
         try {
             conn.setAutoCommit(false);
             ps = conn.prepareStatement(setInfo2);
-           
+
             ps.setString(1, databaseFlightNumber);
             ps.setString(2, databaseLabelNumber);
             ps.setString(3, databaseTravellerCity);
@@ -301,15 +305,106 @@ public class GevondenBagageController implements Initializable {
             ps.setString(15, databaseAirportName);
             ps.setString(16, databaseNotes);
             ps.setInt(17, db.getLuggageRegistrationNr());
-            ps.executeUpdate();          
-            
+            ps.executeUpdate();
+
             conn.commit();
         } catch (SQLException e) {
             System.err.print("SQL error setfields: @@@@@@ " + e);
         }
     }
-    
+
     private void goToMatching() {
         MainApp.loadFXMLFile(this.getClass().getResource("/fxml/MatchingFXML.fxml"));
-    }  
+    }
+
+    private void setupAiportBox() {
+        try {
+            // Do an SQL query to get all airports
+            String query = "SELECT IATA FROM airport;";
+            ResultSet result = MainApp.myJDBC.executeResultSetQuery(query);
+            // Loop over de resultset
+            while (result.next()) {
+                // Voeg de individuele results to aan de database
+                airportsList.add(result.getString("IATA"));
+            }
+            // Set the items of the airportbox to the observable list
+            airportFound.setItems(airportsList);
+        } catch (SQLException ex) {
+            Logger.getLogger(GevondenBagageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void setupColorCombobox() {
+        colorList.addAll(ComboboxInformation.getCOLOR_BLACK(),
+                ComboboxInformation.getCOLOR_BLUE(),
+                ComboboxInformation.getCOLOR_BROWN(),
+                ComboboxInformation.getCOLOR_CREAM(),
+                ComboboxInformation.getCOLOR_DARKBLUE(),
+                ComboboxInformation.getCOLOR_DARKBROWN(),
+                ComboboxInformation.getCOLOR_DARKGRAY(),
+                ComboboxInformation.getCOLOR_DARKGREEN(),
+                ComboboxInformation.getCOLOR_DARKRED(),
+                ComboboxInformation.getCOLOR_GRAY(),
+                ComboboxInformation.getCOLOR_GREEN(),
+                ComboboxInformation.getCOLOR_LIGHTBLUE(),
+                ComboboxInformation.getCOLOR_LIGHTBROWN(),
+                ComboboxInformation.getCOLOR_LIGHTGRAY(),
+                ComboboxInformation.getCOLOR_LIGHTGREEN(),
+                ComboboxInformation.getCOLOR_OLIVE(),
+                ComboboxInformation.getCOLOR_ORANGE(),
+                ComboboxInformation.getCOLOR_PINK(),
+                ComboboxInformation.getCOLOR_PURPLE(),
+                ComboboxInformation.getCOLOR_RED(),
+                ComboboxInformation.getCOLOR_VIOLET(),
+                ComboboxInformation.getCOLOR_WHITE(),
+                ComboboxInformation.getCOLOR_YELLOW());
+
+        primaryColor.setItems(colorList);
+        secondaryColor.setItems(colorList);
+    }
+
+    private void setupLuggageTypeCombobox() {
+
+        luggageTypeList.addAll(ComboboxInformation.getSUITCASE(),
+                ComboboxInformation.getBAG(),
+                ComboboxInformation.getBAGPACK(),
+                ComboboxInformation.getBOX(),
+                ComboboxInformation.getSPORTSBAG(),
+                ComboboxInformation.getBUSINESSCASE(),
+                ComboboxInformation.getCASE(),
+                ComboboxInformation.getOTHER());
+
+        luggageType.setItems(luggageTypeList);
+    }
+
+    private void setupLocationFound() {
+        locationFoundList.addAll(ComboboxInformation.getBELT_01(),
+                ComboboxInformation.getBELT_02(),
+                ComboboxInformation.getBELT_03(),
+                ComboboxInformation.getBELT_04(),
+                ComboboxInformation.getBELT_05(),
+                ComboboxInformation.getBELT_06(),
+                ComboboxInformation.getDEPARTURE_HALL(),
+                ComboboxInformation.getARRIVAL_HAL(),
+                ComboboxInformation.getTOILET());
+        locationFound.setItems(locationFoundList);
+    }
+
+    private void clearFields() {
+        // clear all textfields.
+        registrationNumber.clear();
+        time.clear();
+        brand.clear();
+        arrivedWithFlight.clear();
+        tag.clear();
+        sizeHeigth.clear();
+        sizeWidth.clear();
+        sizeDepth.clear();
+        weight.clear();
+        firstName.clear();
+        insertion.clear();
+        lastName.clear();
+        city.clear();
+        comments.clear();
+    }
 }

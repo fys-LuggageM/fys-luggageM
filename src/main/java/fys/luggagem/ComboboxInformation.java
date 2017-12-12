@@ -42,28 +42,16 @@ public class ComboboxInformation {
     private final static String BUSINESSCASE = data.getResourceBundle().getString("businessCase");
     private final static String CASE = data.getResourceBundle().getString("case");
     private final static String OTHER = data.getResourceBundle().getString("other");
-        
-    private final static String[] ENGLISH_LOCATIONS = {"Belt-06", "Belt-05", "Belt-04", "Belt-03", 
-        "Belt-02", "Belt-01", "Departure Hall", "Arrival hall", "Toilet"};
     
-    private final static String[] DUTCH_LOCATIONS = {"Band-06", "Band-05", "Band-04", "Band-03", 
-        "Band-02", "Band-01", "Vertrekhal", "Aankomsthal", "Toilet"};
-
-    public static String[] getENGLISH_LUGGAGE_TYPES() {
-        return ENGLISH_LUGGAGE_TYPES;
-    }
-
-    public static String[] getDUTCH_LUGGAGE_TYPES() {
-        return DUTCH_LUGGAGE_TYPES;
-    }
-
-    public static String[] getENGLISH_LOCATIONS() {
-        return ENGLISH_LOCATIONS;
-    }
-
-    public static String[] getDUTCH_LOCATIONS() {
-        return DUTCH_LOCATIONS;
-    }
+    private final static String BELT_01 = data.getResourceBundle().getString("belt01");
+    private final static String BELT_02 = data.getResourceBundle().getString("belt02");
+    private final static String BELT_03 = data.getResourceBundle().getString("belt03");
+    private final static String BELT_04 = data.getResourceBundle().getString("belt04");
+    private final static String BELT_05 = data.getResourceBundle().getString("belt05");
+    private final static String BELT_06 = data.getResourceBundle().getString("belt06");
+    private final static String DEPARTURE_HALL = data.getResourceBundle().getString("departureHall");
+    private final static String ARRIVAL_HAL = data.getResourceBundle().getString("arrivalHall");
+    private final static String TOILET = data.getResourceBundle().getString("toilet");
 
     public static String getCOLOR_BLACK() {
         return COLOR_BLACK;
@@ -157,4 +145,72 @@ public class ComboboxInformation {
         return COLOR_YELLOW;
     }
 
+    public static String getSUITCASE() {
+        return SUITCASE;
+    }
+
+    public static String getBAG() {
+        return BAG;
+    }
+
+    public static String getBAGPACK() {
+        return BAGPACK;
+    }
+
+    public static String getBOX() {
+        return BOX;
+    }
+
+    public static String getSPORTSBAG() {
+        return SPORTSBAG;
+    }
+
+    public static String getBUSINESSCASE() {
+        return BUSINESSCASE;
+    }
+
+    public static String getCASE() {
+        return CASE;
+    }
+
+    public static String getOTHER() {
+        return OTHER;
+    }
+
+    public static String getBELT_01() {
+        return BELT_01;
+    }
+
+    public static String getBELT_02() {
+        return BELT_02;
+    }
+
+    public static String getBELT_03() {
+        return BELT_03;
+    }
+
+    public static String getBELT_04() {
+        return BELT_04;
+    }
+
+    public static String getBELT_05() {
+        return BELT_05;
+    }
+
+    public static String getBELT_06() {
+        return BELT_06;
+    }
+
+    public static String getDEPARTURE_HALL() {
+        return DEPARTURE_HALL;
+    }
+
+    public static String getARRIVAL_HAL() {
+        return ARRIVAL_HAL;
+    }
+
+    public static String getTOILET() {
+        return TOILET;
+    }
+    
 }
