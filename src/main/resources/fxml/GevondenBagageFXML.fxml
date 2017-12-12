@@ -81,7 +81,7 @@
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                  <ComboBox fx:id="airportFound" promptText="%chooseAirport">
+                  <ComboBox fx:id="airportFound" promptText="%airportChoose">
                      <VBox.margin>
                         <Insets bottom="7.0" />
                      </VBox.margin>
@@ -91,11 +91,11 @@
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="luggageType" promptText="%luggageTypePrompt">
-                            <VBox.margin>
-                                <Insets bottom="7.0" />
-                            </VBox.margin>
-                        </TextField>
+                  <ComboBox fx:id="luggageType" promptText="%luggageTypePrompt">
+                     <VBox.margin>
+                        <Insets bottom="7.0" />
+                     </VBox.margin>
+                  </ComboBox>
                         <Label maxWidth="1.7976931348623157E308" text="%brand">
                             <font>
                                 <Font name="System Bold" size="16.0" />
@@ -135,11 +135,11 @@
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="locationFound" promptText="%locationFoundPrompt">
-                            <VBox.margin>
-                                <Insets bottom="7.0" />
-                            </VBox.margin>
-                        </TextField>
+                  <ComboBox fx:id="locationFound" promptText="%locationFoundPrompt">
+                     <VBox.margin>
+                        <Insets bottom="7.0" />
+                     </VBox.margin>
+                  </ComboBox>
                         <Label maxWidth="1.7976931348623157E308" text="%colors" VBox.vgrow="NEVER">
                             <font>
                                 <Font name="System Bold" size="16.0" />
@@ -150,12 +150,11 @@
                         </Label>
                         <HBox prefWidth="200.0">
                             <children>
-                                <TextField fx:id="primaryColor" promptText="%colorsPrompt1" />
-                                <TextField fx:id="secondaryColor" promptText="%colorsPrompt2">
-                                    <HBox.margin>
-                                        <Insets left="25.0" />
-                                    </HBox.margin>
-                                </TextField>
+                        <ComboBox fx:id="primaryColor" promptText="%colorsPrompt1">
+                           <HBox.margin>
+                              <Insets right="25.0" />
+                           </HBox.margin></ComboBox>
+                        <ComboBox fx:id="secondaryColor" promptText="%colorsPrompt2" />
                             </children>
                             <VBox.margin>
                                 <Insets bottom="7.0" />
