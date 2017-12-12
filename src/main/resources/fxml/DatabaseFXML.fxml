@@ -133,6 +133,9 @@
                         <TableColumn fx:id="brand" prefWidth="75.0" text="%brand" />
                         <TableColumn fx:id="IATA" prefWidth="75.0" text="%airport" />
                      </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
                   </TableView>
                     <Label fx:id="label" alignment="CENTER" minHeight="16" minWidth="69" text="Data van Beschadigde Bagage" GridPane.halignment="LEFT">
                      <font>
