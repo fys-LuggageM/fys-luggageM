@@ -105,20 +105,14 @@ public class GevondenBagageController implements Initializable {
 
     public void setFoundLuggageList(List<ExcelImport> list) {
         foundLuggageList = list;
-//        registrationNumber.setText(foundLuggageList.get(index).getRegistrationNr());
         time.setText(foundLuggageList.get(index).getTimeFound());
-//        date.setValue(foundLuggageList.get(index).getDateFound());
-//        luggageType.setText(foundLuggageList.get(index).getLuggageType());
         brand.setText(foundLuggageList.get(index).getBrand());
         arrivedWithFlight.setText(foundLuggageList.get(index).getFlightNr());
         tag.setText(foundLuggageList.get(index).getLuggageTag());
-//        locationFound.setText(foundLuggageList.get(index).getLocationFound());
-
         sizeHeigth.setText(foundLuggageList.get(index).getLuggageSizeHeigth());
         sizeWidth.setText(foundLuggageList.get(index).getLuggageSizeWidth());
         sizeDepth.setText(foundLuggageList.get(index).getLuggageSizeDepth());
         weight.setText(foundLuggageList.get(index).getLuggageWeight());
-//        name.setText(foundLuggageList.get(index).getTravellerNameAndCityName());
         city.setText(foundLuggageList.get(index).getTravellerNameAndCityCity());
         comments.setText(foundLuggageList.get(index).getComments());
     }
@@ -126,18 +120,14 @@ public class GevondenBagageController implements Initializable {
     @FXML
     private void handleNextAction(ActionEvent event) {
         index = index + 1 >= foundLuggageList.size() ? index : index + 1;
-//        registrationNumber.setText(foundLuggageList.get(index).getRegistrationNr());
         time.setText(foundLuggageList.get(index).getTimeFound());
-//        luggageType.setText(foundLuggageList.get(index).getLuggageType());
         brand.setText(foundLuggageList.get(index).getBrand());
         arrivedWithFlight.setText(foundLuggageList.get(index).getFlightNr());
         tag.setText(foundLuggageList.get(index).getLuggageTag());
-//        locationFound.setText(foundLuggageList.get(index).getLocationFound());
         sizeHeigth.setText(foundLuggageList.get(index).getLuggageSizeHeigth());
         sizeWidth.setText(foundLuggageList.get(index).getLuggageSizeWidth());
         sizeDepth.setText(foundLuggageList.get(index).getLuggageSizeDepth());
         weight.setText(foundLuggageList.get(index).getLuggageWeight());
-//        name.setText(foundLuggageList.get(index).getTravellerNameAndCityName());
         city.setText(foundLuggageList.get(index).getTravellerNameAndCityCity());
         comments.setText(foundLuggageList.get(index).getComments());
     }
@@ -145,18 +135,14 @@ public class GevondenBagageController implements Initializable {
     @FXML
     private void handlePreviousAction(ActionEvent event) {
         index = index - 1 < 0 ? index : index - 1;
-//        registrationNumber.setText(foundLuggageList.get(index).getRegistrationNr());
         time.setText(foundLuggageList.get(index).getTimeFound());
-//        luggageType.setText(foundLuggageList.get(index).getLuggageType());
         brand.setText(foundLuggageList.get(index).getBrand());
         arrivedWithFlight.setText(foundLuggageList.get(index).getFlightNr());
         tag.setText(foundLuggageList.get(index).getLuggageTag());
-//        locationFound.setText(foundLuggageList.get(index).getLocationFound());
         sizeHeigth.setText(foundLuggageList.get(index).getLuggageSizeHeigth());
         sizeWidth.setText(foundLuggageList.get(index).getLuggageSizeWidth());
         sizeDepth.setText(foundLuggageList.get(index).getLuggageSizeDepth());
         weight.setText(foundLuggageList.get(index).getLuggageWeight());
-//        name.setText(foundLuggageList.get(index).getTravellerNameAndCityName());
         city.setText(foundLuggageList.get(index).getTravellerNameAndCityCity());
         comments.setText(foundLuggageList.get(index).getComments());
     }
