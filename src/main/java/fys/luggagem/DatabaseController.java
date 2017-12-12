@@ -219,6 +219,8 @@ public class DatabaseController implements Initializable {
                         Stage stage = new Stage(StageStyle.DECORATED);
                         stage.setTitle("Edit found luggage");
                         stage.setScene(new Scene(parent));
+                        stage.setAlwaysOnTop(true);
+                        stage.initOwner(data.getStage());
                         stage.show();
                     } catch (IOException ex) {
                         Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
