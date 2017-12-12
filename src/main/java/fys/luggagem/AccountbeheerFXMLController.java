@@ -3,6 +3,8 @@ package fys.luggagem;
 import fys.luggagem.models.Data;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -115,15 +117,30 @@ public class AccountbeheerFXMLController implements Initializable {
 
             Optional<ButtonType> resetPasswordAnswer = resetPasswordAlert.showAndWait();
             if (resetPasswordAnswer.get() == ButtonType.OK) {
-                String query = String.format("UPDATE `account` "
-                        + "SET `password`='%s', `salt`='%s' "
-                        + "WHERE `Employee_code`='%s';", hashAndPass[0], hashAndPass[1], userToReset);
-                MainApp.myJDBC.executeUpdateQuery(query);
+                try {
+                    String query = "UPDATE `account` "
+                            + "SET `password`=?, `salt`=? "
+                            + "WHERE `Employee_code`=?;";
 
-                resetPasswordInfo.setTextFill(Paint.valueOf("green"));
-                resetPasswordInfo.setText(data.getResourceBundle().getString("passwordResetInfo"));
-                resetUser.clear();
-                resetPassword.clear();
+                    PreparedStatement ps;
+                    Connection conn = MainApp.myJDBC.getConnection();
+                    conn.setAutoCommit(false);
+                    ps = conn.prepareStatement(query);
+                    ps.setString(1, hashAndPass[0]);
+                    ps.setString(2, hashAndPass[1]);
+                    ps.setString(3, userToReset);
+                    ps.executeUpdate();
+                    conn.commit();
+                    
+                    MainApp.myJDBC.executeUpdateQuery(query);
+
+                    resetPasswordInfo.setTextFill(Paint.valueOf("green"));
+                    resetPasswordInfo.setText(data.getResourceBundle().getString("passwordResetInfo"));
+                    resetUser.clear();
+                    resetPassword.clear();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountbeheerFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else {
 
             }
