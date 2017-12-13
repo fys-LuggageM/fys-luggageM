@@ -207,7 +207,7 @@ public class AccountbeheerFXMLController implements Initializable {
                 createUserAlert.initOwner(data.getStage());
                 createUserAlert.setTitle("Account creation");
                 createUserAlert.setHeaderText("Account succesfully created.");
-                createUserAlert.setContentText("A new user has been created with the following information:"
+                createUserAlert.setContentText("A new user has been created with the following information:\n"
                         + "Username: " + createUserStringName + "\n");
                 createUserAlert.showAndWait();
 

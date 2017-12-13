@@ -196,13 +196,7 @@ public class DatabaseEdit implements Initializable {
         }
     }
 
-    private void closeStage(ActionEvent event) {
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.close();
-    }
-
-    @FXML
-    private void commitChanges(ActionEvent event) {
+    private void commitSQLchanges() {
         String query = "UPDATE luggage "
                 + "SET flightnr=?, "
                 + "labelnr=?, "
@@ -249,7 +243,36 @@ public class DatabaseEdit implements Initializable {
         } catch (SQLException e) {
             System.err.print("SQL error setfields: @@@@@@ " + e);
         }
-        
+    }
+
+    private void registerAccountability() {
+        try {
+            String query = "INSERT INTO changes "
+                    + "(`Employee_code`, `Luggage_registrationnr`, `changeid`) "
+                    + "VALUES (?, ?, ?);";
+            PreparedStatement ps;
+            Connection conn = MainApp.myJDBC.getConnection();
+            conn.setAutoCommit(false);
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, MainApp.data.getEmployeeNr());
+            ps.setInt(2, registrationNumber);
+            ps.setInt(3, 1);
+            ps.executeUpdate();
+            conn.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseEdit.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void closeStage(ActionEvent event) {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void commitChanges(ActionEvent event) {
+        commitSQLchanges();
+        registerAccountability();
         closeStage(event);
     }
 
