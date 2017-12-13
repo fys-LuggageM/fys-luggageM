@@ -56,7 +56,6 @@ public class GevondenBagageController implements Initializable {
             + "airport_IATA = ?, notes = ? "
             + "WHERE registrationnr = ?";
 
-    DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
     private ObservableList<String> airportsList = FXCollections.observableArrayList();
     private List<ExcelImport> foundLuggageList;
     private int index = 0;
