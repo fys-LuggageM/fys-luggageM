@@ -203,48 +203,67 @@ public class AccountbeheerFXMLController implements Initializable {
 
             Optional<ButtonType> createUserAnswer = createUserAlert.showAndWait();
             if (createUserAnswer.get() == ButtonType.OK) {
-                String createUserStringName = getNextStaffID();
-                String queryEmployee = "INSERT INTO `employee` "
-                        + "(`code`, `first_name`, `preposition`, `last_name`, `Luchthaven_IATA`) "
-                        + "VALUES "
-                        + "('" + createUserStringName + "', '" + createUserStringRealName + "', '" + betweenName + "', '" + createUserStringLastName + "', '" + createUserStringAirport + "');";
-                int doQueryEmployeeTable = MainApp.myJDBC.executeUpdateQuery(queryEmployee);
-                String queryAccounts = "INSERT INTO `account` "
-                        + "(`Employee_code`, `email`, `password`, `salt`, `user_level`, `active`) "
-                        + "VALUES "
-                        + "('" + createUserStringName + "', '" + createUserStringEmail + "', '" + hashAndPass[0] + "', '" + hashAndPass[1] + "', '" + createUserStringPermissions + "', '1');";
-                int doQueryAccountsTable = MainApp.myJDBC.executeUpdateQuery(queryAccounts);
-                if (doQueryEmployeeTable == -1 || doQueryAccountsTable == -1) {
-                    createUserInfo.setTextFill(Paint.valueOf("d81e05"));
-                    createUserInfo.setFont(Font.font(10));
-                    createUserInfo.setText(data.getResourceBundle().getString("Something went wrong in the SQL query.\n Please contact your local sysadmin."));
+                try {
+                    String createUserStringName = getNextStaffID();
+                    String queryEmployee = "INSERT INTO `employee` "
+                            + "(`code`, `first_name`, `preposition`, `last_name`, `Luchthaven_IATA`) "
+                            + "VALUES "
+                            + "('?', '?', '?', '?', '?');";
+                    PreparedStatement ps;
+                    Connection conn = MainApp.myJDBC.getConnection();
+                    conn.setAutoCommit(false);
+                    ps = conn.prepareStatement(queryEmployee);
+                    ps.setString(1, createUserStringName);
+                    ps.setString(2, createUserStringRealName);
+                    ps.setString(3, betweenName);
+                    ps.setString(4, createUserStringLastName);
+                    ps.setString(5, createUserStringAirport);
+                    ps.executeUpdate();
+
+                    int doQueryEmployeeTable = MainApp.myJDBC.executeUpdateQuery(queryEmployee);
+                    String queryAccounts = "INSERT INTO `account` "
+                            + "(`Employee_code`, `email`, `password`, `salt`, `user_level`, `active`) "
+                            + "VALUES "
+                            + "(?, ?, ?, ?, ?, ?);";
+                    ps = conn.prepareStatement(queryAccounts);
+                    ps.setString(1, createUserStringName);
+                    ps.setString(2, createUserStringEmail);
+                    ps.setString(3, hashAndPass[0]);
+                    ps.setString(4, hashAndPass[1]);
+                    ps.setString(5, createUserStringPermissions);
+                    ps.setInt(6, 1);
+                    ps.executeUpdate();
+
+                    conn.commit();
+                    
+                    createUserAlert = new Alert(AlertType.INFORMATION);
+                    createUserAlert.initOwner(data.getStage());
+                    createUserAlert.setTitle("Account creation");
+                    createUserAlert.setHeaderText("Account succesfully created.");
+                    createUserAlert.setContentText("A new user has been created with the following information:\n"
+                            + "Username: " + createUserStringName + "\n");
+                    createUserAlert.showAndWait();
+                    
+                    // Empty everything
+                    createUserPassword.clear();
+                    createUserRealname.clear();
+                    createUserBetweenName.clear();
+                    createUserLastname.clear();
+                    createUserEmail.clear();
+                    
+                    roleAdmin.setSelected(false);
+                    roleManager.setSelected(false);
+                    roleEmployee.setSelected(true);
+                    
+                    setupTableView();
+                    
+                    // Confirm to the user that the account was succesfully created
+                    createUserInfo.setTextFill(Paint.valueOf("green"));
+                    createUserInfo.setFont(Font.font(12));
+                    createUserInfo.setText(data.getResourceBundle().getString("accountCreatedInfo"));
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountbeheerFXMLController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-                createUserAlert = new Alert(AlertType.INFORMATION);
-                createUserAlert.initOwner(data.getStage());
-                createUserAlert.setTitle("Account creation");
-                createUserAlert.setHeaderText("Account succesfully created.");
-                createUserAlert.setContentText("A new user has been created with the following information:\n"
-                        + "Username: " + createUserStringName + "\n");
-                createUserAlert.showAndWait();
-
-                // Empty everything 
-                createUserPassword.clear();
-                createUserRealname.clear();
-                createUserBetweenName.clear();
-                createUserLastname.clear();
-                createUserEmail.clear();
-
-                roleAdmin.setSelected(false);
-                roleManager.setSelected(false);
-                roleEmployee.setSelected(true);
-
-                setupTableView();
-
-                // Confirm to the user that the account was succesfully created
-                createUserInfo.setTextFill(Paint.valueOf("green"));
-                createUserInfo.setFont(Font.font(12));
-                createUserInfo.setText(data.getResourceBundle().getString("accountCreatedInfo"));
 
             } else {
 
