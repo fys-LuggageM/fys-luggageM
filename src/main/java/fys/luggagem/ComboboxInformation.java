@@ -1,15 +1,12 @@
 package fys.luggagem;
 
 import static fys.luggagem.MainApp.data;
-import javafx.collections.ObservableList;
-import javax.swing.DefaultComboBoxModel;
 
 /**
- *
  * @author Mees Sour
  */
 public class ComboboxInformation {
-    
+    // define all colors via the language bundles
     private final static String COLOR_BLACK = data.getResourceBundle().getString("black");
     private final static String COLOR_BLUE = data.getResourceBundle().getString("blue");
     private final static String COLOR_BROWN = data.getResourceBundle().getString("brown");
@@ -33,7 +30,7 @@ public class ComboboxInformation {
     private final static String COLOR_VIOLET = data.getResourceBundle().getString("violet");
     private final static String COLOR_WHITE = data.getResourceBundle().getString("white");
     private final static String COLOR_YELLOW = data.getResourceBundle().getString("yellow");
-    
+    // define all types of luggage via the language bundles
     private final static String SUITCASE = data.getResourceBundle().getString("suitcase");
     private final static String BAG = data.getResourceBundle().getString("bag");
     private final static String BAGPACK = data.getResourceBundle().getString("bagpack");
@@ -42,7 +39,7 @@ public class ComboboxInformation {
     private final static String BUSINESSCASE = data.getResourceBundle().getString("businessCase");
     private final static String CASE = data.getResourceBundle().getString("case");
     private final static String OTHER = data.getResourceBundle().getString("other");
-    
+    // define all locations for luggage to be found via the language bundles
     private final static String BELT_01 = data.getResourceBundle().getString("belt01");
     private final static String BELT_02 = data.getResourceBundle().getString("belt02");
     private final static String BELT_03 = data.getResourceBundle().getString("belt03");

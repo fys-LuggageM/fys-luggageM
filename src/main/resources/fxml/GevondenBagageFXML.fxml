@@ -31,21 +31,8 @@
                 <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="0.0" vgrow="ALWAYS" />
             </rowConstraints>
             <children>
-                <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="310.0" minHeight="500.0" minWidth="310.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <VBox maxHeight="1.7976931348623157E308" maxWidth="310.0" minHeight="500.0" minWidth="310.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <children>
-                        <Label maxWidth="1.7976931348623157E308" text="%registrationNumber" VBox.vgrow="NEVER">
-                            <font>
-                                <Font name="System Bold" size="16.0" />
-                            </font>
-                            <VBox.margin>
-                                <Insets />
-                            </VBox.margin>
-                        </Label>
-                        <TextField fx:id="registrationNumber" disable="true" editable="false" promptText="2017/12345">
-                            <VBox.margin>
-                                <Insets bottom="7.0" />
-                            </VBox.margin>
-                        </TextField>
                         <Label maxWidth="1.7976931348623157E308" text="%date">
                             <font>
                                 <Font name="System Bold" size="16.0" />
@@ -53,7 +40,7 @@
                         </Label>
                         <DatePicker fx:id="date" maxWidth="1.7976931348623157E308" prefHeight="31.0" prefWidth="349.0" promptText="14-11-2017">
                             <VBox.margin>
-                                <Insets bottom="7.0" />
+                                <Insets bottom="12.0" />
                             </VBox.margin>
                         </DatePicker>
                         <Label maxWidth="1.7976931348623157E308" text="%time">
@@ -61,21 +48,11 @@
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                        <HBox prefWidth="200.0">
-                            <children>
-                                <TextField fx:id="time" promptText="HH:mm:ss">
-                                    <HBox.margin>
-                                        <Insets />
-                                    </HBox.margin>
-                                </TextField>
-                            </children>
-                            <padding>
-                                <Insets bottom="5.0" />
-                            </padding>
-                            <VBox.margin>
-                                <Insets bottom="7.0" />
-                            </VBox.margin>
-                        </HBox>
+                          <TextField fx:id="time" promptText="HH:mm:ss">
+                     <VBox.margin>
+                        <Insets bottom="12.0" />
+                     </VBox.margin>
+                          </TextField>
                         <Label maxWidth="1.7976931348623157E308" text="%airportFound">
                             <font>
                                 <Font name="System Bold" size="16.0" />
@@ -83,7 +60,7 @@
                         </Label>
                   <ComboBox fx:id="airportFound" promptText="%airportChoose">
                      <VBox.margin>
-                        <Insets bottom="7.0" />
+                        <Insets bottom="12.0" />
                      </VBox.margin>
                   </ComboBox>
                         <Label maxWidth="1.7976931348623157E308" text="%luggageType">
@@ -93,7 +70,7 @@
                         </Label>
                   <ComboBox fx:id="luggageType" promptText="%luggageTypePrompt">
                      <VBox.margin>
-                        <Insets bottom="7.0" />
+                        <Insets bottom="12.0" />
                      </VBox.margin>
                   </ComboBox>
                         <Label maxWidth="1.7976931348623157E308" text="%brand">
@@ -103,7 +80,7 @@
                         </Label>
                         <TextField fx:id="brand" promptText="Eastsport">
                             <VBox.margin>
-                                <Insets bottom="7.0" />
+                                <Insets bottom="12.0" />
                             </VBox.margin>
                         </TextField>
                         <Label maxWidth="1.7976931348623157E308" text="%arrivedWithFlight">
@@ -113,7 +90,7 @@
                         </Label>
                         <TextField fx:id="arrivedWithFlight" promptText="AA1234">
                             <VBox.margin>
-                                <Insets bottom="7.0" />
+                                <Insets bottom="12.0" />
                             </VBox.margin>
                         </TextField>
                         <Label maxWidth="1.7976931348623157E308" text="%tag">
@@ -123,13 +100,9 @@
                         </Label>
                         <TextField fx:id="tag" promptText="1234567890">
                             <VBox.margin>
-                                <Insets bottom="7.0" />
+                                <Insets bottom="12.0" />
                             </VBox.margin>
                         </TextField>
-                    </children>
-                </VBox>
-                <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="310.0" minHeight="500.0" minWidth="310.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                    <children>
                         <Label maxWidth="1.7976931348623157E308" text="%locationFound">
                             <font>
                                 <Font name="System Bold" size="16.0" />
@@ -137,9 +110,13 @@
                         </Label>
                   <ComboBox fx:id="locationFound" promptText="%locationFoundPrompt">
                      <VBox.margin>
-                        <Insets bottom="7.0" />
+                        <Insets />
                      </VBox.margin>
                   </ComboBox>
+                    </children>
+                </VBox>
+                <VBox maxHeight="1.7976931348623157E308" maxWidth="310.0" minHeight="500.0" minWidth="310.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                    <children>
                         <Label maxWidth="1.7976931348623157E308" text="%colors" VBox.vgrow="NEVER">
                             <font>
                                 <Font name="System Bold" size="16.0" />
@@ -157,7 +134,7 @@
                         <ComboBox fx:id="secondaryColor" promptText="%colorsPrompt2" />
                             </children>
                             <VBox.margin>
-                                <Insets bottom="7.0" />
+                                <Insets bottom="12.0" />
                             </VBox.margin>
                         </HBox>
                         <Label maxWidth="1.7976931348623157E308" text="%luggageSizeInCm">
@@ -186,7 +163,7 @@
                                 </TextField>
                             </children>
                             <VBox.margin>
-                                <Insets bottom="7.0" />
+                                <Insets bottom="12.0" />
                             </VBox.margin>
                         </HBox>
                         <Label maxWidth="1.7976931348623157E308" text="%weightInKg">
@@ -196,7 +173,7 @@
                         </Label>
                         <TextField fx:id="weight" promptText="20kg">
                             <VBox.margin>
-                                <Insets bottom="7.0" />
+                                <Insets bottom="12.0" />
                             </VBox.margin>
                         </TextField>
                         <Label maxWidth="1.7976931348623157E308" text="%passengerName">
@@ -223,7 +200,7 @@
                                 </TextField>
                             </children>
                             <VBox.margin>
-                                <Insets bottom="7.0" />
+                                <Insets bottom="12.0" />
                             </VBox.margin>
                         </HBox>
                         <Label maxWidth="1.7976931348623157E308" text="%city">
@@ -233,7 +210,7 @@
                         </Label>
                         <TextField fx:id="city" promptText="Amsterdam">
                             <VBox.margin>
-                                <Insets bottom="7.0" />
+                                <Insets bottom="12.0" />
                             </VBox.margin>
                         </TextField>
                         <Label maxWidth="1.7976931348623157E308" text="%comments">
@@ -243,7 +220,7 @@
                         </Label>
                         <TextArea fx:id="comments" maxHeight="115.0" VBox.vgrow="ALWAYS">
                             <VBox.margin>
-                                <Insets bottom="15.0" />
+                                <Insets bottom="14.0" />
                             </VBox.margin>
                         </TextArea>
                         <HBox alignment="CENTER_RIGHT">
@@ -256,7 +233,7 @@
                                         <Insets right="5.0" />
                                     </HBox.margin>
                                 </Button>
-                                <Button minWidth="67.0" mnemonicParsing="false" onAction="#save" text="%save">
+                                <Button minWidth="67.0" mnemonicParsing="false" onAction="#save" style="-fx-background-color: #d9534f; -fx-text-fill: white;" text="%save">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
@@ -272,11 +249,6 @@
                     <GridPane.margin>
                         <Insets />
                     </GridPane.margin>
-                </Label>
-                <Label fx:id="saveStatus" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                    <font>
-                        <Font size="13.0" />
-                    </font>
                 </Label>
             </children>
         </GridPane>
