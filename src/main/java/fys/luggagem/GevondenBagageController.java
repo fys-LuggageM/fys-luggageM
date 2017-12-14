@@ -153,11 +153,11 @@ public class GevondenBagageController implements Initializable {
         Alert alert = new Alert(AlertType.CONFIRMATION);
 
         // Alert dialog setup
-        alert.initOwner(DATA.getStage());
+        alert.initOwner(data.getStage());
         alert.setGraphic(new ImageView(image));
-        alert.setTitle(DATA.getResourceBundle().getString("foundLuggageTitle"));
-        alert.setHeaderText(DATA.getResourceBundle().getString("alertBoxHeader"));
-        alert.setContentText(DATA.getResourceBundle().getString("alertBoxContent"));
+        alert.setTitle(data.getResourceBundle().getString("foundLuggageTitle"));
+        alert.setHeaderText(data.getResourceBundle().getString("alertBoxHeader"));
+        alert.setContentText(data.getResourceBundle().getString("alertBoxContent"));
 
         Optional<ButtonType> result = alert.showAndWait();
 
