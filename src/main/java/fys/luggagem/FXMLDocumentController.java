@@ -121,6 +121,12 @@ public class FXMLDocumentController implements Initializable {
                         if (accountInfoSet.next()) {
                             data.setPermissions(accountInfoSet.getInt("user_level"));
                         }
+                        ResultSet airportInfoSet = MainApp.myJDBC.executeResultSetQuery("SELECT timezone FROM Airport A"
+                                + " INNER JOIN employee E ON A.IATA = E.Luchthaven_IATA"
+                                + " WHERE E.code = " + resultSet.getInt("Employee_code"));
+                        if(airportInfoSet.next()) {
+                            data.setTimezone(airportInfoSet.getString("timezone"));
+                        } 
                         MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
                     } else {
                         statusMessage.setText("Impossible error has occured. Please try again.");
