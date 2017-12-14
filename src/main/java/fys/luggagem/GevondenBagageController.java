@@ -57,14 +57,13 @@ public class GevondenBagageController implements Initializable {
     private ObservableList<String> airportsList = FXCollections.observableArrayList();
     private List<ExcelImport> foundLuggageList;
     private int index = 0;
-    private ObservableList<String> colorList = FXCollections.observableArrayList();
-    private ObservableList<String> secondaryColorList = FXCollections.observableArrayList();
-    private ObservableList<String> luggageTypeList = FXCollections.observableArrayList();
-    private ObservableList<String> locationFoundList = FXCollections.observableArrayList();
+    
     private final String CASE_STATUS_FOUND_LUGGAGE = "1";
+    private final ObservableList<String> AIRPORT_LIST = FXCollections.observableArrayList();
+    private final ObservableList<String> COLOR_LIST = FXCollections.observableArrayList();
+    private final ObservableList<String> LUGGAGE_TYPE_LIST = FXCollections.observableArrayList();
+    private final ObservableList<String> LOCATION_FOUND_LIST = FXCollections.observableArrayList();
 
-    @FXML
-    private AnchorPane rootPane;
     @FXML
     private TextField registrationNumber;
     @FXML
@@ -105,18 +104,6 @@ public class GevondenBagageController implements Initializable {
     private TextField insertion;
     @FXML
     private TextField lastName;
-
-    private final Data DATA = MainApp.getData();
-    private MyJDBC db = MainApp.myJDBC;
-    private final String CASE_STATUS_FOUND_LUGGAGE = "1";
-    private String imageURL;
-    DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-    private int index = 0;
-    private List<ExcelImport> foundLuggageList;
-    private final ObservableList<String> AIRPORT_LIST = FXCollections.observableArrayList();
-    private final ObservableList<String> COLOR_LIST = FXCollections.observableArrayList();
-    private final ObservableList<String> LUGGAGE_TYPE_LIST = FXCollections.observableArrayList();
-    private final ObservableList<String> LOCATION_FOUND_LIST = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
