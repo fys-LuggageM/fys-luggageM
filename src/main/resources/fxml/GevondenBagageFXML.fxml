@@ -248,20 +248,7 @@
                         </TextArea>
                         <HBox alignment="CENTER_RIGHT">
                             <children>
-                                <Button disable="true" minWidth="29.0" mnemonicParsing="false" onAction="#handlePreviousAction" prefHeight="37.0" prefWidth="36.0" text="&lt;">
-                                    <font>
-                                        <Font size="16.0" />
-                                    </font>
-                                </Button>
-                                <Button disable="true" minWidth="29.0" mnemonicParsing="false" onAction="#handleNextAction" prefHeight="37.0" prefWidth="36.0" text="&gt;">
-                                    <font>
-                                        <Font size="16.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets right="5.0" />
-                                    </HBox.margin>
-                                </Button>
-                                <Button disable="true" minWidth="67.0" mnemonicParsing="false" onAction="#importExcel" text="%importFromExcel">
+                                <Button minWidth="67.0" mnemonicParsing="false" onAction="#importExcel" text="%importFromExcel">
                                     <font>
                                         <Font size="16.0" />
                                     </font>

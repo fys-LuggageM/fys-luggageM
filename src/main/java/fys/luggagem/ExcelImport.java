@@ -1,8 +1,18 @@
 package fys.luggagem;
 
+import fys.luggagem.models.Data;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DateUtil;
@@ -18,7 +28,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class ExcelImport {
 
-    private String registrationNr;
+    private static Data data = MainApp.getData();
+    private static MyJDBC myJDBC = MainApp.myJDBC;
+    private int registrationNr;
+    private static String iata;
     private String dateFound;
     private String timeFound;
     private String luggageType;
@@ -28,6 +41,8 @@ public class ExcelImport {
     private String locationFound;
     private String primaryColor;
     private String secondaryColor;
+    private String dateTime;
+    private Timestamp ts;
 
     private String luggageSize;
     private String luggageSizeHeigth;
@@ -42,78 +57,130 @@ public class ExcelImport {
 
     private String comments;
 
-//    private static int beginAtRow = 0;
-//    private static int a = 1;
-//    private static String temp;
+    private String labelQuery = "SELECT * FROM luggage WHERE labelnr = ?;";
+
     public static List<ExcelImport> importFoundLuggageFromExcel(String fileName) throws IOException {
         List<ExcelImport> luggageList = new ArrayList<>();
 
         Workbook workbook = new XSSFWorkbook(fileName);
-        Sheet firstSheet = workbook.getSheetAt(0);
-        int numOfColumns = firstSheet.getRow(20).getPhysicalNumberOfCells();
+        int numOfSheets = workbook.getNumberOfSheets();
 
-//        while (beginAtRow == 0) {
-//            
-//            Row row = firstSheet.getRow(a);
-//            Cell cell = row.getCell(0);
-//            
-//            setTemp(cellToString(cell));
-//            if (temp == "Registration nr") {
-//                beginAtRow = a;
-//            }
-//            a++;
-//        }
-        for (int i = 4; i < firstSheet.getLastRowNum(); i++) {
-            ExcelImport importedLugage = new ExcelImport();
-            Row row = firstSheet.getRow(i);
-            for (int j = 0; j < numOfColumns; j++) {
-                Cell cell = row.getCell(j);
-                switch (j) {
-                    case 0:
-                        importedLugage.setRegistrationNr(cellToString(cell));
-                        break;
-                    case 1:
-//                        importedLugage.setDateFound(cellToString(cell));
-                        break;
-                    case 2:
-                        importedLugage.setTimeFound(cellToString(cell));
-                        break;
-                    case 3:
-                        importedLugage.setLuggageType(cellToString(cell));
-                        break;
-                    case 4:
-                        importedLugage.setBrand(cellToString(cell));
-                        break;
-                    case 5:
-                        importedLugage.setFlightNr(cellToString(cell));
-                        break;
-                    case 6:
-                        importedLugage.setLuggageTag(cellToString(cell));
-                        break;
-                    case 7:
-                        importedLugage.setLocationFound(cellToString(cell));
-                        break;
-                    case 8:
-                        importedLugage.setPrimaryColor(cellToString(cell));
-                        break;
-                    case 9:
-                        importedLugage.setSecondaryColor(cellToString(cell));
-                        break;
-                    case 10:
-                        importedLugage.setLuggageSize(cellToString(cell));
-                        break;
-                    case 11:
-                        importedLugage.setLuggageWeight(cellToString(cell));
-                        break;
-                    case 12:
-                        importedLugage.setTravellerNameAndCity(cellToString(cell));
-                        break;
-                    case 13:
-                        importedLugage.setComments(cellToString(cell));
+        //Cycle through the sheets of the workbook
+        for (int i = 0; i < numOfSheets; i++) {
+            Sheet sheet = workbook.getSheetAt(i);
+            int numOfColumns = sheet.getRow(getDataStartingRow(sheet) - 1).getPhysicalNumberOfCells();
+            iata = cellToString(sheet.getRow(1).getCell(1));
+            int lastRow = sheet.getPhysicalNumberOfRows() - 1;
+            System.out.println(lastRow);
+
+            //Cycle through the rows of sheet i
+            for (int j = getDataStartingRow(sheet); j < lastRow; j++) {
+                ExcelImport importedLugage = new ExcelImport();
+                System.out.println("Row " + j);
+                Row row = sheet.getRow(j);
+
+                //Cycle through the columns of row j
+                for (int k = 0; k < numOfColumns; k++) {
+                    System.out.println("Column " + k);
+                    Cell cell = row.getCell(k);
+                    switch (k) {
+                        case 0:
+//                        String regNr = cellToString(cell);
+//                        regNr.replace("/", "");
+//                        importedLugage.setRegistrationNr(Integer.parseInt(regNr));
+                            break;
+                        case 1:
+                            importedLugage.setDateFound(cellToString(cell));
+                            break;
+                        case 2:
+                            importedLugage.setTimeFound(cellToString(cell));
+                            break;
+                        case 3:
+                            importedLugage.setLuggageType(cellToString(cell));
+                            break;
+                        case 4:
+                            importedLugage.setBrand(cellToString(cell));
+                            break;
+                        case 5:
+                            importedLugage.setFlightNr(cellToString(cell));
+                            break;
+                        case 6:
+                            importedLugage.setLuggageTag(cellToString(cell));
+                            break;
+                        case 7:
+                            importedLugage.setLocationFound(cellToString(cell));
+                            break;
+                        case 8:
+                            importedLugage.setPrimaryColor(cellToString(cell));
+                            break;
+                        case 9:
+                            importedLugage.setSecondaryColor(cellToString(cell));
+                            break;
+                        case 10:
+                            importedLugage.setLuggageSize(cellToString(cell));
+                            break;
+                        case 11:
+                            importedLugage.setLuggageWeight(cellToString(cell));
+                            break;
+                        case 12:
+                            importedLugage.setTravellerNameAndCity(cellToString(cell));
+                            break;
+                        case 13:
+                            importedLugage.setComments(cellToString(cell));
+                            break;
+                    }
+                }
+
+                importedLugage.dateTime = importedLugage.dateFound + " " + importedLugage.timeFound;
+                Calendar cal = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
+                sdf.setTimeZone(TimeZone.getTimeZone(data.getTimezone()));
+                Date dbDate = null;
+                try {
+                    dbDate = sdf.parse(importedLugage.dateTime);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                cal.setTime(dbDate);
+                importedLugage.ts = new Timestamp(cal.getTimeInMillis());
+
+                if (!importedLugage.getLuggageTag().equals("")) {
+                    boolean check = true;
+                    String labelnr = null;
+
+                    //Search through the database for occurences of labelnr to prevent double data
+                    try {
+                        PreparedStatement ps = myJDBC.getConnection().prepareStatement(importedLugage.labelQuery);
+                        ps.setString(1, importedLugage.getLuggageTag());
+                        ResultSet rs = ps.executeQuery();
+
+                        if (rs.next()) {
+                            labelnr = rs.getString("labelnr");
+                        }
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (labelnr != null) {
+                        check = false;
+                    }
+
+                    for (int l = 0; l < luggageList.size(); l++) {
+                        if (luggageList.get(l).getLuggageTag().equals(importedLugage.getLuggageTag())) {
+                            check = false;
+                        }
+                    }
+
+                    if (check) {
+                        luggageList.add(importedLugage);
+                    }
+                } else {
+                    luggageList.add(importedLugage);
                 }
             }
-            luggageList.add(importedLugage);
         }
+
         return luggageList;
     }
 
@@ -258,19 +325,18 @@ public class ExcelImport {
         return str;
     }
 
-    private void setRegistrationNr(String num) {
-        num = num.replace("/", "");
+    private void setRegistrationNr(int num) {
         registrationNr = num;
     }
 
-    public String getRegistrationNr() {
+    public int getRegistrationNr() {
         return registrationNr;
     }
 
-    private void setDateFound(String num) {      
+    private void setDateFound(String num) {
         dateFound = num;
     }
-    
+
     public String getDateFound() {
         return dateFound;
     }
@@ -305,5 +371,32 @@ public class ExcelImport {
 
     public String getFlightNr() {
         return flightNr;
+    }
+
+    public String getLuggageSize() {
+        return luggageSize;
+    }
+
+    public String getIATA() {
+        return iata;
+    }
+
+    public Timestamp getTimestamp() {
+        return ts;
+    }
+
+    private static int getDataStartingRow(Sheet sheet) {
+        int i = 0;
+        boolean isRunning = true;
+        while (isRunning) {
+            Cell cell = sheet.getRow(i).getCell(10);
+            if (cellToString(cell).equals("")) {
+                i++;
+            } else {
+                isRunning = false;
+            }
+        }
+
+        return i + 1;
     }
 }

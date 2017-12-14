@@ -500,4 +500,39 @@ public class MyJDBC {
 
         }
     }
+    
+    public void getNewEmptyFoundLuggageNr() throws SQLException {
+        Connection conn = connection;
+
+        // select query for max registationNr
+        String selectMaxRegNR = "SELECT MAX(registrationnr) FROM luggage";
+
+        // insert query to create new registrationNr
+        String insertNewRegNR = "INSERT INTO luggage (registrationnr, case_type) VALUES (?, 1)";
+
+//        String INSERT_PICTURE = "insert into test(id, image01, image02, image03) values (?, ?, ?, ?)";
+        // prepared statement
+        PreparedStatement ps = null;
+        try {
+            // set autocommit false
+            conn.setAutoCommit(false);
+
+            // add query to prepared statement
+            ps = conn.prepareStatement(selectMaxRegNR);
+
+            // execute prepared statement
+            ResultSet result = ps.executeQuery();
+
+            // get results from the query
+            if (result.next()) {
+                registrationNr = result.getInt(1);
+
+                // increment registrationNr by 1 for a new registrationNr
+                registrationNr++;
+                luggageRegistrationNr = registrationNr;
+            }
+        } finally {
+
+        }
+    }
 }

@@ -29,6 +29,7 @@ public class Data {
     private int permissions;
     private String lastScene;
     private int luggageRegistrationNumber;
+    private String timezone;
 
     public int getLuggageRegistrationNumber() {
         return luggageRegistrationNumber;
@@ -124,5 +125,13 @@ public class Data {
 
     public void setEmployeeNr(int employeeNr) {
         this.employeeNr = employeeNr;
+    }
+
+    public String getTimezone() {
+        return timezone;
+    }
+
+    public void setTimezone(String timezone) {
+        this.timezone = timezone;
     }
 }
