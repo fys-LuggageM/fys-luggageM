@@ -60,10 +60,6 @@ public class GevondenBagageController implements Initializable {
     private int index = 0;
 
     private final String CASE_STATUS_FOUND_LUGGAGE = "1";
-    private final String CHANGE_ID = "0";
-    LocalDateTime localDateAndTime = LocalDateTime.now();
-    DateTimeFormatter dateAndTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    String formatDateTime = localDateAndTime.format(dateAndTimeFormat);
     private final ObservableList<String> AIRPORT_LIST = FXCollections.observableArrayList();
     private final ObservableList<String> COLOR_LIST = FXCollections.observableArrayList();
     private final ObservableList<String> LUGGAGE_TYPE_LIST = FXCollections.observableArrayList();
@@ -189,7 +185,6 @@ public class GevondenBagageController implements Initializable {
 
     private void setFields() {
         // Create Strings that hold the given values
-        String databaseDateAndTime = formatDateTime;
         String databaseAirportName = airportFound.getValue().toString();
         String databaseBrand = brand.getText();
         String databaseFlightNumber = arrivedWithFlight.getText();
@@ -201,7 +196,6 @@ public class GevondenBagageController implements Initializable {
         String databaseTravellerCity = city.getText();
         String databaseNotes = comments.getText();
         String databaseCaseStatus = CASE_STATUS_FOUND_LUGGAGE;
-        String databaseChangeId = CHANGE_ID;
         String databaseLuggageType;
         // Only fill this particular String when the given value is not null
         if (luggageType.getValue() != null) {
@@ -245,41 +239,33 @@ public class GevondenBagageController implements Initializable {
             databaseLuggageSize = "";
         }
 
-        // Make a new record in the changes table
-        String queryChange = "INSERT INTO `changes` "
-                + "(`date`, `Employee_code`, `Luggage_registrationnr`, `changeid`) "
-                + "VALUES "
-                + "('" + databaseDateAndTime + "', '" + data.getEmployeeNr() + "', '" + db.getLuggageRegistrationNr() + "', '" + databaseChangeId + "');";
-        MainApp.myJDBC.executeUpdateQuery(queryChange);
-
         // Update the fields in the created row with a designated registration number
         Connection connection = db.getConnection();
-        String setInfo = "UPDATE luggage SET date = ?, flightnr = ?, labelnr = ?, destination = ?, luggage_type = ?, brand = ?, location_found = ?, primary_color = ?, secondary_color = ?, size = ?, weight = ?, customer_firstname = ?, customer_preposition = ?, customer_lastname = ?, case_status = ?, airport_IATA = ?, notes = ? WHERE registrationnr = ?";
+        String setInfoLuggage = "UPDATE luggage SET flightnr = ?, labelnr = ?, destination = ?, luggage_type = ?, brand = ?, location_found = ?, primary_color = ?, secondary_color = ?, size = ?, weight = ?, customer_firstname = ?, customer_preposition = ?, customer_lastname = ?, case_status = ?, airport_IATA = ?, notes = ? WHERE registrationnr = ?";
 
         PreparedStatement ps = null;
 
         try {
             connection.setAutoCommit(false);
-            ps = connection.prepareStatement(setInfo);
+            ps = connection.prepareStatement(setInfoLuggage);
 
-            ps.setString(1, databaseDateAndTime);
-            ps.setString(2, databaseFlightNumber);
-            ps.setString(3, databaseLabelNumber);
-            ps.setString(4, databaseTravellerCity);
-            ps.setString(5, databaseLuggageType);
-            ps.setString(6, databaseBrand);
-            ps.setString(7, databaseLocationFound);
-            ps.setString(8, databasePrimaryColor);
-            ps.setString(9, databaseSecondaryColor);
-            ps.setString(10, databaseLuggageSize);
-            ps.setString(11, databaseWeight);
-            ps.setString(12, databaseTravellerFirstName);
-            ps.setString(13, databaseTravellerInsertion);
-            ps.setString(14, databaseTravellerLastName);
-            ps.setString(15, databaseCaseStatus);
-            ps.setString(16, databaseAirportName);
-            ps.setString(17, databaseNotes);
-            ps.setInt(18, db.getLuggageRegistrationNr());
+            ps.setString(1, databaseFlightNumber);
+            ps.setString(2, databaseLabelNumber);
+            ps.setString(3, databaseTravellerCity);
+            ps.setString(4, databaseLuggageType);
+            ps.setString(5, databaseBrand);
+            ps.setString(6, databaseLocationFound);
+            ps.setString(7, databasePrimaryColor);
+            ps.setString(8, databaseSecondaryColor);
+            ps.setString(9, databaseLuggageSize);
+            ps.setString(10, databaseWeight);
+            ps.setString(11, databaseTravellerFirstName);
+            ps.setString(12, databaseTravellerInsertion);
+            ps.setString(13, databaseTravellerLastName);
+            ps.setString(14, databaseCaseStatus);
+            ps.setString(15, databaseAirportName);
+            ps.setString(16, databaseNotes);
+            ps.setInt(17, db.getLuggageRegistrationNr());
             ps.executeUpdate();
 
             connection.commit();
