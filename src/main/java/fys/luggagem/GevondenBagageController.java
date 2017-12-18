@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -56,8 +58,12 @@ public class GevondenBagageController implements Initializable {
     private ObservableList<String> airportsList = FXCollections.observableArrayList();
     private List<ExcelImport> foundLuggageList;
     private int index = 0;
-    
+
     private final String CASE_STATUS_FOUND_LUGGAGE = "1";
+    private final String CHANGE_ID = "0";
+    LocalDateTime localDateAndTime = LocalDateTime.now();
+    DateTimeFormatter dateAndTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    String formatDateTime = localDateAndTime.format(dateAndTimeFormat);
     private final ObservableList<String> AIRPORT_LIST = FXCollections.observableArrayList();
     private final ObservableList<String> COLOR_LIST = FXCollections.observableArrayList();
     private final ObservableList<String> LUGGAGE_TYPE_LIST = FXCollections.observableArrayList();
@@ -239,6 +245,13 @@ public class GevondenBagageController implements Initializable {
             databaseLuggageSize = "";
         }
 
+        // Make a new record in the changes table
+        String queryChange = "INSERT INTO `changes` "
+                + "(`date`, `Employee_code`, `Luggage_registrationnr`, `changeid`) "
+                + "VALUES "
+                + "('" + databaseDateAndTime + "', '" + data.getEmployeeNr() + "', '" + db.getLuggageRegistrationNr() + "', '" + databaseChangeId + "');";
+        MainApp.myJDBC.executeUpdateQuery(queryChange);
+
         // Update the fields in the created row with a designated registration number
         Connection connection = db.getConnection();
         String setInfo = "UPDATE luggage SET date = ?, flightnr = ?, labelnr = ?, destination = ?, luggage_type = ?, brand = ?, location_found = ?, primary_color = ?, secondary_color = ?, size = ?, weight = ?, customer_firstname = ?, customer_preposition = ?, customer_lastname = ?, case_status = ?, airport_IATA = ?, notes = ? WHERE registrationnr = ?";
@@ -272,7 +285,7 @@ public class GevondenBagageController implements Initializable {
             connection.commit();
         } catch (SQLException e) {
             System.err.print("SQL error setfields: @@@@@@ " + e);
-        }      
+        }
     }
 
     private void goToMatching() {
@@ -283,7 +296,6 @@ public class GevondenBagageController implements Initializable {
 
         Connection conn = db.getConnection();
         PreparedStatement ps = null;
-        
 
         for (ExcelImport luggageList : list) {
             String name = luggageList.getTravellerNameAndCityName();
