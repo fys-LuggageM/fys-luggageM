@@ -47,11 +47,10 @@ public class MainApp extends Application {
     }
 
     public static File selectFileToRead(String xlsx) {
-        Stage stage = new Stage();
         FileChooser filechooser = new FileChooser();
         filechooser.setTitle("Select file to read");
         filechooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel", "*.xlsx"));
-        File selectedFile = filechooser.showOpenDialog(stage);
+        File selectedFile = filechooser.showOpenDialog(data.getStage());
         if (selectedFile != null) {
             return selectedFile;
         }

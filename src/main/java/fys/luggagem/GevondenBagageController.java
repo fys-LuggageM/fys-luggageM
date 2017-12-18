@@ -38,6 +38,31 @@ import javafx.scene.layout.AnchorPane;
  */
 public class GevondenBagageController implements Initializable {
 
+    private Data data = MainApp.getData();
+    private String imageURL;
+    private MyJDBC db = MainApp.myJDBC;
+
+    private DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+    private String setInfo = "INSERT INTO luggage (registrationnr, date, flightnr, labelnr, destination, luggage_type, "
+            + "brand, location_found, primary_color, secondary_color, size, weight, case_type, customer_firstname, "
+            + "customer_preposition, customer_lastname, case_status, notes, airport_IATA) "
+            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private String setInfo2 = "UPDATE luggage SET flightnr = ?, labelnr = ?, destination = ?, luggage_type = ?, "
+            + "brand = ?, location_found = ?, primary_color = ?, secondary_color = ?, size = ?, weight = ?, "
+            + "customer_firstname = ?, customer_preposition = ?, customer_lastname = ?, case_status = ?, "
+            + "airport_IATA = ?, notes = ? "
+            + "WHERE registrationnr = ?";
+
+    private ObservableList<String> airportsList = FXCollections.observableArrayList();
+    private List<ExcelImport> foundLuggageList;
+    private int index = 0;
+    
+    private final String CASE_STATUS_FOUND_LUGGAGE = "1";
+    private final ObservableList<String> AIRPORT_LIST = FXCollections.observableArrayList();
+    private final ObservableList<String> COLOR_LIST = FXCollections.observableArrayList();
+    private final ObservableList<String> LUGGAGE_TYPE_LIST = FXCollections.observableArrayList();
+    private final ObservableList<String> LOCATION_FOUND_LIST = FXCollections.observableArrayList();
+
     @FXML
     private AnchorPane rootPane;
     @FXML
@@ -79,21 +104,6 @@ public class GevondenBagageController implements Initializable {
     @FXML
     private Button saveButton;
 
-    private Data data = MainApp.getData();
-    private MyJDBC db = MainApp.myJDBC;
-    private final String CASE_STATUS_FOUND_LUGGAGE = "1";
-    private final String CHANGE_ID = "0";
-    private String imageURL;
-    private int index = 0;
-    private List<ExcelImport> foundLuggageList;
-    private final ObservableList<String> AIRPORT_LIST = FXCollections.observableArrayList();
-    private final ObservableList<String> COLOR_LIST = FXCollections.observableArrayList();
-    private final ObservableList<String> LUGGAGE_TYPE_LIST = FXCollections.observableArrayList();
-    private final ObservableList<String> LOCATION_FOUND_LIST = FXCollections.observableArrayList();
-    LocalDateTime localDateAndTime = LocalDateTime.now();
-    DateTimeFormatter dateAndTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    String formatDateTime = localDateAndTime.format(dateAndTimeFormat);
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Fill multiple comboboxes
@@ -111,43 +121,7 @@ public class GevondenBagageController implements Initializable {
 
     public void setFoundLuggageList(List<ExcelImport> list) {
         foundLuggageList = list;
-        brand.setText(foundLuggageList.get(index).getBrand());
-        arrivedWithFlight.setText(foundLuggageList.get(index).getFlightNr());
-        tag.setText(foundLuggageList.get(index).getLuggageTag());
-        sizeHeigth.setText(foundLuggageList.get(index).getLuggageSizeHeigth());
-        sizeWidth.setText(foundLuggageList.get(index).getLuggageSizeWidth());
-        sizeDepth.setText(foundLuggageList.get(index).getLuggageSizeDepth());
-        weight.setText(foundLuggageList.get(index).getLuggageWeight());
-        city.setText(foundLuggageList.get(index).getTravellerNameAndCityCity());
-        comments.setText(foundLuggageList.get(index).getComments());
-    }
-
-    @FXML
-    private void handleNextAction(ActionEvent event) {
-        index = index + 1 >= foundLuggageList.size() ? index : index + 1;
-        brand.setText(foundLuggageList.get(index).getBrand());
-        arrivedWithFlight.setText(foundLuggageList.get(index).getFlightNr());
-        tag.setText(foundLuggageList.get(index).getLuggageTag());
-        sizeHeigth.setText(foundLuggageList.get(index).getLuggageSizeHeigth());
-        sizeWidth.setText(foundLuggageList.get(index).getLuggageSizeWidth());
-        sizeDepth.setText(foundLuggageList.get(index).getLuggageSizeDepth());
-        weight.setText(foundLuggageList.get(index).getLuggageWeight());
-        city.setText(foundLuggageList.get(index).getTravellerNameAndCityCity());
-        comments.setText(foundLuggageList.get(index).getComments());
-    }
-
-    @FXML
-    private void handlePreviousAction(ActionEvent event) {
-        index = index - 1 < 0 ? index : index - 1;
-        brand.setText(foundLuggageList.get(index).getBrand());
-        arrivedWithFlight.setText(foundLuggageList.get(index).getFlightNr());
-        tag.setText(foundLuggageList.get(index).getLuggageTag());
-        sizeHeigth.setText(foundLuggageList.get(index).getLuggageSizeHeigth());
-        sizeWidth.setText(foundLuggageList.get(index).getLuggageSizeWidth());
-        sizeDepth.setText(foundLuggageList.get(index).getLuggageSizeDepth());
-        weight.setText(foundLuggageList.get(index).getLuggageWeight());
-        city.setText(foundLuggageList.get(index).getTravellerNameAndCityCity());
-        comments.setText(foundLuggageList.get(index).getComments());
+        importedLuggageToDatabase(list);
     }
 
     @FXML
@@ -159,9 +133,15 @@ public class GevondenBagageController implements Initializable {
             String filename = file.getAbsolutePath();
             List<ExcelImport> foundLuggage = ExcelImport.importFoundLuggageFromExcel(filename);
 
-            setFoundLuggageList(foundLuggage);
+            importedLuggageToDatabase(foundLuggage);
 
         }
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.initOwner(data.getStage());
+        alert.setTitle("Excel file imported!");
+        String s = file.getName() + " has been imported!";
+        alert.setHeaderText(s);
+        alert.showAndWait();
     }
 
     @FXML
@@ -258,18 +238,13 @@ public class GevondenBagageController implements Initializable {
         } else {
             databaseLuggageSize = "";
         }
-        // Make a new record in the changes table
-        String queryChange = "INSERT INTO `changes` "
-                + "(`date`, `Employee_code`, `Luggage_registrationnr`, `changeid`) "
-                + "VALUES "
-                + "('" + databaseDateAndTime + "', '" + data.getEmployeeNr() + "', '" + db.getLuggageRegistrationNr() + "', '" + databaseChangeId + "');";
-        MainApp.myJDBC.executeUpdateQuery(queryChange);
-        
+
         // Update the fields in the created row with a designated registration number
         Connection connection = db.getConnection();
         String setInfo = "UPDATE luggage SET date = ?, flightnr = ?, labelnr = ?, destination = ?, luggage_type = ?, brand = ?, location_found = ?, primary_color = ?, secondary_color = ?, size = ?, weight = ?, customer_firstname = ?, customer_preposition = ?, customer_lastname = ?, case_status = ?, airport_IATA = ?, notes = ? WHERE registrationnr = ?";
 
         PreparedStatement ps = null;
+
         try {
             connection.setAutoCommit(false);
             ps = connection.prepareStatement(setInfo);
@@ -302,6 +277,64 @@ public class GevondenBagageController implements Initializable {
 
     private void goToMatching() {
         MainApp.loadFXMLFile(this.getClass().getResource("/fxml/MatchingFXML.fxml"));
+    }
+
+    private void importedLuggageToDatabase(List<ExcelImport> list) {
+
+        Connection conn = db.getConnection();
+        PreparedStatement ps = null;
+        
+
+        for (ExcelImport luggageList : list) {
+            String name = luggageList.getTravellerNameAndCityName();
+
+            String date = luggageList.getDateFound();
+            String time = luggageList.getTimeFound();
+
+            int start = name.indexOf(' ');
+            int end = name.lastIndexOf(' ');
+            String firstName = "";
+            String middleName = "";
+            String lastName = "";
+            if (start >= 0) {
+                firstName = name.substring(0, start);
+                if (end > start) {
+                    middleName = name.substring(start + 1, end);
+                }
+                lastName = name.substring(end + 1, name.length());
+            }
+
+            try {
+                db.getNewEmptyFoundLuggageNr();
+                conn.setAutoCommit(false);
+                ps = conn.prepareStatement(setInfo);
+
+                ps.setInt(1, db.getLuggageRegistrationNr());
+                ps.setTimestamp(2, luggageList.getTimestamp());
+                ps.setString(3, luggageList.getFlightNr());
+                ps.setString(4, luggageList.getLuggageTag());
+                ps.setString(5, luggageList.getTravellerNameAndCityCity());
+                ps.setString(6, luggageList.getLuggageType());
+                ps.setString(7, luggageList.getBrand());
+                ps.setString(8, luggageList.getLocationFound());
+                ps.setString(9, luggageList.getPrimaryColor());
+                ps.setString(10, luggageList.getSecondaryColor());
+                ps.setString(11, luggageList.getLuggageSize());
+                ps.setString(12, luggageList.getLuggageWeight());
+                ps.setInt(13, 1);
+                ps.setString(14, firstName);
+                ps.setString(15, middleName);
+                ps.setString(16, lastName);
+                ps.setInt(17, 1);
+                ps.setString(18, luggageList.getComments());
+                ps.setString(19, luggageList.getIATA());
+                ps.executeUpdate();
+
+                conn.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void setupAiportBox() {
