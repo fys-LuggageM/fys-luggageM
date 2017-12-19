@@ -97,10 +97,7 @@ public class AccountbeheerFXMLController implements Initializable {
 
     @FXML
     private void resetPasswordAction(ActionEvent event) {
-        if ((resetUser.getText() == null || resetUser.getText().trim().isEmpty()) || (resetPassword.getText().trim().isEmpty())) {
-            resetPasswordInfo.setTextFill(Paint.valueOf("d81e05"));
-            resetPasswordInfo.setText(data.getResourceBundle().getString("passwordNotResetInfo"));
-        } else {
+        if (resetUser.getText() != null && !resetUser.getText().trim().isEmpty() && !resetPassword.getText().trim().isEmpty()) {
             String userToReset = resetUser.getText();
             String newPassword = resetPassword.getText();
 
@@ -131,7 +128,7 @@ public class AccountbeheerFXMLController implements Initializable {
                     ps.setString(3, userToReset);
                     ps.executeUpdate();
                     conn.commit();
-                    
+
                     MainApp.myJDBC.executeUpdateQuery(query);
 
                     resetPasswordInfo.setTextFill(Paint.valueOf("green"));
@@ -144,20 +141,19 @@ public class AccountbeheerFXMLController implements Initializable {
             } else {
 
             }
+        } else {
+            resetPasswordInfo.setTextFill(Paint.valueOf("d81e05"));
+            resetPasswordInfo.setText(data.getResourceBundle().getString("passwordNotResetInfo"));
         }
     }
 
     @FXML
     private void createAccount(ActionEvent event) {
-        if ((createUserPassword.getText() == null || createUserPassword.getText().trim().isEmpty())
-                || (createUserRealname.getText() == null || createUserRealname.getText().trim().isEmpty())
-                || (createUserLastname.getText() == null || createUserLastname.getText().trim().isEmpty())
-                || (createUserEmail.getText() == null || createUserEmail.getText().trim().isEmpty())
-                || (airportBox.getSelectionModel().getSelectedItem() == null || airportBox.getSelectionModel().getSelectedItem().trim().isEmpty())) {
-            createUserInfo.setTextFill(Paint.valueOf("d81e05"));
-            createUserInfo.setFont(Font.font(10));
-            createUserInfo.setText(data.getResourceBundle().getString("accountNotCreatedInfo"));
-        } else {
+        if (createUserPassword.getText() != null && !createUserPassword.getText().trim().isEmpty()
+                && createUserRealname.getText() != null && !createUserRealname.getText().trim().isEmpty()
+                && createUserLastname.getText() != null && !createUserLastname.getText().trim().isEmpty()
+                && createUserEmail.getText() != null && !createUserEmail.getText().trim().isEmpty()
+                && airportBox.getSelectionModel().getSelectedItem() != null && !airportBox.getSelectionModel().getSelectedItem().trim().isEmpty()) {
             String createUserStringRealName = createUserRealname.getText();
             String betweenName = "";
             if (createUserBetweenName.getText() != null || !createUserBetweenName.getText().trim().isEmpty()) {
@@ -172,7 +168,7 @@ public class AccountbeheerFXMLController implements Initializable {
             hashAndPass = Encryptor.encrypt(password);
 
             String createUserStringPermissions;
-
+            
             // Store universally named userPermissions 
             RadioButton selectedPermissions = (RadioButton) accountButtons.getSelectedToggle();
             String un18perms = selectedPermissions.getId();
@@ -198,7 +194,7 @@ public class AccountbeheerFXMLController implements Initializable {
             createUserAlert.setContentText("A new user will be created with the following information:\n"
                     + "Please confirm the following information is correct\n"
                     + "Email: " + createUserStringEmail + "\n"
-                    + "Airport: " + createUserStringAirport);
+                            + "Airport: " + createUserStringAirport);
             createUserAlert.setGraphic(new ImageView(image));
 
             Optional<ButtonType> createUserAnswer = createUserAlert.showAndWait();
@@ -235,7 +231,7 @@ public class AccountbeheerFXMLController implements Initializable {
                     ps.executeUpdate();
 
                     conn.commit();
-                    
+
                     createUserAlert = new Alert(AlertType.INFORMATION);
                     createUserAlert.initOwner(data.getStage());
                     createUserAlert.setTitle("Account creation");
@@ -243,20 +239,20 @@ public class AccountbeheerFXMLController implements Initializable {
                     createUserAlert.setContentText("A new user has been created with the following information:\n"
                             + "Username: " + createUserStringName + "\n");
                     createUserAlert.showAndWait();
-                    
+
                     // Empty everything
                     createUserPassword.clear();
                     createUserRealname.clear();
                     createUserBetweenName.clear();
                     createUserLastname.clear();
                     createUserEmail.clear();
-                    
+
                     roleAdmin.setSelected(false);
                     roleManager.setSelected(false);
                     roleEmployee.setSelected(true);
-                    
+
                     setupTableView();
-                    
+
                     // Confirm to the user that the account was succesfully created
                     createUserInfo.setTextFill(Paint.valueOf("green"));
                     createUserInfo.setFont(Font.font(12));
@@ -269,6 +265,10 @@ public class AccountbeheerFXMLController implements Initializable {
 
             }
 
+        } else {
+            createUserInfo.setTextFill(Paint.valueOf("d81e05"));
+            createUserInfo.setFont(Font.font(10));
+            createUserInfo.setText(data.getResourceBundle().getString("accountNotCreatedInfo"));
         }
 
     }
@@ -276,49 +276,83 @@ public class AccountbeheerFXMLController implements Initializable {
     @FXML
     private void deactivateUser(ActionEvent event) {
         System.out.println("Gebruiker ge(de)activeerd.");
-        if (deactivateUsername.getText() == null || deactivateUsername.getText().trim().isEmpty()) {
+        if (deactivateUsername.getText() != null && !deactivateUsername.getText().trim().isEmpty()
+                && MainApp.isNumeric(deactivateUsername.getText())) {
+            String userToDeactivateString = deactivateUsername.getText();
+            int userToDeactivate = Integer.parseInt(deactivateUsername.getText());
+
+            if (userToDeactivate != data.getEmployeeNr()) {
+                try {
+                    PreparedStatement preparedUpdateQuery;
+                    PreparedStatement preparedActiveCheckQuery;
+                    int isActive = 0;
+
+                    Connection conn = MainApp.myJDBC.getConnection();
+
+                    String updateQuery = "UPDATE `account` SET `active`=? WHERE `Employee_code`=?;";
+                    String activeCheckQuery = "SELECT active FROM account WHERE Employee_code =?";
+
+                    preparedActiveCheckQuery = conn.prepareStatement(activeCheckQuery);
+                    preparedActiveCheckQuery.setInt(1, userToDeactivate);
+                    ResultSet result = preparedActiveCheckQuery.executeQuery();
+
+                    conn.setAutoCommit(false);
+                    preparedUpdateQuery = conn.prepareStatement(updateQuery);
+                    preparedUpdateQuery.setInt(2, userToDeactivate);
+
+                    while (result.next()) {
+                        isActive = result.getInt("active");
+                    }
+
+                    if (isActive == 1) {
+                        Alert deactivateUserAlert = new Alert(AlertType.CONFIRMATION);
+                        String imageURL = this.getClass().getResource("/images/32190-200.png").toString();
+                        Image image = new Image(imageURL, 64, 64, false, true);
+
+                        deactivateUserAlert.initOwner(data.getStage());
+                        deactivateUserAlert.setTitle("Deactivate user!");
+                        deactivateUserAlert.setContentText("Are you sure you want to deactivate user " + userToDeactivate);
+                        deactivateUserAlert.setGraphic(new ImageView(image));
+
+                        Optional<ButtonType> deactivateUserAnswer = deactivateUserAlert.showAndWait();
+                        if (deactivateUserAnswer.get() == ButtonType.OK) {
+                            preparedUpdateQuery.setInt(1, 0);
+                            preparedUpdateQuery.execute();
+                        }
+                    } else {
+                        Alert deactivateUserAlert = new Alert(AlertType.CONFIRMATION);
+                        String imageURL = this.getClass().getResource("/images/32190-200.png").toString();
+                        Image image = new Image(imageURL, 64, 64, false, true);
+
+                        deactivateUserAlert.initOwner(data.getStage());
+                        deactivateUserAlert.setTitle("Deactivate user!");
+                        deactivateUserAlert.setContentText("Are you sure you want to activate user " + userToDeactivate);
+                        deactivateUserAlert.setGraphic(new ImageView(image));
+
+                        Optional<ButtonType> deactivateUserAnswer = deactivateUserAlert.showAndWait();
+                        if (deactivateUserAnswer.get() == ButtonType.OK) {
+                            preparedUpdateQuery.setInt(1, 1);
+                            preparedUpdateQuery.execute();
+                        }
+                        conn.commit();
+                    }
+                    deactivateUserInfo.setTextFill(Paint.valueOf("green"));
+                    deactivateUserInfo.setText(data.getResourceBundle().getString("accountDeactivatedInfo"));
+                    setupTableView();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountbeheerFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Trying to deactivate yourself!");
+                alert.setContentText("It is not possible to disable the currently logged in user.");
+                alert.initOwner(data.getStage());
+                alert.showAndWait();
+            }
+        } else {
             deactivateUsername.clear();
             deactivateUserInfo.setTextFill(Paint.valueOf("d81e05"));
             deactivateUserInfo.setText(data.getResourceBundle().getString("accountNotDeactivatedInfo"));
-        } else {
-            String userToDeactivate = deactivateUsername.getText();
-
-            String deactivateQuery = "UPDATE `account` SET `active`='0' WHERE `Employee_code`='" + userToDeactivate + "';";
-            String activateQuery = "UPDATE `account` SET `active`='1' WHERE `Employee_code`='" + userToDeactivate + "';";
-            String activeCheckQuery = "SELECT active FROM account WHERE Employee_code = '" + userToDeactivate + "'";
-
-            if (MainApp.myJDBC.executeStringQuery(activeCheckQuery).equals("1")) {
-                Alert deactivateUserAlert = new Alert(AlertType.CONFIRMATION);
-                String imageURL = this.getClass().getResource("/images/32190-200.png").toString();
-                Image image = new Image(imageURL, 64, 64, false, true);
-
-                deactivateUserAlert.initOwner(data.getStage());
-                deactivateUserAlert.setTitle("Deactivate user!");
-                deactivateUserAlert.setContentText("Are you sure you want to deactivate user " + userToDeactivate);
-                deactivateUserAlert.setGraphic(new ImageView(image));
-
-                Optional<ButtonType> deactivateUserAnswer = deactivateUserAlert.showAndWait();
-                if (deactivateUserAnswer.get() == ButtonType.OK) {
-                    MainApp.myJDBC.executeUpdateQuery(deactivateQuery);
-                }
-            } else {
-                Alert deactivateUserAlert = new Alert(AlertType.CONFIRMATION);
-                String imageURL = this.getClass().getResource("/images/32190-200.png").toString();
-                Image image = new Image(imageURL, 64, 64, false, true);
-
-                deactivateUserAlert.initOwner(data.getStage());
-                deactivateUserAlert.setTitle("Deactivate user!");
-                deactivateUserAlert.setContentText("Are you sure you want to activate user " + userToDeactivate);
-                deactivateUserAlert.setGraphic(new ImageView(image));
-
-                Optional<ButtonType> deactivateUserAnswer = deactivateUserAlert.showAndWait();
-                if (deactivateUserAnswer.get() == ButtonType.OK) {
-                    MainApp.myJDBC.executeUpdateQuery(activateQuery);
-                }
-            }
-            deactivateUserInfo.setTextFill(Paint.valueOf("green"));
-            deactivateUserInfo.setText(data.getResourceBundle().getString("accountDeactivatedInfo"));
-            setupTableView();
         }
     }
 
@@ -397,7 +431,9 @@ public class AccountbeheerFXMLController implements Initializable {
     public void reloadTable() {
         try {
             userList.clear();
-            String query = "SELECT Employee_code,first_name,preposition,last_name,user_level,Luchthaven_IATA,active FROM account JOIN employee ON Employee_code = code;";
+            String query = "SELECT Employee_code,first_name,preposition,last_name,user_level,Luchthaven_IATA,active "
+                    + "FROM account JOIN employee "
+                    + "ON Employee_code = code;";
             ResultSet result = MainApp.myJDBC.executeResultSetQuery(query);
 
             while (result.next()) {
