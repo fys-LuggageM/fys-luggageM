@@ -115,10 +115,10 @@ public class GevondenBagageController implements Initializable {
         setupLocationFound();
 
         // booleanbinding to check if textfields are empty
-        BooleanBinding bb = luggageType.valueProperty().isNull();
+        BooleanBinding bb = luggageType.valueProperty().isNull().or(primaryColor.valueProperty().isNull());
         // if so, disable the save button to prevent accidental uploads to the database
-        bb = primaryColor.valueProperty().isNull();
-        saveButton.disableProperty().bind(bb);
+        saveButton.disableProperty().bind(bb);     
+        
     }
 
     public void setFoundLuggageList(List<ExcelImport> list) {
