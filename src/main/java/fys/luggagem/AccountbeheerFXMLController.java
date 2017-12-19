@@ -129,8 +129,6 @@ public class AccountbeheerFXMLController implements Initializable {
                     ps.executeUpdate();
                     conn.commit();
 
-                    MainApp.myJDBC.executeUpdateQuery(query);
-
                     resetPasswordInfo.setTextFill(Paint.valueOf("green"));
                     resetPasswordInfo.setText(data.getResourceBundle().getString("passwordResetInfo"));
                     resetUser.clear();
@@ -216,7 +214,6 @@ public class AccountbeheerFXMLController implements Initializable {
                     ps.setString(5, createUserStringAirport);
                     ps.executeUpdate();
 
-                    int doQueryEmployeeTable = MainApp.myJDBC.executeUpdateQuery(queryEmployee);
                     String queryAccounts = "INSERT INTO `account` "
                             + "(`Employee_code`, `email`, `password`, `salt`, `user_level`, `active`) "
                             + "VALUES "
