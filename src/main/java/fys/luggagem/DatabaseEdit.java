@@ -82,6 +82,20 @@ public class DatabaseEdit implements Initializable {
         registrationNumber = MainApp.data.getLuggageRegistrationNumber();
         setupAiportBox();
         setCurrentLuggageFields();
+        setFieldsOnOrOff();
+    }
+
+    private void setFieldsOnOrOff() {
+        String luggageType = MainApp.myJDBC.executeStringQuery("SELECT case_type "
+                + "FROM luggage "
+                + "WHERE registrationnr=" + registrationNumber);
+        if (luggageType.equals("2")) {
+            locationFoundField.setDisable(true);
+            luggageDepthField.setDisable(true);
+            luggageHeightField.setDisable(true);
+            luggageWidthField.setDisable(true);
+            weightField.setDisable(true);
+        }
     }
 
     private void setCurrentLuggageFields() {
