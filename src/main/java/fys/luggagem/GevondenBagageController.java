@@ -10,14 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,14 +25,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * @author Mees Sour
@@ -57,7 +58,7 @@ public class GevondenBagageController implements Initializable {
     private ObservableList<String> airportsList = FXCollections.observableArrayList();
     private List<ExcelImport> foundLuggageList;
     private int index = 0;
-    
+
     private final String CASE_STATUS_FOUND_LUGGAGE = "1";
     private final ObservableList<String> AIRPORT_LIST = FXCollections.observableArrayList();
     private final ObservableList<String> COLOR_LIST = FXCollections.observableArrayList();
@@ -65,11 +66,11 @@ public class GevondenBagageController implements Initializable {
     private final ObservableList<String> LOCATION_FOUND_LIST = FXCollections.observableArrayList();
 
     @FXML
-    private TextField registrationNumber;
+    private AnchorPane rootPane;
     @FXML
-    private DatePicker date;
+    private Label statusMessage;
     @FXML
-    private ComboBox luggageType;
+    private ComboBox<String> luggageType;
     @FXML
     private TextField brand;
     @FXML
@@ -97,25 +98,27 @@ public class GevondenBagageController implements Initializable {
     @FXML
     private ComboBox<String> airportFound;
     @FXML
-    private TextField time;
-    @FXML
     private TextField firstName;
     @FXML
     private TextField insertion;
     @FXML
     private TextField lastName;
+    @FXML
+    private Button saveButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Set the local date
-        date.setValue(LocalDate.now());
-        // Set the local time
-        time.setText(timeFormat.format(new Date()));
         // Fill multiple comboboxes
         setupAiportBox();
         setupColorCombobox();
         setupLuggageTypeCombobox();
         setupLocationFound();
+
+        // booleanbinding to check if textfields are empty
+        BooleanBinding bb = luggageType.valueProperty().isNull().or(primaryColor.valueProperty().isNull());
+        // if so, disable the save button to prevent accidental uploads to the database
+        saveButton.disableProperty().bind(bb);     
+        
     }
 
     public void setFoundLuggageList(List<ExcelImport> list) {
@@ -175,15 +178,13 @@ public class GevondenBagageController implements Initializable {
             makeFieldsDefault();
             // Match the results
             goToMatching();
+
         }
 
     }
 
     private void setFields() {
         // Create Strings that hold the given values
-        String databaseDate = date.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String databaseTime = time.getText();
-        String databaseDateAndTime = databaseDate + " " + databaseTime;
         String databaseAirportName = airportFound.getValue().toString();
         String databaseBrand = brand.getText();
         String databaseFlightNumber = arrivedWithFlight.getText();
@@ -240,13 +241,13 @@ public class GevondenBagageController implements Initializable {
 
         // Update the fields in the created row with a designated registration number
         Connection connection = db.getConnection();
-        String setInfo = "UPDATE luggage SET flightnr = ?, labelnr = ?, destination = ?, luggage_type = ?, brand = ?, location_found = ?, primary_color = ?, secondary_color = ?, size = ?, weight = ?, customer_firstname = ?, customer_preposition = ?, customer_lastname = ?, case_status = ?, airport_IATA = ?, notes = ? WHERE registrationnr = ?";
+        String setInfoLuggage = "UPDATE luggage SET flightnr = ?, labelnr = ?, destination = ?, luggage_type = ?, brand = ?, location_found = ?, primary_color = ?, secondary_color = ?, size = ?, weight = ?, customer_firstname = ?, customer_preposition = ?, customer_lastname = ?, case_status = ?, airport_IATA = ?, notes = ? WHERE registrationnr = ?";
 
         PreparedStatement ps = null;
 
         try {
             connection.setAutoCommit(false);
-            ps = connection.prepareStatement(setInfo);
+            ps = connection.prepareStatement(setInfoLuggage);
 
             ps.setString(1, databaseFlightNumber);
             ps.setString(2, databaseLabelNumber);
@@ -281,7 +282,6 @@ public class GevondenBagageController implements Initializable {
 
         Connection conn = db.getConnection();
         PreparedStatement ps = null;
-        
 
         for (ExcelImport luggageList : list) {
             String name = luggageList.getTravellerNameAndCityName();
@@ -415,7 +415,6 @@ public class GevondenBagageController implements Initializable {
 
     private void makeFieldsDefault() {
         // clear all textfields.
-        time.clear();
         brand.clear();
         arrivedWithFlight.clear();
         tag.clear();
@@ -428,10 +427,5 @@ public class GevondenBagageController implements Initializable {
         lastName.clear();
         city.clear();
         comments.clear();
-        // Set the local date
-        date.setValue(LocalDate.now());
-        // Set the local time
-        time.setText(timeFormat.format(new Date()));
-
     }
 }

@@ -1,5 +1,6 @@
 package fys.luggagem;
 
+import fys.luggagem.models.Data;
 import java.sql.*;
 import java.util.Enumeration;
 
@@ -16,17 +17,18 @@ public class MyJDBC {
     private static final String DB_DEFAULT_ACCOUNT = "root";
     private static final String DB_DEFAULT_PASSWORD = ""; //insert password
 
-
     private final static String DB_DRIVER_URL = "com.mysql.jdbc.Driver";
     private final static String DB_DRIVER_PREFIX = "jdbc:mysql://";
     private final static String DB_DRIVER_PARAMETERS = "?useSSL=false";
 
+    private Data data = MainApp.getData();
     private Connection connection = null;
     private int registrationNr;
     private int registrationNrDamaged;
     private int registrationNrFound;
     private int registrationNrLost;
     private int luggageRegistrationNr;
+    private int changesRegistrationNr;
 
     // set for verbose logging of all queries
     private boolean verbose = true;
@@ -86,8 +88,9 @@ public class MyJDBC {
 
     /**
      * *
-     * elects proper loading of the named driver for database connections. This is relevant if there are multiple
-     * drivers installed that match the JDBC type
+     * elects proper loading of the named driver for database connections. This
+     * is relevant if there are multiple drivers installed that match the JDBC
+     * type
      *
      * @param driverName the name of the driver to be activated.
      * @return indicates whether a suitable driver is available
@@ -134,8 +137,9 @@ public class MyJDBC {
 
     /**
      * *
-     * Executes an SQL query that yields a ResultSet with the outcome of the query. This outcome may be a single row
-     * with a single column in case of a scalar outcome.
+     * Executes an SQL query that yields a ResultSet with the outcome of the
+     * query. This outcome may be a single row with a single column in case of a
+     * scalar outcome.
      *
      * @param sql the full sql text of the query.
      * @return a ResultSet object that can iterate along all rows
@@ -213,8 +217,9 @@ public class MyJDBC {
 
     /**
      * *
-     * echoes an exception and its stack trace on the system console. remembers the message of the first error that
-     * occurs for later reference. closes the connection such that no further operations are possible.
+     * echoes an exception and its stack trace on the system console. remembers
+     * the message of the first error that occurs for later reference. closes
+     * the connection such that no further operations are possible.
      *
      * @param e
      */
@@ -462,6 +467,7 @@ public class MyJDBC {
 
         // insert query to create new registrationNr
         String insertNewRegNR = "INSERT INTO luggage (registrationnr, case_type) VALUES (?, 1)";
+        String insertNewRegNR2 = "INSERT INTO changes (Luggage_registrationnr, Employee_code, changeid) VALUES (?, ?, 0)";
 
 //        String INSERT_PICTURE = "insert into test(id, image01, image02, image03) values (?, ?, ?, ?)";
         // prepared statement
@@ -492,6 +498,13 @@ public class MyJDBC {
                     ps02.setInt(1, registrationNr);
                     ps02.executeUpdate();
                     conn.commit();
+                    
+                    PreparedStatement ps03 = null;
+                    ps03 = conn.prepareStatement(insertNewRegNR2);
+                    ps03.setInt(1, registrationNr);
+                    ps03.setInt(2, data.getEmployeeNr());
+                    ps03.executeUpdate();
+                    conn.commit();
                 } finally {
                 }
 
@@ -500,7 +513,7 @@ public class MyJDBC {
 
         }
     }
-    
+
     public void getNewEmptyFoundLuggageNr() throws SQLException {
         Connection conn = connection;
 
