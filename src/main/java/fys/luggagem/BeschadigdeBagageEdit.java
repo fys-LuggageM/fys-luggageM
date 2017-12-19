@@ -1,8 +1,12 @@
 package fys.luggagem;
 
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -12,9 +16,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 /**
  * @author Mees Sour
@@ -37,8 +43,12 @@ public class BeschadigdeBagageEdit implements Initializable {
     private TextArea notesField;
     @FXML
     private Button closeButton;
-
+    @FXML
+    private CheckBox handledCheckBox;
     private int registrationNumber;
+    private int caseStatus;
+    private final int CASE_STATUS_ACTIEF = 1;
+    private final int CASE_STATUS_INACTIEF = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -73,9 +83,17 @@ public class BeschadigdeBagageEdit implements Initializable {
                     notesField.setText(result.getString("notes"));
                 } catch (NullPointerException e) {
                 }
+                
+                try {
+                    caseStatus = result.getInt("case_status");
+                } catch (NullPointerException e) {
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseEdit.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (caseStatus == 0) {
+            handledCheckBox.setSelected(true);
         }
     }
 
@@ -86,14 +104,13 @@ public class BeschadigdeBagageEdit implements Initializable {
             if (result.next()) {
                 try {
                     Blob blob = result.getBlob("image01");
+                    InputStream is = blob.getBinaryStream();
                     long blobLength = blob.length();
 
                     int pos = 1; // position is 1-based
                     int len = 10;
                     byte[] bytes = blob.getBytes(pos, len);
 
-                    InputStream is = blob.getBinaryStream();
-                    int b = is.read();
                 } catch (NullPointerException e) {
                 }
             }
@@ -102,9 +119,42 @@ public class BeschadigdeBagageEdit implements Initializable {
         }
 
     }
+    private void commitSQLchanges() {
+        String query = "UPDATE luggage "
+                + "SET notes=?, "
+                + "case_status=? "
+                + " WHERE registrationnr=?;";
+        
+        if (handledCheckBox.isSelected()) {
+            caseStatus = CASE_STATUS_INACTIEF;
+        } else {
+            caseStatus = CASE_STATUS_ACTIEF;
+        }
+        
+        try {
+            PreparedStatement ps;
+            Connection conn = MainApp.myJDBC.getConnection();
+            conn.setAutoCommit(false);
+            ps = conn.prepareStatement(query);
+            ps.setString(1, notesField.getText());
+            ps.setInt(2, caseStatus);
+            ps.setInt(3, registrationNumber);
+            ps.executeUpdate();
+            conn.commit();
+        } catch (SQLException e) {
+            System.err.print("SQL error setfields: @@@@@@ " + e);
+        }
+    }
+
+    private void closeStage(ActionEvent event) {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+    }
 
     @FXML
     private void commitChanges(ActionEvent event) {
+        commitSQLchanges();
+        closeStage(event);
     }
 
 }
