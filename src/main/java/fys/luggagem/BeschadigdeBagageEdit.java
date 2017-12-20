@@ -1,5 +1,7 @@
 package fys.luggagem;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -19,8 +21,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 
 /**
  * @author Mees Sour
@@ -83,7 +87,7 @@ public class BeschadigdeBagageEdit implements Initializable {
                     notesField.setText(result.getString("notes"));
                 } catch (NullPointerException e) {
                 }
-                
+
                 try {
                     caseStatus = result.getInt("case_status");
                 } catch (NullPointerException e) {
@@ -102,35 +106,47 @@ public class BeschadigdeBagageEdit implements Initializable {
             String query = "SELECT * FROM luggage_damaged WHERE Luggage_registrationnr=" + registrationNumber;
             ResultSet result = MainApp.myJDBC.executeResultSetQuery(query);
             if (result.next()) {
+                
                 try {
-                    Blob blob = result.getBlob("image01");
-                    InputStream is = blob.getBinaryStream();
-                    long blobLength = blob.length();
-
-                    int pos = 1; // position is 1-based
-                    int len = 10;
-                    byte[] bytes = blob.getBytes(pos, len);
-
+                    InputStream binaryStream = result.getBinaryStream("image01");
+                    Image image = new Image(binaryStream);
+                    image01.setImage(image);
                 } catch (NullPointerException e) {
                 }
+                
+                try {
+                    InputStream binaryStream = result.getBinaryStream("image02");
+                    Image image = new Image(binaryStream);
+                    image02.setImage(image);
+                } catch (NullPointerException e) {
+                }
+                
+                try {
+                    InputStream binaryStream = result.getBinaryStream("image03");
+                    Image image = new Image(binaryStream);
+                    image03.setImage(image);
+                } catch (NullPointerException e) {
+                }
+                
             }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseEdit.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
+
     private void commitSQLchanges() {
         String query = "UPDATE luggage "
                 + "SET notes=?, "
                 + "case_status=? "
                 + " WHERE registrationnr=?;";
-        
+
         if (handledCheckBox.isSelected()) {
             caseStatus = CASE_STATUS_INACTIEF;
         } else {
             caseStatus = CASE_STATUS_ACTIEF;
         }
-        
+
         try {
             PreparedStatement ps;
             Connection conn = MainApp.myJDBC.getConnection();
@@ -146,6 +162,25 @@ public class BeschadigdeBagageEdit implements Initializable {
         }
     }
 
+    private void registerAccountability() {
+        try {
+            String query = "INSERT INTO changes "
+                    + "(`Employee_code`, `Luggage_registrationnr`, `changeid`) "
+                    + "VALUES (?, ?, ?);";
+            PreparedStatement ps;
+            Connection conn = MainApp.myJDBC.getConnection();
+            conn.setAutoCommit(false);
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, MainApp.data.getEmployeeNr());
+            ps.setInt(2, registrationNumber);
+            ps.setInt(3, 1);
+            ps.executeUpdate();
+            conn.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseEdit.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     private void closeStage(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
@@ -154,6 +189,7 @@ public class BeschadigdeBagageEdit implements Initializable {
     @FXML
     private void commitChanges(ActionEvent event) {
         commitSQLchanges();
+        registerAccountability();
         closeStage(event);
     }
 
