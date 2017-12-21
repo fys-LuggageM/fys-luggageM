@@ -1,12 +1,7 @@
 package fys.luggagem;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +19,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import javax.imageio.ImageIO;
 
 /**
  * @author Mees Sour
@@ -49,10 +43,13 @@ public class BeschadigdeBagageEdit implements Initializable {
     private Button closeButton;
     @FXML
     private CheckBox handledCheckBox;
+    
     private int registrationNumber;
     private int caseStatus;
     private final int CASE_STATUS_ACTIEF = 1;
     private final int CASE_STATUS_INACTIEF = 0;
+    private String originalNotes;
+    private int originalStatus;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -85,11 +82,13 @@ public class BeschadigdeBagageEdit implements Initializable {
 
                 try {
                     notesField.setText(result.getString("notes"));
+                    originalNotes = result.getString("notes");
                 } catch (NullPointerException e) {
                 }
 
                 try {
                     caseStatus = result.getInt("case_status");
+                    originalStatus = result.getInt("case_status");
                 } catch (NullPointerException e) {
                 }
             }
@@ -106,28 +105,28 @@ public class BeschadigdeBagageEdit implements Initializable {
             String query = "SELECT * FROM luggage_damaged WHERE Luggage_registrationnr=" + registrationNumber;
             ResultSet result = MainApp.myJDBC.executeResultSetQuery(query);
             if (result.next()) {
-                
+
                 try {
                     InputStream binaryStream = result.getBinaryStream("image01");
                     Image image = new Image(binaryStream);
                     image01.setImage(image);
                 } catch (NullPointerException e) {
                 }
-                
+
                 try {
                     InputStream binaryStream = result.getBinaryStream("image02");
                     Image image = new Image(binaryStream);
                     image02.setImage(image);
                 } catch (NullPointerException e) {
                 }
-                
+
                 try {
                     InputStream binaryStream = result.getBinaryStream("image03");
                     Image image = new Image(binaryStream);
                     image03.setImage(image);
                 } catch (NullPointerException e) {
                 }
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseEdit.class.getName()).log(Level.SEVERE, null, ex);
@@ -141,11 +140,7 @@ public class BeschadigdeBagageEdit implements Initializable {
                 + "case_status=? "
                 + " WHERE registrationnr=?;";
 
-        if (handledCheckBox.isSelected()) {
-            caseStatus = CASE_STATUS_INACTIEF;
-        } else {
-            caseStatus = CASE_STATUS_ACTIEF;
-        }
+        checkCaseStatus();
 
         try {
             PreparedStatement ps;
@@ -163,6 +158,35 @@ public class BeschadigdeBagageEdit implements Initializable {
     }
 
     private void registerAccountability() {
+        checkCaseStatus();
+        String newNotes = notesField.getText();
+        if (!originalNotes.equals(newNotes) || originalStatus != caseStatus) {
+            commitSQLchanges();
+            deleteChanges();
+            insertChanges();
+        }
+    }
+
+    private void checkCaseStatus() {
+        if (handledCheckBox.isSelected()) {
+            caseStatus = CASE_STATUS_INACTIEF;
+        } else {
+            caseStatus = CASE_STATUS_ACTIEF;
+        }
+    }
+
+    private void closeStage(ActionEvent event) {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void commitChanges(ActionEvent event) {
+        registerAccountability();
+        closeStage(event);
+    }
+
+    private void insertChanges() {
         try {
             String query = "INSERT INTO changes "
                     + "(`Employee_code`, `Luggage_registrationnr`, `changeid`) "
@@ -181,16 +205,20 @@ public class BeschadigdeBagageEdit implements Initializable {
         }
     }
 
-    private void closeStage(ActionEvent event) {
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.close();
-    }
-
-    @FXML
-    private void commitChanges(ActionEvent event) {
-        commitSQLchanges();
-        registerAccountability();
-        closeStage(event);
+    private void deleteChanges() {
+        String query = "DELETE FROM changes "
+                + "WHERE Luggage_registrationnr=?";
+        try {
+            PreparedStatement ps;
+            Connection conn = MainApp.myJDBC.getConnection();
+            conn.setAutoCommit(false);
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, registrationNumber);
+            ps.executeUpdate();
+            conn.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseEdit.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
