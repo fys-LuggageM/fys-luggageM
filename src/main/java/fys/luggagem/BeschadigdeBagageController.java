@@ -3,7 +3,6 @@ package fys.luggagem;
 import fys.luggagem.models.Customer;
 import fys.luggagem.models.Data;
 import fys.luggagem.models.Email;
-import fys.luggagem.models.Luggage;
 import fys.luggagem.models.Print;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,8 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.PauseTransition;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
@@ -50,10 +47,8 @@ public class BeschadigdeBagageController implements Initializable {
     private URI imageURL01;
     private URI imageURL02;
     private URI imageURL03;
-    String email;
 
-    //Will store the new/highest registrationNr
-    private int registrationNr;
+    String email;
 
     @FXML
     private TextArea notes;
@@ -160,54 +155,69 @@ public class BeschadigdeBagageController implements Initializable {
         FileInputStream fis01 = null;
         FileInputStream fis02 = null;
         FileInputStream fis03 = null;
+
+        File file01 = null;
+        File file02 = null;
+        File file03 = null;
         PreparedStatement ps = null;
         try {
             conn.setAutoCommit(false);
             //image01
-            File file01 = new File(imageURL01);
-            file01.toURI();
-            fis01 = new FileInputStream(file01);
-
+            if (imageURL01 != null) {
+                file01 = new File(imageURL01);
+                file01.toURI();
+                fis01 = new FileInputStream(file01);
+            }
             //image02
-            File file02 = new File(imageURL02);
-            file02.toURI();
-            fis02 = new FileInputStream(file02);
-
+            if (imageURL02 != null) {
+                file02 = new File(imageURL02);
+                file02.toURI();
+                fis02 = new FileInputStream(file02);
+            }
             //image03
-            File file03 = new File(imageURL03);
-            file03.toURI();
-            fis03 = new FileInputStream(file03);
+            if (imageURL03 != null) {
+                file03 = new File(imageURL03);
+                file03.toURI();
+                fis03 = new FileInputStream(file03);
+            }
 
             //preparedstatement
             ps = conn.prepareStatement(INSERT_PICTURE);
-            ps.setBinaryStream(1, fis01, (int) file01.length());
-            ps.setBinaryStream(2, fis02, (int) file02.length());
-            ps.setBinaryStream(3, fis03, (int) file03.length());
+            if (file01 != null) {
+                ps.setBinaryStream(1, fis01, (int) file01.length());
+            } else {
+                ps.setBinaryStream(1, fis01);
+            }
+            if (file02 != null) {
+                ps.setBinaryStream(2, fis02, (int) file02.length());
+            } else {
+                ps.setBinaryStream(2, fis02);
+            }
+            if (file03 != null) {
+                ps.setBinaryStream(3, fis03, (int) file03.length());
+            } else {
+                ps.setBinaryStream(3, fis03);
+            }
             ps.setInt(4, db.getRegNrDamaged());
             ps.executeUpdate();
 
             conn.commit();
-        } finally {
+        } catch (SQLException e) {
+            System.err.println("\n uploadImageQuery: " + e);
         }
     }
 
     private void setFields() {
         String setNotes = notes.getText();
         String setAirport = comboBox.getValue().toString();
+        System.out.println("GET NOTES: " + setNotes);
 
         Connection conn = db.getConnection();
-//        String setInfo = "UPDATE luggage (airport_IATA, notes, customer_firstname, customer_preposition, customer_lastname) VALUES (?, ?, ?, ?, ?)"
-//                + "WHERE registrationnr=?";
 
         String setInfo2 = "UPDATE luggage SET airport_IATA = ?, notes = ?, customer_firstname = ?, customer_preposition = ?, customer_lastname = ?, customer_customernr = ? WHERE registrationnr = ?";
 
         PreparedStatement ps = null;
         try {
-            System.out.print(db.getRegNrDamaged() + "\n");
-            System.out.print(customer.getFirstName() + "\n");
-            System.out.print(customer.getLastName() + "\n");
-            System.out.print("IATA: " + setAirport + "\n");
-
             conn.setAutoCommit(false);
             ps = conn.prepareStatement(setInfo2);
 
@@ -221,7 +231,7 @@ public class BeschadigdeBagageController implements Initializable {
             ps.executeUpdate();
             conn.commit();
         } catch (SQLException e) {
-            System.err.print("SQL error setfields: @@@@@@ " + e);
+            System.err.print("\nsetfields: " + e);
         }
     }
 
@@ -230,6 +240,8 @@ public class BeschadigdeBagageController implements Initializable {
         // Image inside alert dialog resized to 65x50
         imageURL = this.getClass().getResource("/images/upload_button02.png").toString();
         Image image = new Image(imageURL, 64, 64, false, true);
+
+        System.out.println("CUSTOMER NR: " + customer.getCustomerNr());
 
         //Create new alert dialog
         Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -246,6 +258,21 @@ public class BeschadigdeBagageController implements Initializable {
             //set saved succesfull label visible for 5 seconds and disable save button
             saveImages.setVisible(false);
             savedConfirmation.setVisible(true);
+
+            try {
+                // create new registrationnr
+                db.newRegnrDamagedLuggage();
+            } catch (SQLException ex) {
+                System.out.println("\nnewRegnrDamagedLuggage (MyJDBC): " + ex);
+            }
+            setFields();
+            try {
+                // upload selected images
+                uploadImageQuery(event);
+            } catch (IOException | SQLException ex) {
+                System.out.println("uploadImageQuery: " + ex);
+            }
+
             PauseTransition pause = new PauseTransition(Duration.seconds(5));
             pause.setOnFinished(new EventHandler<ActionEvent>() {
                 @Override
@@ -253,45 +280,33 @@ public class BeschadigdeBagageController implements Initializable {
                     savedConfirmation.setVisible(false);
                     saveImages.setVisible(true);
 
-                    try {
-                        // create new registrationnr
-                        db.newRegnrDamagedLuggage();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(BeschadigdeBagageController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    setFields();
-                    try {
-                        // upload selected images
-                        uploadImageQuery(event);
-                    } catch (IOException | SQLException ex) {
-                        Logger.getLogger(BeschadigdeBagageController.class.getName()).log(Level.SEVERE, null, ex);
-                    }              
                 }
             });
-            
+            pause.play();
+
             // ask to send email or print confirmation
             setEmailContent();
             createChoiceAlert();
             // clear all input field and set placeholder for images
             placeholderURL = this.getClass().getResource("/images/placeholder-600x400.png").toString();
             Image placeholder = new Image(placeholderURL);
-            customer.clear();
-            notes.clear();
             image01.setImage(placeholder);
             image02.setImage(placeholder);
             image03.setImage(placeholder);
+            notes.clear();
+            customer.clear();
 
             // start the pause timer    
-            pause.play();
         } else {
             // ... user chose CANCEL or closed the dialog
         }
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // add items to combobox and set pre selection to"AMS"
-        comboBox.getItems().addAll("AMS", "RTM");
+        comboBox.getItems().addAll("AMS");
         comboBox.getSelectionModel().select("AMS");
 
         // booleanbinding to check if textfields are empty
@@ -319,7 +334,7 @@ public class BeschadigdeBagageController implements Initializable {
 
     private void createChoiceAlert() {
 
-        String imageURL = this.getClass().getResource("/images/share-option.png").toString();
+//        String imageURL = this.getClass().getResource("/images/share-option.png").toString();
         Image image = new Image("/images/share-option.png", 64, 64, false, true);
 
         Alert alert = new Alert(AlertType.CONFIRMATION);
