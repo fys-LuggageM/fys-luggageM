@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.luggagem.BeschadigdeBagageEdit">
+   <children>
+      <BorderPane layoutX="3.0" layoutY="1.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <center>
+            <GridPane minHeight="450.0" BorderPane.alignment="CENTER">
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints halignment="LEFT" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="730.0" minWidth="730.0" prefWidth="730.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="175.0" minHeight="175.0" prefHeight="175.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="32.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label text="%editDamagedLuggage" GridPane.columnIndex="2">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label text="%registrationNumber" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="%airport" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="registrationNumberField" disable="true" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets right="5.0" />
+                     </GridPane.margin></TextField>
+                  <Label text="%notes" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextArea fx:id="notesField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                     <GridPane.margin>
+                        <Insets bottom="5.0" right="5.0" top="5.0" />
+                     </GridPane.margin></TextArea>
+                  <TextField fx:id="customerIDField" disable="true" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets right="5.0" />
+                     </GridPane.margin></TextField>
+                  <Label text="%customerNr" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="airportFoundField" disable="true" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets right="5.0" />
+                     </GridPane.margin></TextField>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="2.5" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <children>
+                        <ImageView fx:id="image01" fitHeight="158.0" fitWidth="239.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/placeholder-600x400.png" />
+                           </image>
+                        </ImageView>
+                        <Label maxWidth="1.7976931348623157E308" />
+                        <ImageView fx:id="image02" fitHeight="158.0" fitWidth="239.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/placeholder-600x400.png" />
+                           </image>
+                        </ImageView>
+                        <Label maxWidth="1.7976931348623157E308" />
+                        <ImageView fx:id="image03" fitHeight="158.0" fitWidth="239.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/placeholder-600x400.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                     <children>
+                        <CheckBox fx:id="handledCheckBox" mnemonicParsing="false" text="%handled" />
+                        <Button fx:id="closeButton" mnemonicParsing="false" onAction="#commitChanges" text="%confirm">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <GridPane.margin>
+                        <Insets right="-5.0" />
+                     </GridPane.margin>
+                  </HBox>
+               </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+            </GridPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

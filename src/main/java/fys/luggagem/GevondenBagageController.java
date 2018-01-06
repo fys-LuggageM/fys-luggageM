@@ -117,8 +117,8 @@ public class GevondenBagageController implements Initializable {
         // booleanbinding to check if textfields are empty
         BooleanBinding bb = luggageType.valueProperty().isNull().or(primaryColor.valueProperty().isNull());
         // if so, disable the save button to prevent accidental uploads to the database
-        saveButton.disableProperty().bind(bb);     
-        
+        saveButton.disableProperty().bind(bb);
+
     }
 
     public void setFoundLuggageList(List<ExcelImport> list) {
@@ -241,7 +241,13 @@ public class GevondenBagageController implements Initializable {
 
         // Update the fields in the created row with a designated registration number
         Connection connection = db.getConnection();
-        String setInfoLuggage = "UPDATE luggage SET flightnr = ?, labelnr = ?, destination = ?, luggage_type = ?, brand = ?, location_found = ?, primary_color = ?, secondary_color = ?, size = ?, weight = ?, customer_firstname = ?, customer_preposition = ?, customer_lastname = ?, case_status = ?, airport_IATA = ?, notes = ? WHERE registrationnr = ?";
+        String setInfoLuggage = "UPDATE luggage SET flightnr = ?, labelnr = ?, "
+                + "destination = ?, luggage_type = ?, brand = ?, "
+                + "location_found = ?, primary_color = ?, secondary_color = ?, "
+                + "size = ?, weight = ?, customer_firstname = ?, "
+                + "customer_preposition = ?, customer_lastname = ?, "
+                + "case_status = ?, airport_IATA = ?, notes = ? "
+                + "WHERE registrationnr = ?";
 
         PreparedStatement ps = null;
 
@@ -271,6 +277,23 @@ public class GevondenBagageController implements Initializable {
             connection.commit();
         } catch (SQLException e) {
             System.err.print("SQL error setfields: @@@@@@ " + e);
+        }
+        
+        try {
+            String query = "INSERT INTO changes "
+                    + "(`Employee_code`, `Luggage_registrationnr`, `changeid`) "
+                    + "VALUES (?, ?, ?);";
+            PreparedStatement ps2;
+            Connection conn = MainApp.myJDBC.getConnection();
+            conn.setAutoCommit(false);
+            ps2 = conn.prepareStatement(query);
+            ps2.setInt(1, MainApp.data.getEmployeeNr());
+            ps2.setInt(2, db.getLuggageRegistrationNr());
+            ps2.setInt(3, 0);
+            ps2.executeUpdate();
+            conn.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseEdit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -349,8 +372,10 @@ public class GevondenBagageController implements Initializable {
             airportFound.setItems(AIRPORT_LIST);
             // Set the first option from the combobox as the standard value 
             airportFound.getSelectionModel().selectFirst();
+
         } catch (SQLException ex) {
-            Logger.getLogger(GevondenBagageController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GevondenBagageController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -399,7 +424,7 @@ public class GevondenBagageController implements Initializable {
     }
 
     private void setupLocationFound() {
-        // Add all the loctions where luggage can be found via getters from the class: ComboboxInformation, to the LOCATION_FOUND_LIST
+        // Add all the locations where luggage can be found via getters from the class: ComboboxInformation, to the LOCATION_FOUND_LIST
         LOCATION_FOUND_LIST.addAll(ComboboxInformation.getBELT_01(),
                 ComboboxInformation.getBELT_02(),
                 ComboboxInformation.getBELT_03(),

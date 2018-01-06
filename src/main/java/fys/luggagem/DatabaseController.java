@@ -314,10 +314,14 @@ public class DatabaseController implements Initializable {
                     try {
                         Luggage rowData = row.getItem();
                         MainApp.data.setLuggageRegistrationNumber(rowData.getRegistrationNr());
-                        Parent parent = FXMLLoader.load(getClass().getResource("/fxml/DatabaseEdit.fxml"), data.getResourceBundle());
-
+                        Parent parent;
+                        if (!"damagedLuggage".equals(currentlyActiveTable)) {
+                            parent = FXMLLoader.load(getClass().getResource("/fxml/BeschadigdeBagageEdit.fxml"), data.getResourceBundle());
+                        } else {
+                            parent = FXMLLoader.load(getClass().getResource("/fxml/DatabaseEdit.fxml"), data.getResourceBundle());
+                        }
                         Stage stage = new Stage(StageStyle.DECORATED);
-                        stage.setTitle("Edit found luggage");
+                        stage.setTitle("Edit " + currentlyActiveTable);
                         stage.setScene(new Scene(parent));
                         stage.setAlwaysOnTop(true);
                         stage.initOwner(data.getStage());
