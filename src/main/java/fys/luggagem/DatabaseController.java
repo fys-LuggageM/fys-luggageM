@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -63,26 +66,25 @@ public class DatabaseController implements Initializable {
     private TableColumn<?, ?> IATA;
 
     private String currentlyActiveTable;
+    @FXML
+    private TextField searchLuggage;
 
     @FXML
     private void handleBeschadigdeButtonAction(ActionEvent event) {
-        System.out.println("Beschadigde bagage");
         setupDamagedLuggageTable();
-        label.setText("data van Beschadigde Bagage");
+        label.setText(data.getResourceBundle().getString("luggageDamaged"));
     }
 
     @FXML
     private void handleVerlorenButtonAction(ActionEvent event) {
-        System.out.println("Verloren bagage");
         setupLostLuggageTable();
-        label.setText("data van Verloren Bagage");
+        label.setText(data.getResourceBundle().getString("luggageLost"));
     }
 
     @FXML
     private void handleGevondenButtonAction(ActionEvent event) {
-        System.out.println("Gevonden bagage");
         setupFoundLuggageTable();
-        label.setText("data van Gevonden Bagage");
+        label.setText(data.getResourceBundle().getString("luggageFound"));
     }
 
     @FXML
@@ -112,21 +114,53 @@ public class DatabaseController implements Initializable {
                 String labelnr = foundLuggage.getString("labelnr");
                 String luggagetype = foundLuggage.getString("luggage_type");
                 String brandy = foundLuggage.getString("brand");
-                String IATA = foundLuggage.getString("airport_IATA");
+                String rIATA = foundLuggage.getString("airport_IATA");
 
-                Luggage luggageObject = new Luggage(registrationnr, flightnr, labelnr, luggagetype, brandy, IATA);
+                Luggage luggageObject = new Luggage(registrationnr, flightnr, labelnr, luggagetype, brandy, rIATA);
                 System.out.println("Added Luggage object to list.");
 
                 damagedLuggageList.add(luggageObject);
             }
 
-            TableViewLuggage.setItems(damagedLuggageList);
+            FilteredList<Luggage> filteredData = new FilteredList<>(damagedLuggageList, p -> true);
+
+            // 2. Set the filter Predicate whenever the filter changes.
+            searchLuggage.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredData.setPredicate(luggage -> {
+                    // If filter text is empty, display all persons.
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+
+                    // Compare first name and last name of every person with filter text.
+                    String lowerCaseFilter = newValue.toLowerCase();
+
+                    if (Integer.toString(luggage.getRegistrationNr()) != null && Integer.toString(luggage.getRegistrationNr()).contains(lowerCaseFilter)) {
+                        return true; // Filter matches first name.
+                    } else if (luggage.getDestination() != null && luggage.getDestination().toLowerCase().contains(lowerCaseFilter)) {
+                        return true; // Filter matches last name.
+                    } else if (luggage.getBrand() != null && luggage.getBrand().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (luggage.getLuggageType() != null && luggage.getLuggageType().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }
+                    return false; // Does not match.
+                });
+            });
+
+            // 3. Wrap the FilteredList in a SortedList. 
+            SortedList<Luggage> sortedData = new SortedList<>(filteredData);
+
+            // 4. Bind the SortedList comparator to the TableView comparator.
+            sortedData.comparatorProperty().bind(TableViewLuggage.comparatorProperty());
+
+            // 5. Add sorted (and filtered) data to the table.
+            TableViewLuggage.setItems(sortedData);
             currentlyActiveTable = "damagedLuggage";
 
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     private void setupLostLuggageTable() {
@@ -151,15 +185,48 @@ public class DatabaseController implements Initializable {
                 String labelnr = foundLuggage.getString("labelnr");
                 String luggagetype = foundLuggage.getString("luggage_type");
                 String brandy = foundLuggage.getString("brand");
-                String IATA = foundLuggage.getString("airport_IATA");
+                String rIATA = foundLuggage.getString("airport_IATA");
 
-                Luggage luggageObject = new Luggage(registrationnr, flightnr, labelnr, luggagetype, brandy, IATA);
+                Luggage luggageObject = new Luggage(registrationnr, flightnr, labelnr, luggagetype, brandy, rIATA);
                 System.out.println("Added Luggage object to list.");
 
                 lostLuggageList.add(luggageObject);
             }
 
-            TableViewLuggage.setItems(lostLuggageList);
+            FilteredList<Luggage> filteredData = new FilteredList<>(lostLuggageList, p -> true);
+
+            // 2. Set the filter Predicate whenever the filter changes.
+            searchLuggage.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredData.setPredicate(luggage -> {
+                    // If filter text is empty, display all persons.
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+
+                    // Compare first name and last name of every person with filter text.
+                    String lowerCaseFilter = newValue.toLowerCase();
+
+                    if (Integer.toString(luggage.getRegistrationNr()) != null && Integer.toString(luggage.getRegistrationNr()).contains(lowerCaseFilter)) {
+                        return true; // Filter matches first name.
+                    } else if (luggage.getDestination() != null && luggage.getDestination().toLowerCase().contains(lowerCaseFilter)) {
+                        return true; // Filter matches last name.
+                    } else if (luggage.getBrand() != null && luggage.getBrand().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (luggage.getLuggageType() != null && luggage.getLuggageType().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }
+                    return false; // Does not match.
+                });
+            });
+
+            // 3. Wrap the FilteredList in a SortedList. 
+            SortedList<Luggage> sortedData = new SortedList<>(filteredData);
+
+            // 4. Bind the SortedList comparator to the TableView comparator.
+            sortedData.comparatorProperty().bind(TableViewLuggage.comparatorProperty());
+
+            // 5. Add sorted (and filtered) data to the table.
+            TableViewLuggage.setItems(sortedData);
             currentlyActiveTable = "lostLuggage";
 
         } catch (SQLException ex) {
@@ -190,15 +257,48 @@ public class DatabaseController implements Initializable {
                 String labelnr = foundLuggage.getString("labelnr");
                 String luggagetype = foundLuggage.getString("luggage_type");
                 String brandy = foundLuggage.getString("brand");
-                String IATA = foundLuggage.getString("airport_IATA");
+                String rIATA = foundLuggage.getString("airport_IATA");
 
-                Luggage luggageObject = new Luggage(registrationnr, flightnr, labelnr, luggagetype, brandy, IATA);
+                Luggage luggageObject = new Luggage(registrationnr, flightnr, labelnr, luggagetype, brandy, rIATA);
                 System.out.println("Added Luggage object to list.");
 
                 foundLuggageList.add(luggageObject);
             }
 
-            TableViewLuggage.setItems(foundLuggageList);
+            FilteredList<Luggage> filteredData = new FilteredList<>(foundLuggageList, p -> true);
+
+            // 2. Set the filter Predicate whenever the filter changes.
+            searchLuggage.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredData.setPredicate(luggage -> {
+                    // If filter text is empty, display all persons.
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+
+                    // Compare first name and last name of every person with filter text.
+                    String lowerCaseFilter = newValue.toLowerCase();
+
+                    if (Integer.toString(luggage.getRegistrationNr()) != null && Integer.toString(luggage.getRegistrationNr()).contains(lowerCaseFilter)) {
+                        return true; // Filter matches first name.
+                    } else if (luggage.getDestination() != null && luggage.getDestination().toLowerCase().contains(lowerCaseFilter)) {
+                        return true; // Filter matches last name.
+                    } else if (luggage.getBrand() != null && luggage.getBrand().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (luggage.getLuggageType() != null && luggage.getLuggageType().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }
+                    return false; // Does not match.
+                });
+            });
+
+            // 3. Wrap the FilteredList in a SortedList. 
+            SortedList<Luggage> sortedData = new SortedList<>(filteredData);
+
+            // 4. Bind the SortedList comparator to the TableView comparator.
+            sortedData.comparatorProperty().bind(TableViewLuggage.comparatorProperty());
+
+            // 5. Add sorted (and filtered) data to the table.
+            TableViewLuggage.setItems(sortedData);
             currentlyActiveTable = "foundLuggage";
 
         } catch (SQLException ex) {
@@ -215,7 +315,7 @@ public class DatabaseController implements Initializable {
                         Luggage rowData = row.getItem();
                         MainApp.data.setLuggageRegistrationNumber(rowData.getRegistrationNr());
                         Parent parent = FXMLLoader.load(getClass().getResource("/fxml/DatabaseEdit.fxml"), data.getResourceBundle());
-                        
+
                         Stage stage = new Stage(StageStyle.DECORATED);
                         stage.setTitle("Edit found luggage");
                         stage.setScene(new Scene(parent));
