@@ -122,40 +122,7 @@ public class DatabaseController implements Initializable {
                 damagedLuggageList.add(luggageObject);
             }
 
-            FilteredList<Luggage> filteredData = new FilteredList<>(damagedLuggageList, p -> true);
-
-            // 2. Set the filter Predicate whenever the filter changes.
-            searchLuggage.textProperty().addListener((observable, oldValue, newValue) -> {
-                filteredData.setPredicate(luggage -> {
-                    // If filter text is empty, display all persons.
-                    if (newValue == null || newValue.isEmpty()) {
-                        return true;
-                    }
-
-                    // Compare first name and last name of every person with filter text.
-                    String lowerCaseFilter = newValue.toLowerCase();
-
-                    if (Integer.toString(luggage.getRegistrationNr()) != null && Integer.toString(luggage.getRegistrationNr()).contains(lowerCaseFilter)) {
-                        return true; // Filter matches first name.
-                    } else if (luggage.getDestination() != null && luggage.getDestination().toLowerCase().contains(lowerCaseFilter)) {
-                        return true; // Filter matches last name.
-                    } else if (luggage.getBrand() != null && luggage.getBrand().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    } else if (luggage.getLuggageType() != null && luggage.getLuggageType().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    }
-                    return false; // Does not match.
-                });
-            });
-
-            // 3. Wrap the FilteredList in a SortedList. 
-            SortedList<Luggage> sortedData = new SortedList<>(filteredData);
-
-            // 4. Bind the SortedList comparator to the TableView comparator.
-            sortedData.comparatorProperty().bind(TableViewLuggage.comparatorProperty());
-
-            // 5. Add sorted (and filtered) data to the table.
-            TableViewLuggage.setItems(sortedData);
+            setupSearch(damagedLuggageList);
             currentlyActiveTable = "damagedLuggage";
 
         } catch (SQLException ex) {
@@ -193,40 +160,7 @@ public class DatabaseController implements Initializable {
                 lostLuggageList.add(luggageObject);
             }
 
-            FilteredList<Luggage> filteredData = new FilteredList<>(lostLuggageList, p -> true);
-
-            // 2. Set the filter Predicate whenever the filter changes.
-            searchLuggage.textProperty().addListener((observable, oldValue, newValue) -> {
-                filteredData.setPredicate(luggage -> {
-                    // If filter text is empty, display all persons.
-                    if (newValue == null || newValue.isEmpty()) {
-                        return true;
-                    }
-
-                    // Compare first name and last name of every person with filter text.
-                    String lowerCaseFilter = newValue.toLowerCase();
-
-                    if (Integer.toString(luggage.getRegistrationNr()) != null && Integer.toString(luggage.getRegistrationNr()).contains(lowerCaseFilter)) {
-                        return true; // Filter matches first name.
-                    } else if (luggage.getDestination() != null && luggage.getDestination().toLowerCase().contains(lowerCaseFilter)) {
-                        return true; // Filter matches last name.
-                    } else if (luggage.getBrand() != null && luggage.getBrand().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    } else if (luggage.getLuggageType() != null && luggage.getLuggageType().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    }
-                    return false; // Does not match.
-                });
-            });
-
-            // 3. Wrap the FilteredList in a SortedList. 
-            SortedList<Luggage> sortedData = new SortedList<>(filteredData);
-
-            // 4. Bind the SortedList comparator to the TableView comparator.
-            sortedData.comparatorProperty().bind(TableViewLuggage.comparatorProperty());
-
-            // 5. Add sorted (and filtered) data to the table.
-            TableViewLuggage.setItems(sortedData);
+            setupSearch(lostLuggageList);
             currentlyActiveTable = "lostLuggage";
 
         } catch (SQLException ex) {
@@ -264,41 +198,7 @@ public class DatabaseController implements Initializable {
 
                 foundLuggageList.add(luggageObject);
             }
-
-            FilteredList<Luggage> filteredData = new FilteredList<>(foundLuggageList, p -> true);
-
-            // 2. Set the filter Predicate whenever the filter changes.
-            searchLuggage.textProperty().addListener((observable, oldValue, newValue) -> {
-                filteredData.setPredicate(luggage -> {
-                    // If filter text is empty, display all persons.
-                    if (newValue == null || newValue.isEmpty()) {
-                        return true;
-                    }
-
-                    // Compare first name and last name of every person with filter text.
-                    String lowerCaseFilter = newValue.toLowerCase();
-
-                    if (Integer.toString(luggage.getRegistrationNr()) != null && Integer.toString(luggage.getRegistrationNr()).contains(lowerCaseFilter)) {
-                        return true; // Filter matches first name.
-                    } else if (luggage.getDestination() != null && luggage.getDestination().toLowerCase().contains(lowerCaseFilter)) {
-                        return true; // Filter matches last name.
-                    } else if (luggage.getBrand() != null && luggage.getBrand().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    } else if (luggage.getLuggageType() != null && luggage.getLuggageType().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    }
-                    return false; // Does not match.
-                });
-            });
-
-            // 3. Wrap the FilteredList in a SortedList. 
-            SortedList<Luggage> sortedData = new SortedList<>(filteredData);
-
-            // 4. Bind the SortedList comparator to the TableView comparator.
-            sortedData.comparatorProperty().bind(TableViewLuggage.comparatorProperty());
-
-            // 5. Add sorted (and filtered) data to the table.
-            TableViewLuggage.setItems(sortedData);
+            setupSearch(foundLuggageList);
             currentlyActiveTable = "foundLuggage";
 
         } catch (SQLException ex) {
@@ -315,7 +215,7 @@ public class DatabaseController implements Initializable {
                         Luggage rowData = row.getItem();
                         MainApp.data.setLuggageRegistrationNumber(rowData.getRegistrationNr());
                         Parent parent;
-                        if (!"damagedLuggage".equals(currentlyActiveTable)) {
+                        if ("damagedLuggage".equals(currentlyActiveTable)) {
                             parent = FXMLLoader.load(getClass().getResource("/fxml/BeschadigdeBagageEdit.fxml"), data.getResourceBundle());
                         } else {
                             parent = FXMLLoader.load(getClass().getResource("/fxml/DatabaseEdit.fxml"), data.getResourceBundle());
@@ -333,6 +233,47 @@ public class DatabaseController implements Initializable {
             });
             return row;
         });
+    }
+
+    public void setupSearch(ObservableList<Luggage> list) {
+        FilteredList<Luggage> filteredData = new FilteredList<>(list, p -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        searchLuggage.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(luggage -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (Integer.toString(luggage.getRegistrationNr()) != null && Integer.toString(luggage.getRegistrationNr()).contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } else if (luggage.getDestination() != null && luggage.getDestination().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                } else if (luggage.getBrand() != null && luggage.getBrand().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (luggage.getLuggageType() != null && luggage.getLuggageType().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (luggage.getFlightNr()!= null && luggage.getFlightNr().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (luggage.getLabelNr()!= null && luggage.getLabelNr().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList. 
+        SortedList<Luggage> sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(TableViewLuggage.comparatorProperty());
+
+        // 5. Add sorted (and filtered) data to the table.
+        TableViewLuggage.setItems(sortedData);
     }
 
     @Override
