@@ -48,7 +48,7 @@
                      </font>
                   </Label>
                   <Label text="%registrationNumber" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="%airportFound" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                  <Label text="%airport" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                   <Label text="%brand" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <Label text="%destination" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label text="%colors" GridPane.columnIndex="1" GridPane.rowIndex="8" />
@@ -91,7 +91,7 @@
                   <TextField fx:id="flightNrField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   <TextField fx:id="luggageTypeField" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                   <Label text="%luggageType" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <ComboBox fx:id="airportField" prefWidth="150.0" promptText="%airportFound" GridPane.columnIndex="2" GridPane.rowIndex="11" />
+                  <ComboBox fx:id="airportField" prefWidth="150.0" promptText="%airport" GridPane.columnIndex="2" GridPane.rowIndex="11" />
                   <TextField fx:id="customerIDField" disable="true" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="13" />
                   <Label text="%customerNr" GridPane.columnIndex="1" GridPane.rowIndex="13" />
                   <Label text="%tag" GridPane.columnIndex="1" GridPane.rowIndex="3" />
