@@ -241,6 +241,7 @@ public class GevondenBagageController implements Initializable {
 
         // Update the fields in the created row with a designated registration number
         Connection connection = db.getConnection();
+        
         String setInfoLuggage = "UPDATE luggage SET flightnr = ?, labelnr = ?, "
                 + "destination = ?, luggage_type = ?, brand = ?, "
                 + "location_found = ?, primary_color = ?, secondary_color = ?, "
@@ -248,8 +249,9 @@ public class GevondenBagageController implements Initializable {
                 + "customer_preposition = ?, customer_lastname = ?, "
                 + "case_status = ?, airport_IATA = ?, notes = ? "
                 + "WHERE registrationnr = ?";
-
+        
         PreparedStatement ps = null;
+        PreparedStatement ps2 = null;
 
         try {
             connection.setAutoCommit(false);
@@ -272,28 +274,11 @@ public class GevondenBagageController implements Initializable {
             ps.setString(15, databaseAirportName);
             ps.setString(16, databaseNotes);
             ps.setInt(17, db.getLuggageRegistrationNr());
+            
             ps.executeUpdate();
-
             connection.commit();
         } catch (SQLException e) {
             System.err.print("SQL error setfields: @@@@@@ " + e);
-        }
-        
-        try {
-            String query = "INSERT INTO changes "
-                    + "(`Employee_code`, `Luggage_registrationnr`, `changeid`) "
-                    + "VALUES (?, ?, ?);";
-            PreparedStatement ps2;
-            Connection conn = MainApp.myJDBC.getConnection();
-            conn.setAutoCommit(false);
-            ps2 = conn.prepareStatement(query);
-            ps2.setInt(1, MainApp.data.getEmployeeNr());
-            ps2.setInt(2, db.getLuggageRegistrationNr());
-            ps2.setInt(3, 0);
-            ps2.executeUpdate();
-            conn.commit();
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseEdit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
