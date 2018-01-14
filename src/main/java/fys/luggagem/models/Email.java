@@ -8,7 +8,6 @@ package fys.luggagem.models;
 import fys.luggagem.MainApp;
 import javax.mail.PasswordAuthentication;
 import java.util.Properties;
-import javafx.scene.Cursor;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;

@@ -133,7 +133,7 @@ public class FXMLDocumentController implements Initializable {
                     }
                 }
             }
-            statusMessage.setText("De ingevulde gegevens zijn niet correct!");
+            statusMessage.setText(data.getResourceBundle().getString("wrongInformation"));
         } catch (SQLException e) {
             System.out.println(e);
         }

@@ -202,7 +202,7 @@ public class AccountbeheerFXMLController implements Initializable {
                     String queryEmployee = "INSERT INTO `employee` "
                             + "(`code`, `first_name`, `preposition`, `last_name`, `Luchthaven_IATA`) "
                             + "VALUES "
-                            + "('?', '?', '?', '?', '?');";
+                            + "(?, ?, ?, ?, ?);";
                     PreparedStatement ps;
                     Connection conn = MainApp.myJDBC.getConnection();
                     conn.setAutoCommit(false);

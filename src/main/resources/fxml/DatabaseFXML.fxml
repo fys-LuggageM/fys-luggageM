@@ -74,7 +74,7 @@
                   <RowConstraints maxHeight="478.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="beschadigdeBagageButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleBeschadigdeButtonAction" prefWidth="220.0" style="-fx-border-color: black;" text="Beschadigde Bagage" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                  <Button fx:id="beschadigdeBagageButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleBeschadigdeButtonAction" prefWidth="220.0" style="-fx-border-color: black;" text="%luggageDamaged" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -85,7 +85,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                    <Button fx:id="verlorenBagageButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleVerlorenButtonAction" style="-fx-border-color: black;" text="Verloren Bagage" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                    <Button fx:id="verlorenBagageButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleVerlorenButtonAction" style="-fx-border-color: black;" text="%luggageLost" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -96,7 +96,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="gevondenBagageBeschadigde" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleGevondenButtonAction" style="-fx-border-color: black;" text="Gevonden Bagage" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                  <Button fx:id="gevondenBagageBeschadigde" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleGevondenButtonAction" style="-fx-border-color: black;" text="%luggageFound" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -137,7 +137,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                    <Label fx:id="label" alignment="CENTER" minHeight="16" minWidth="69" text="Data van Beschadigde Bagage" GridPane.halignment="LEFT">
+                    <Label fx:id="label" alignment="CENTER" minHeight="16" minWidth="69" text="%foundLuggageData" GridPane.halignment="LEFT">
                      <font>
                         <Font size="16.0" />
                      </font>

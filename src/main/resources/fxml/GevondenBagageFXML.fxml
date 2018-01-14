@@ -37,9 +37,9 @@
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                  <ComboBox fx:id="airportFound" promptText="%airportChoose">
+                  <ComboBox fx:id="airportFound" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="%airportChoose">
                      <VBox.margin>
-                        <Insets bottom="23.0" />
+                        <Insets bottom="25.0" />
                      </VBox.margin>
                   </ComboBox>
                         <Label maxWidth="1.7976931348623157E308" text="%luggageType">
@@ -47,9 +47,9 @@
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                  <ComboBox fx:id="luggageType" promptText="%luggageTypePrompt">
+                  <ComboBox fx:id="luggageType" maxWidth="1.7976931348623157E308" promptText="%luggageTypePrompt">
                      <VBox.margin>
-                        <Insets bottom="23.0" />
+                        <Insets bottom="25.0" />
                      </VBox.margin>
                   </ComboBox>
                         <Label maxWidth="1.7976931348623157E308" text="%locationFound">
@@ -57,9 +57,9 @@
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                  <ComboBox fx:id="locationFound" promptText="%locationFoundPrompt">
+                  <ComboBox fx:id="locationFound" maxWidth="1.7976931348623157E308" promptText="%locationFoundPrompt">
                      <VBox.margin>
-                        <Insets bottom="23.0" />
+                        <Insets bottom="25.0" />
                      </VBox.margin>
                   </ComboBox>
                         <Label maxWidth="1.7976931348623157E308" text="%colors" VBox.vgrow="NEVER">
@@ -72,14 +72,14 @@
                         </Label>
                         <HBox prefWidth="200.0">
                             <children>
-                        <ComboBox fx:id="primaryColor" promptText="%colorsPrompt1">
+                        <ComboBox fx:id="primaryColor" maxWidth="1.7976931348623157E308" promptText="%colorsPrompt1" HBox.hgrow="SOMETIMES">
                            <HBox.margin>
                               <Insets right="25.0" />
                            </HBox.margin></ComboBox>
-                        <ComboBox fx:id="secondaryColor" promptText="%colorsPrompt2" />
+                        <ComboBox fx:id="secondaryColor" maxWidth="1.7976931348623157E308" promptText="%colorsPrompt2" HBox.hgrow="SOMETIMES" />
                             </children>
                             <VBox.margin>
-                                <Insets bottom="23.0" />
+                                <Insets bottom="25.0" />
                             </VBox.margin>
                         </HBox>
                         <Label maxWidth="1.7976931348623157E308" text="%brand">
@@ -89,7 +89,7 @@
                         </Label>
                         <TextField fx:id="brand" promptText="Eastsport">
                             <VBox.margin>
-                                <Insets bottom="23.0" />
+                                <Insets bottom="25.0" />
                             </VBox.margin>
                         </TextField>
                         <Label maxWidth="1.7976931348623157E308" text="%arrivedWithFlight">
@@ -99,7 +99,7 @@
                         </Label>
                         <TextField fx:id="arrivedWithFlight" promptText="AA1234">
                             <VBox.margin>
-                                <Insets bottom="23.0" />
+                                <Insets bottom="25.0" />
                             </VBox.margin>
                         </TextField>
                         <Label maxWidth="1.7976931348623157E308" text="%tag">
@@ -109,7 +109,7 @@
                         </Label>
                         <TextField fx:id="tag" promptText="1234567890">
                             <VBox.margin>
-                                <Insets bottom="23.0" />
+                                <Insets bottom="25.0" />
                             </VBox.margin>
                         </TextField>
                     </children>
@@ -142,7 +142,7 @@
                                 </TextField>
                             </children>
                             <VBox.margin>
-                                <Insets bottom="23.0" />
+                                <Insets bottom="25.0" />
                             </VBox.margin>
                         </HBox>
                         <Label maxWidth="1.7976931348623157E308" text="%weightInKg">
@@ -152,7 +152,7 @@
                         </Label>
                         <TextField fx:id="weight" promptText="20kg">
                             <VBox.margin>
-                                <Insets bottom="23.0" />
+                                <Insets bottom="25.0" />
                             </VBox.margin>
                         </TextField>
                         <Label maxWidth="1.7976931348623157E308" text="%passengerName">
@@ -179,7 +179,7 @@
                                 </TextField>
                             </children>
                             <VBox.margin>
-                                <Insets bottom="23.0" />
+                                <Insets bottom="25.0" />
                             </VBox.margin>
                         </HBox>
                         <Label maxWidth="1.7976931348623157E308" text="%city">
@@ -189,7 +189,7 @@
                         </Label>
                         <TextField fx:id="city" promptText="Amsterdam">
                             <VBox.margin>
-                                <Insets bottom="23.0" />
+                                <Insets bottom="25.0" />
                             </VBox.margin>
                         </TextField>
                         <Label maxWidth="1.7976931348623157E308" text="%comments">
@@ -197,9 +197,9 @@
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                        <TextArea fx:id="comments" maxHeight="115.0" VBox.vgrow="ALWAYS">
+                        <TextArea fx:id="comments" maxHeight="100.0" VBox.vgrow="ALWAYS">
                             <VBox.margin>
-                                <Insets bottom="16.0" />
+                                <Insets bottom="10.0" />
                             </VBox.margin>
                         </TextArea>
                   <HBox alignment="CENTER_RIGHT" prefWidth="200.0">
@@ -215,7 +215,7 @@
                   </HBox>
                         <HBox alignment="CENTER_RIGHT">
                             <children>
-                                <Button disable="true" minWidth="67.0" mnemonicParsing="false" onAction="#importExcel" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="%importFromExcel">
+                                <Button minWidth="67.0" mnemonicParsing="false" onAction="#importExcel" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="%importFromExcel">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
