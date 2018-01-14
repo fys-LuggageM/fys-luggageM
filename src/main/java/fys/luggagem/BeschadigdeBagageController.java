@@ -12,11 +12,16 @@ import java.net.URI;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.PauseTransition;
 import javafx.beans.binding.BooleanBinding;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -32,14 +37,14 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class BeschadigdeBagageController implements Initializable {
 
-    private Data data = MainApp.getData();
-    private MyJDBC db = MainApp.myJDBC;
-    private Customer customer = MainApp.getCustomer();
+    private final Data data = MainApp.getData();
+    private final MyJDBC db = MainApp.myJDBC;
+    private final Customer customer = MainApp.getCustomer();
+    private final ObservableList<String> Airports = FXCollections.observableArrayList();
 
     //To store the image URL's as strings
     private String placeholderURL;
@@ -54,7 +59,7 @@ public class BeschadigdeBagageController implements Initializable {
     private TextArea notes;
 
     @FXML
-    private ComboBox comboBox;
+    private ComboBox airports;
 
     @FXML
     private ImageView image01;
@@ -72,6 +77,46 @@ public class BeschadigdeBagageController implements Initializable {
     private Label savedConfirmation;
 
     @FXML
+    private Button selectImage1;
+
+    @FXML
+    private Button selectImage2;
+
+    @FXML
+    private Button selectImage3;
+    
+    @FXML
+    private Label customerSelected;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // setup combobox with airports
+        getAirports();
+
+        // disable save button if text fields are empty
+        BooleanBinding bb = notes.textProperty().isEmpty().or(airports.valueProperty().isNull());
+        saveImages.disableProperty().bind(bb);
+
+        //check if customer object is selected
+        if (customer.checkIfEmpty()) {
+            toggleButtons(true);
+            customerSelected.setVisible(false);
+        } else {
+            toggleButtons(false);
+            customerSelected.setVisible(true);
+        }
+    }
+
+    private void toggleButtons(boolean toggle) {
+        notes.setDisable(toggle);
+        airports.setDisable(toggle);
+        selectImage1.setDisable(toggle);
+        selectImage2.setDisable(toggle);
+        selectImage3.setDisable(toggle);
+
+    }
+
+    @FXML
     public void handleNewCustomerAction(ActionEvent event) throws IOException {
         data.setLastScene("/fxml/BeschadigdeBagageFXML.fxml");
         MainApp.loadFXMLFile(this.getClass().getResource("/fxml/NewCustomerFXML.fxml"));
@@ -79,6 +124,7 @@ public class BeschadigdeBagageController implements Initializable {
 
     @FXML
     public void handleExistingCustomerAction(ActionEvent event) {
+
         data.setLastScene("/fxml/BeschadigdeBagageFXML.fxml");
         MainApp.loadFXMLFile(this.getClass().getResource("/fxml/ExistingCustomerFXML.fxml"));
     }
@@ -90,7 +136,6 @@ public class BeschadigdeBagageController implements Initializable {
 
     @FXML
     private void loadImage01(ActionEvent event) throws MalformedURLException {
-        Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Selecteer de foto");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"));
@@ -109,7 +154,6 @@ public class BeschadigdeBagageController implements Initializable {
 
     @FXML
     private void loadImage02(ActionEvent event) throws MalformedURLException {
-        Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Selecteer de foto");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"));
@@ -127,7 +171,6 @@ public class BeschadigdeBagageController implements Initializable {
 
     @FXML
     private void loadImage03(ActionEvent event) throws MalformedURLException {
-        Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Selecteer de foto");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"));
@@ -209,7 +252,7 @@ public class BeschadigdeBagageController implements Initializable {
 
     private void setFields() {
         String setNotes = notes.getText();
-        String setAirport = comboBox.getValue().toString();
+        String setAirport = airports.getValue().toString();
         System.out.println("GET NOTES: " + setNotes);
 
         Connection conn = db.getConnection();
@@ -235,8 +278,26 @@ public class BeschadigdeBagageController implements Initializable {
         }
     }
 
+    private void getAirports() {
+        try {
+            String query = "SELECT IATA from Airport";
+
+            ResultSet result = db.executeResultSetQuery(query);
+            while (result.next()) {
+                Airports.add(result.getString("IATA"));
+            }
+            airports.setItems(Airports);
+        } catch (SQLException ex) {
+            Logger.getLogger(BeschadigdeBagageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @FXML
     public void saveToDatabase(ActionEvent event) {
+        if (customer == null) {
+            System.out.println("Select a customer");
+        }
+
         // Image inside alert dialog resized to 65x50
         imageURL = this.getClass().getResource("/images/upload_button02.png").toString();
         Image image = new Image(imageURL, 64, 64, false, true);
@@ -287,6 +348,7 @@ public class BeschadigdeBagageController implements Initializable {
             // ask to send email or print confirmation
             setEmailContent();
             createChoiceAlert();
+
             // clear all input field and set placeholder for images
             placeholderURL = this.getClass().getResource("/images/placeholder-600x400.png").toString();
             Image placeholder = new Image(placeholderURL);
@@ -295,25 +357,9 @@ public class BeschadigdeBagageController implements Initializable {
             image03.setImage(placeholder);
             notes.clear();
             customer.clear();
-
-            // start the pause timer    
         } else {
             // ... user chose CANCEL or closed the dialog
         }
-
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // add items to combobox and set pre selection to"AMS"
-        comboBox.getItems().addAll("AMS");
-        comboBox.getSelectionModel().select("AMS");
-
-        // booleanbinding to check if textfields are empty
-        // if so, disable the save button to prevent accidental uploads to the database
-        BooleanBinding bb = notes.textProperty().isEmpty();
-
-        saveImages.disableProperty().bind(bb);
 
     }
 

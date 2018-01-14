@@ -32,7 +32,7 @@
                                 <Font size="24.0" />
                             </font>
                         </Label>
-                        <Label maxWidth="1.7976931348623157E308" text="Labelnumber:" VBox.vgrow="ALWAYS">
+                        <Label maxWidth="1.7976931348623157E308" text="%labelNumber" VBox.vgrow="ALWAYS">
                             <font>
                                 <Font size="16.0" />
                             </font>
@@ -42,7 +42,7 @@
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                        <Label maxWidth="1.7976931348623157E308" text="Luggage type:">
+                        <Label maxWidth="1.7976931348623157E308" text="%luggageType">
                             <font>
                                 <Font size="16.0" />
                             </font>
@@ -56,7 +56,7 @@
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                        <Label maxWidth="1.7976931348623157E308" text="Brand:">
+                        <Label maxWidth="1.7976931348623157E308" text="%brand">
                             <font>
                                 <Font size="16.0" />
                             </font>
@@ -69,7 +69,7 @@
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                        <Label maxWidth="1.7976931348623157E308" text="Primary color:">
+                        <Label maxWidth="1.7976931348623157E308" text="%primColor">
                             <font>
                                 <Font size="16.0" />
                             </font>
@@ -82,7 +82,7 @@
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                        <Label maxWidth="1.7976931348623157E308" text="Secondary color:">
+                        <Label maxWidth="1.7976931348623157E308" text="%secColor">
                             <font>
                                 <Font size="16.0" />
                             </font>
@@ -95,11 +95,11 @@
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                  <Button fx:id="confirmButton" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#confirmUpload" style="-fx-background-color: #5cb85c; -fx-text-fill: white;" text="Confirm match">
+                  <Button fx:id="confirmButton" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#confirmUpload" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #5cb85c; -fx-text-fill: white;" text="%confirmMatch">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin></Button>
-                  <Label fx:id="confirmLabel" prefHeight="17.0" prefWidth="94.0" />
+                  <Label fx:id="confirmLabel" prefHeight="17.0" prefWidth="144.0" />
                     </children>
                     <padding>
                         <Insets left="25.0" />
@@ -107,11 +107,11 @@
                 </VBox>
                 <TableView fx:id="matchingTableview" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <columns>
-                        <TableColumn fx:id="labelNr" prefWidth="63.666656494140625" text="Label#" />
-                        <TableColumn fx:id="luggageType" prefWidth="75.0" text="Type" />
-                        <TableColumn fx:id="brand" prefWidth="75.0" text="Brand" />
-                        <TableColumn fx:id="primaryColor" prefWidth="75.0" text="Prim color" />
-                        <TableColumn fx:id="secondaryColor" prefWidth="75.0" text="Sec color" />
+                        <TableColumn fx:id="labelNr" prefWidth="63.666656494140625" text="%tableLabelNumber" />
+                        <TableColumn fx:id="luggageType" prefWidth="75.0" text="%tableLuggageType" />
+                        <TableColumn fx:id="brand" prefWidth="75.0" text="%tableBrand" />
+                        <TableColumn fx:id="primaryColor" prefWidth="75.0" text="%tablePrimColor" />
+                        <TableColumn fx:id="secondaryColor" prefWidth="75.0" text="%tableSecColor" />
                     </columns>
                 </TableView>
             </children>

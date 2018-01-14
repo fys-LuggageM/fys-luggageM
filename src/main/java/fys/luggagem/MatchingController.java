@@ -8,13 +8,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -23,10 +27,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class MatchingController implements Initializable {
 
-    private Data data = MainApp.getData();
-    private MyJDBC db = MainApp.myJDBC;
-    private ObservableList<Luggage> luggageList = FXCollections.observableArrayList();
-    private Matching matching = new Matching();
+    private final Data data = MainApp.getData();
+    private final MyJDBC db = MainApp.myJDBC;
+    private final ObservableList<Luggage> luggageList = FXCollections.observableArrayList();
+    private final Matching matching = new Matching();
+    private final Luggage luggage = new Luggage();
 
     @FXML
     private Label label;
@@ -42,8 +47,6 @@ public class MatchingController implements Initializable {
     private Button confirmButton;
     @FXML
     private Label confirmLabel;
-
-    private Luggage luggage = new Luggage();
 
     @FXML
     private TableView matchingTableview;
@@ -75,58 +78,66 @@ public class MatchingController implements Initializable {
             return row;
         });
     }
-    
-    private Luggage getSelectedMatch(){
+
+    private Luggage getSelectedMatch() {
         return (Luggage) matchingTableview.getSelectionModel().getSelectedItem();
     }
-    
-    private void handleSelectionAction(){
+
+    private void handleSelectionAction() {
         Luggage selectedMatch = getSelectedMatch();
         matching.setLabelNr(selectedMatch.getLabelNr());
         matching.setLuggageType(selectedMatch.getLuggageType());
         matching.setPrimaryColor(selectedMatch.getPrimaryColor());
         matching.setSecondaryColor(selectedMatch.getSecondaryColor());
-        
+
         confirmButton.setDisable(false);
-        
-        System.out.print(selectedMatch.getBrand()+"\n");
+
+        System.out.print(selectedMatch.getBrand() + "\n");
         System.out.print(luggage.getBrand());
-        
-        System.out.print(selectedMatch.getLabelNr()+"\n");
+
+        System.out.print(selectedMatch.getLabelNr() + "\n");
         System.out.print(luggage.getLabelNr());
-        
+
     }
-    
+
     @FXML
-    private void confirmUpload(ActionEvent event){
-        confirmLabel.setText("Match has been confirmed");
-        uploadMatch();
+    private void confirmUpload(ActionEvent event) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation match");
+        alert.setContentText("Are you ok with this?");
+        
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            uploadMatch();
+            confirmLabel.setText("Match has been confirmed");
+        } else {
+            confirmLabel.setText("Match has been canceled");
+        }
     }
-    
-    private void uploadMatch(){
+
+    private void uploadMatch() {
         Connection conn = db.getConnection();
         String updateCaseStatus = "UPDATE luggage SET case_status = 0 WHERE registrationnr = ?";
         String uploadMatch = "INSERT INTO matches (registrationnr) VALUES (?)";
-        
-        
+
         PreparedStatement ps = null;
-        try{
+        try {
             conn.setAutoCommit(false);
             ps = conn.prepareStatement(updateCaseStatus);
             ps.setInt(1, db.getLuggageRegistrationNr());
             ps.executeUpdate();
             conn.commit();
-        } catch(SQLException e){
+        } catch (SQLException e) {
             System.err.println("SQL ex in uploadMatch->updateCaseStatus: " + e);
         }
-        
-        try{
+
+        try {
             conn.setAutoCommit(false);
             ps = conn.prepareStatement(uploadMatch);
             ps.setInt(1, db.getLuggageRegistrationNr());
             ps.executeUpdate();
             conn.commit();
-        } catch(SQLException e){
+        } catch (SQLException e) {
             System.err.println("SQL ex in uploadMatch: " + e);
         }
     }
