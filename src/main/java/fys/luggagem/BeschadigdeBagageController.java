@@ -341,11 +341,11 @@ public class BeschadigdeBagageController implements Initializable {
         alert.setGraphic(new ImageView(image));
         alert.initOwner(data.getStage());
         alert.setTitle("");
-        alert.setHeaderText("Bevestiging");
-        alert.setContentText("Hoe wilt u de bevestiging delen met de klant?");
+        alert.setHeaderText(data.getResourceBundle().getString("confirmation"));
+        alert.setContentText(data.getResourceBundle().getString("shareAsk"));
 
-        ButtonType buttonTypeOne = new ButtonType("Email");
-        ButtonType buttonTypeTwo = new ButtonType("Printen");
+        ButtonType buttonTypeOne = new ButtonType(data.getResourceBundle().getString("emailing"));
+        ButtonType buttonTypeTwo = new ButtonType(data.getResourceBundle().getString("printing"));
         ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
         alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);

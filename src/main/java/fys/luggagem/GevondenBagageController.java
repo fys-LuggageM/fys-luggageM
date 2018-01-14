@@ -136,14 +136,15 @@ public class GevondenBagageController implements Initializable {
             List<ExcelImport> foundLuggage = ExcelImport.importFoundLuggageFromExcel(filename);
 
             importedLuggageToDatabase(foundLuggage);
-
+            
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.initOwner(data.getStage());
+            alert.setTitle("Excel file imported!");
+            String s = file.getName() + " has been imported!";
+            alert.setHeaderText(s);
+            alert.showAndWait();
         }
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.initOwner(data.getStage());
-        alert.setTitle("Excel file imported!");
-        String s = file.getName() + " has been imported!";
-        alert.setHeaderText(s);
-        alert.showAndWait();
+
     }
 
     @FXML
@@ -185,7 +186,7 @@ public class GevondenBagageController implements Initializable {
 
     private void setFields() {
         // Create Strings that hold the given values
-        String databaseAirportName = airportFound.getValue().toString();
+        String databaseAirportName = airportFound.getValue();
         String databaseBrand = brand.getText();
         String databaseFlightNumber = arrivedWithFlight.getText();
         String databaseLabelNumber = tag.getText();
@@ -241,7 +242,7 @@ public class GevondenBagageController implements Initializable {
 
         // Update the fields in the created row with a designated registration number
         Connection connection = db.getConnection();
-        
+
         String setInfoLuggage = "UPDATE luggage SET flightnr = ?, labelnr = ?, "
                 + "destination = ?, luggage_type = ?, brand = ?, "
                 + "location_found = ?, primary_color = ?, secondary_color = ?, "
@@ -249,7 +250,7 @@ public class GevondenBagageController implements Initializable {
                 + "customer_preposition = ?, customer_lastname = ?, "
                 + "case_status = ?, airport_IATA = ?, notes = ? "
                 + "WHERE registrationnr = ?";
-        
+
         PreparedStatement ps = null;
         PreparedStatement ps2 = null;
 
@@ -274,7 +275,7 @@ public class GevondenBagageController implements Initializable {
             ps.setString(15, databaseAirportName);
             ps.setString(16, databaseNotes);
             ps.setInt(17, db.getLuggageRegistrationNr());
-            
+
             ps.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
@@ -355,8 +356,6 @@ public class GevondenBagageController implements Initializable {
             }
             // Set the items of the AIRPORT_LIST to the airportFound combobox
             airportFound.setItems(AIRPORT_LIST);
-            // Set the first option from the combobox as the standard value 
-            airportFound.getSelectionModel().selectFirst();
 
         } catch (SQLException ex) {
             Logger.getLogger(GevondenBagageController.class

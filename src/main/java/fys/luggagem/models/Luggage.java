@@ -23,7 +23,7 @@ public class Luggage {
     private final String foundLuggageToDatabaseQuery = 
             "UPDATE luggage SET flightnr = ?, labelnr = ?, destination = ?, luggage_type = ?, brand = ?, "
             + "primary_color = ?, secondary_color = ?, customer_firstname = ?, customer_preposition = ?, "
-            + "customer_lastname = ?, notes = ? "
+            + "customer_lastname = ?, notes = ?, airport_IATA = ? "
             + "WHERE registrationnr = " + myJDBC.getLuggageRegistrationNr() + ";";
     private final String changesLogToDatabase = "INSERT INTO changes (changeid, Employee_code, Luggage_registrationnr) "
             + "VALUES (0, " + data.getEmployeeNr() + ", " + myJDBC.getLuggageRegistrationNr() + ");";
@@ -188,6 +188,7 @@ public class Luggage {
             ps01.setString(9, customer.getPreposition());
             ps01.setString(10, customer.getLastName());
             ps01.setString(11, this.notes);
+            ps01.setString(12, IATA);
             
             System.out.println(this.registrationNr);
             System.out.println(ps01.toString());

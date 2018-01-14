@@ -72,19 +72,19 @@ public class DatabaseController implements Initializable {
     @FXML
     private void handleBeschadigdeButtonAction(ActionEvent event) {
         setupDamagedLuggageTable();
-        label.setText(data.getResourceBundle().getString("luggageDamaged"));
+        label.setText(data.getResourceBundle().getString("damagedLuggageData"));
     }
 
     @FXML
     private void handleVerlorenButtonAction(ActionEvent event) {
         setupLostLuggageTable();
-        label.setText(data.getResourceBundle().getString("luggageLost"));
+        label.setText(data.getResourceBundle().getString("lostLuggageData"));
     }
 
     @FXML
     private void handleGevondenButtonAction(ActionEvent event) {
         setupFoundLuggageTable();
-        label.setText(data.getResourceBundle().getString("luggageFound"));
+        label.setText(data.getResourceBundle().getString("foundLuggageData"));
     }
 
     @FXML

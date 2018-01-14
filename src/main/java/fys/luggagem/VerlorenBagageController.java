@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -31,6 +32,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 
 /**
  * @author Jordan van Beijnhem <jordan.van.beijnhem@hva.nl>
@@ -42,11 +44,25 @@ public class VerlorenBagageController implements Initializable {
     private Customer customer = MainApp.getCustomer();
     private String IATA = "AMS";
     private ObservableList<String> Airports = FXCollections.observableArrayList();
+    private ObservableList<String> colorList = FXCollections.observableArrayList();
+    private ObservableList<String> luggageTypeList = FXCollections.observableArrayList();
     private String email;
 
     @FXML
-    private ComboBox airportBox;
+    private ComboBox<String> airportBox;
 
+    @FXML
+    private ComboBox<String> luggageTypeBox;
+
+    @FXML
+    private ComboBox<String> primaryColorBox;
+
+    @FXML
+    private ComboBox<String> secondaryColorBox;
+
+    @FXML
+    private HBox customerSelectBox;
+    
     @FXML
     private TextField destinationField;
 
@@ -57,16 +73,13 @@ public class VerlorenBagageController implements Initializable {
     private Button saveButton;
 
     @FXML
+    private Button deselectButton;
+    
+    @FXML
     private Button newCustomerButton;
 
     @FXML
     private Button existingCustomerButton;
-
-    @FXML
-    private TextField airportField;
-
-    @FXML
-    private TextField luggageTypeField;
 
     @FXML
     private TextField brandField;
@@ -76,12 +89,6 @@ public class VerlorenBagageController implements Initializable {
 
     @FXML
     private TextField tagField;
-
-    @FXML
-    private TextField primaryColorField;
-
-    @FXML
-    private TextField secondaryColorField;
 
     @FXML
     private TextField initialsField;
@@ -122,30 +129,38 @@ public class VerlorenBagageController implements Initializable {
         data.setLastScene("/fxml/VerlorenBagageFXML.fxml");
         MainApp.loadFXMLFile(this.getClass().getResource("/fxml/ExistingCustomerFXML.fxml"));
     }
+    
+    @FXML
+    public void deselectCustomer(ActionEvent event) {
+        customer.clear();
+        MainApp.loadFXMLFile(this.getClass().getResource("/fxml/VerlorenBagageFXML.fxml"));
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        BooleanBinding bb = luggageTypeField.textProperty().isEmpty().or(brandField.textProperty().isEmpty()).or(
+        BooleanBinding bb = luggageTypeBox.valueProperty().isNull().or(brandField.textProperty().isEmpty()).or(
                 flightField.textProperty().isEmpty()).or(destinationField.textProperty().isEmpty()).or(
-                primaryColorField.textProperty().isEmpty()).or(airportBox.valueProperty().isNull());
+                primaryColorBox.valueProperty().isNull()).or(airportBox.valueProperty().isNull());
 
         saveButton.disableProperty().bind(bb);
 
         setupAiportBox();
+        setupColorBox();
+        setupLuggageTypeBox();
         if (customer.checkIfEmpty()) {
+            customerSelectBox.setVisible(true);
+            deselectButton.setVisible(false);
             newCustomerButton.setStyle("-fx-background-color: #428bca;"
                     + "-fx-text-fill: white");
             existingCustomerButton.setStyle("-fx-background-color: #428bca;"
                     + "-fx-text-fill: white");
             toggleFields(true);
         } else {
-            customerAddedLabel.setText("Customer selected!");
-            newCustomerButton.setStyle("-fx-background-color: green;"
-                    + "-fx-text-fill: white");
+            customerAddedLabel.setText(data.getResourceBundle().getString("customerSelected"));
             newCustomerButton.setDisable(true);
-            existingCustomerButton.setStyle("-fx-background-color: green;"
-                    + "-fx-text-fill: white");
             existingCustomerButton.setDisable(true);
+            customerSelectBox.setVisible(false);
+            deselectButton.setVisible(true);
             toggleFields(false);
             fillInFields();
         }
@@ -153,12 +168,12 @@ public class VerlorenBagageController implements Initializable {
 
     private void toggleFields(boolean toggle) {
         airportBox.setDisable(toggle);
-        luggageTypeField.setDisable(toggle);
+        luggageTypeBox.setDisable(toggle);
         brandField.setDisable(toggle);
         flightField.setDisable(toggle);
         tagField.setDisable(toggle);
-        primaryColorField.setDisable(toggle);
-        secondaryColorField.setDisable(toggle);
+        primaryColorBox.setDisable(toggle);
+        secondaryColorBox.setDisable(toggle);
         notesField.setDisable(toggle);
         destinationField.setDisable(toggle);
     }
@@ -174,14 +189,16 @@ public class VerlorenBagageController implements Initializable {
         myJDBC.newRegnrLostLuggage();
         Luggage lostLuggage = new Luggage();
         lostLuggage.setRegistrationNr(myJDBC.getLuggageRegistrationNr());
-        lostLuggage.setIATA((String) airportBox.getSelectionModel().getSelectedItem()); //test value
-        lostLuggage.setLuggageType(!luggageTypeField.getText().isEmpty() ? luggageTypeField.getText() : null);
+        lostLuggage.setIATA(airportBox.getValue());
+        System.out.println(airportBox.getValue());
+        lostLuggage.setLuggageType(luggageTypeBox.getValue());
         lostLuggage.setBrand(!brandField.getText().isEmpty() ? brandField.getText() : null);
         lostLuggage.setDestination(!destinationField.getText().isEmpty() ? destinationField.getText() : null);
         lostLuggage.setFlightNr(!flightField.getText().isEmpty() ? flightField.getText() : null);
         lostLuggage.setLabelNr(!tagField.getText().isEmpty() ? tagField.getText() : null);
-        lostLuggage.setPrimaryColor(!primaryColorField.getText().isEmpty() ? primaryColorField.getText() : null);
-        lostLuggage.setSecondaryColor(!secondaryColorField.getText().isEmpty() ? secondaryColorField.getText() : null);
+        lostLuggage.setPrimaryColor(primaryColorBox.getValue());
+        lostLuggage.setSecondaryColor(secondaryColorBox.getValue() != null
+                ? secondaryColorBox.getValue() : null);
         lostLuggage.setTravellerName(customer.getFirstName() + (customer.getPreposition() != null
                 ? " " + customer.getPreposition() : "") + " " + customer.getLastName());
         lostLuggage.setNotes(!notesField.getText().isEmpty() ? notesField.getText() : null);
@@ -228,6 +245,50 @@ public class VerlorenBagageController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(VerlorenBagageController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void setupColorBox() {
+        // Add all the colors via getters from the class: ComboboxInformation, to the COLOR_LIST
+        colorList.addAll(ComboboxInformation.getCOLOR_BLACK(),
+                ComboboxInformation.getCOLOR_BLUE(),
+                ComboboxInformation.getCOLOR_BROWN(),
+                ComboboxInformation.getCOLOR_CREAM(),
+                ComboboxInformation.getCOLOR_DARKBLUE(),
+                ComboboxInformation.getCOLOR_DARKBROWN(),
+                ComboboxInformation.getCOLOR_DARKGRAY(),
+                ComboboxInformation.getCOLOR_DARKGREEN(),
+                ComboboxInformation.getCOLOR_DARKRED(),
+                ComboboxInformation.getCOLOR_GRAY(),
+                ComboboxInformation.getCOLOR_GREEN(),
+                ComboboxInformation.getCOLOR_LIGHTBLUE(),
+                ComboboxInformation.getCOLOR_LIGHTBROWN(),
+                ComboboxInformation.getCOLOR_LIGHTGRAY(),
+                ComboboxInformation.getCOLOR_LIGHTGREEN(),
+                ComboboxInformation.getCOLOR_OLIVE(),
+                ComboboxInformation.getCOLOR_ORANGE(),
+                ComboboxInformation.getCOLOR_PINK(),
+                ComboboxInformation.getCOLOR_PURPLE(),
+                ComboboxInformation.getCOLOR_RED(),
+                ComboboxInformation.getCOLOR_VIOLET(),
+                ComboboxInformation.getCOLOR_WHITE(),
+                ComboboxInformation.getCOLOR_YELLOW());
+        // Set the items of the COLOR_LIST to the primaryColor & secondaryColor combobox
+        primaryColorBox.setItems(colorList);
+        secondaryColorBox.setItems(colorList);
+    }
+
+    private void setupLuggageTypeBox() {
+        // Add all the luggagetypes via getters from the class: ComboboxInformation, to the LUGGAGE_TYPE_LIST
+        luggageTypeList.addAll(ComboboxInformation.getSUITCASE(),
+                ComboboxInformation.getBAG(),
+                ComboboxInformation.getBAGPACK(),
+                ComboboxInformation.getBOX(),
+                ComboboxInformation.getSPORTSBAG(),
+                ComboboxInformation.getBUSINESSCASE(),
+                ComboboxInformation.getCASE(),
+                ComboboxInformation.getOTHER());
+        // Set the items of the LUGGAGE_TYPE_LIST to the luggageType combobox
+        luggageTypeBox.setItems(luggageTypeList);
     }
 
     private void createChoiceAlert() {
