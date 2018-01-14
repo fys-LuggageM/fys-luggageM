@@ -41,27 +41,34 @@
                                     <font>
                                         <Font size="16.0" />
                                     </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                                 </Button>
                                 <Label maxWidth="25.0" HBox.hgrow="ALWAYS" />
                                 <Button maxWidth="131.0" mnemonicParsing="false" onAction="#handleNewCustomerAction" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="%newCustomer" HBox.hgrow="ALWAYS">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                                 </Button>
                             </children>
                             <VBox.margin>
                                 <Insets top="6.0" />
                             </VBox.margin>
                         </HBox>
+                  <Label fx:id="customerSelected" prefHeight="24.0" prefWidth="116.0" text="%customerSelected" textFill="#38b94f" visible="false" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%airport" wrappingWidth="261.20998191833496">
                             <font>
-                                <Font size="16.0" />
+                                <Font size="14.0" />
                             </font>
                             <VBox.margin>
                                 <Insets top="15.0" />
                             </VBox.margin>
                         </Text>
-                        <ComboBox fx:id="comboBox" prefHeight="25.0" prefWidth="282.0" promptText="Choose Airport" />
+                        <ComboBox fx:id="airports" prefHeight="25.0" prefWidth="282.0" promptText="Choose Airport" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%notes" wrappingWidth="261.20998191833496">
                             <font>
                                 <Font size="16.0" />
@@ -70,7 +77,7 @@
                                 <Insets top="15.0" />
                             </VBox.margin>
                         </Text>
-                        <TextArea fx:id="notes" prefHeight="478.0" prefWidth="262.0">
+                        <TextArea fx:id="notes" prefHeight="456.0" prefWidth="262.0">
                             <cursor>
                                 <Cursor fx:constant="TEXT" />
                             </cursor>
@@ -88,7 +95,7 @@
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                     <children>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadImage01" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="%photo01" VBox.vgrow="ALWAYS">
+                        <Button fx:id="selectImage1" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadImage01" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="%photo01" VBox.vgrow="ALWAYS">
                             <VBox.margin>
                                 <Insets top="6.0" />
                             </VBox.margin>
@@ -99,7 +106,7 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadImage02" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="%photo02">
+                        <Button fx:id="selectImage2" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadImage02" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="%photo02">
                             <VBox.margin>
                                 <Insets top="15.0" />
                             </VBox.margin>
@@ -110,7 +117,7 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadImage03" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="%photo03">
+                        <Button fx:id="selectImage3" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadImage03" style="-fx-background-color: #428bca; -fx-text-fill: white;" text="%photo03">
                             <VBox.margin>
                                 <Insets top="15.0" />
                             </VBox.margin>
