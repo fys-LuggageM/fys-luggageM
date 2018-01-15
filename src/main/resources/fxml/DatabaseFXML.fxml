@@ -107,6 +107,17 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
+                  <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#matchingEvent" style="-fx-border-color: black;" text="Matching" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" />
+                     </GridPane.margin>
+                  </Button>
                </children>
             </GridPane>
          </left>

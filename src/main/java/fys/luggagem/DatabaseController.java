@@ -3,6 +3,7 @@ package fys.luggagem;
 import static fys.luggagem.MainApp.data;
 import fys.luggagem.models.Data;
 import fys.luggagem.models.Luggage;
+import fys.luggagem.models.Matching;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -33,6 +34,7 @@ import javafx.stage.StageStyle;
 public class DatabaseController implements Initializable {
 
     private Data data = MainApp.getData();
+    private MyJDBC db = MainApp.myJDBC;
 
     @FXML
     private Label label;
@@ -284,6 +286,22 @@ public class DatabaseController implements Initializable {
 
         // 5. Add sorted (and filtered) data to the table.
         TableViewLuggage.setItems(sortedData);
+    }
+    
+    @FXML
+    private void matchingEvent(ActionEvent event) throws IOException{
+        handleCloseAction(event);
+        Luggage luggage = getSelectedMatch();
+        db.setLuggageRegistrationNr(luggage.getRegistrationNr());
+        goToMatching();
+    }
+
+    private Luggage getSelectedMatch() {
+        return (Luggage) TableViewLuggage.getSelectionModel().getSelectedItem();
+    }
+    
+    private void goToMatching() {
+        MainApp.loadFXMLFile(this.getClass().getResource("/fxml/MatchingFXML.fxml"));
     }
 
     @Override

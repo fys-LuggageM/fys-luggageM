@@ -48,7 +48,6 @@ public class MatchingController implements Initializable {
     private Button confirmButton;
     @FXML
     private Label confirmLabel;
-
     @FXML
     private TableView matchingTableview;
 
@@ -106,7 +105,7 @@ public class MatchingController implements Initializable {
         alert.initOwner(data.getStage());
         alert.setTitle(data.getResourceBundle().getString("matchingTitle"));
         alert.setContentText(data.getResourceBundle().getString("confirmMatch"));
-      
+
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             uploadMatch();
@@ -120,7 +119,7 @@ public class MatchingController implements Initializable {
         Connection conn = db.getConnection();
         String updateCaseStatus = "UPDATE luggage SET case_status = 0 WHERE registrationnr = ?";
 
-        String uploadMatch = "INSERT INTO matches (registrationnr) VALUES (?)";
+        String uploadMatch = "INSERT INTO matches (registrationnr, selectedRegNr) VALUES (?, ?)";
 
         PreparedStatement ps = null;
         try {
@@ -135,18 +134,9 @@ public class MatchingController implements Initializable {
 
         try {
             conn.setAutoCommit(false);
-            ps = conn.prepareStatement(updateCaseStatus);
-            ps.setInt(1, selectedLuggage.getRegistrationNr());
-            ps.executeUpdate();
-            conn.commit();
-        } catch (SQLException e) {
-            System.err.println("SQL ex in uploadMatch->updateCaseStatus: " + e);
-        }
-
-        try {
-            conn.setAutoCommit(false);
             ps = conn.prepareStatement(uploadMatch);
             ps.setInt(1, db.getLuggageRegistrationNr());
+            ps.setInt(2, selectedLuggage.getRegistrationNr());
             ps.executeUpdate();
             conn.commit();
         } catch (SQLException e) {
