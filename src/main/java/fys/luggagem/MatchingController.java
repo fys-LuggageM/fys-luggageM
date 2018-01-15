@@ -89,23 +89,15 @@ public class MatchingController implements Initializable {
         matching.setLuggageType(selectedMatch.getLuggageType());
         matching.setPrimaryColor(selectedMatch.getPrimaryColor());
         matching.setSecondaryColor(selectedMatch.getSecondaryColor());
-
         confirmButton.setDisable(false);
-
-        System.out.print(selectedMatch.getBrand() + "\n");
-        System.out.print(luggage.getBrand());
-
-        System.out.print(selectedMatch.getLabelNr() + "\n");
-        System.out.print(luggage.getLabelNr());
-
     }
 
     @FXML
     private void confirmUpload(ActionEvent event) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation match");
-        alert.setContentText("Are you ok with this?");
-        
+        alert.initOwner(data.getStage());
+        alert.setTitle(data.getResourceBundle().getString("matchingTitle"));
+        alert.setContentText(data.getResourceBundle().getString("confirmMatch"));
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             uploadMatch();
@@ -118,6 +110,7 @@ public class MatchingController implements Initializable {
     private void uploadMatch() {
         Connection conn = db.getConnection();
         String updateCaseStatus = "UPDATE luggage SET case_status = 0 WHERE registrationnr = ?";
+
         String uploadMatch = "INSERT INTO matches (registrationnr) VALUES (?)";
 
         PreparedStatement ps = null;

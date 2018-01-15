@@ -112,6 +112,7 @@
                         <TableColumn fx:id="brand" prefWidth="75.0" text="%tableBrand" />
                         <TableColumn fx:id="primaryColor" prefWidth="75.0" text="%tablePrimColor" />
                         <TableColumn fx:id="secondaryColor" prefWidth="75.0" text="%tableSecColor" />
+                  <TableColumn fx:id="registrationNr" prefWidth="75.0" text="reg nr" />
                     </columns>
                 </TableView>
             </children>
