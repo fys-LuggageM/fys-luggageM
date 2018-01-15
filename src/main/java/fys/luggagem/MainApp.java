@@ -35,14 +35,14 @@ public class MainApp extends Application {
     }
 
     public static File selectFileToSave(String defaultFilename) {
-        Stage stage = new Stage();
         FileChooser filechooser = new FileChooser();
         filechooser.setTitle("Select file to save into");
         filechooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF", "*.pdf"));
-        File selectedFile = filechooser.showSaveDialog(stage);
+        File selectedFile = filechooser.showSaveDialog(data.getStage());
         if (selectedFile != null) {
             return selectedFile;
         }
+      
         return null;
     }
 
