@@ -111,7 +111,7 @@ public class RapportageController implements Initializable {
 
     private String month;
 
-//Localisatie Strings
+//Localization strings
     private final String SCREEN_TITLE = data.getResourceBundle().getString("reports");
 
     private final String VERLOREN_CHART_TITLE = data.getResourceBundle().getString("lostChartTitle");
@@ -140,7 +140,7 @@ public class RapportageController implements Initializable {
 
     private final String BESCHADIGDE_CHART_LABEL = data.getResourceBundle().getString("damagedChartLabel");
 
-    // SQL Query's  
+    // SQL Queries  
     private final String COMBO_YEAR_QUERY = "SELECT YEAR(luggage.date), "
             + "COUNT(*) c "
             + "FROM luggage "
@@ -186,6 +186,8 @@ public class RapportageController implements Initializable {
             + "INNER JOIN airport ON luggage.airport_IATA=airport.IATA "
             + "WHERE (YEAR(date),MONTH(date)) =";
 
+    //This button creates the report label text and draws all the charts. It also makes the combobox comboMonths visible
+    //when an item of the combobox comboYear has been selected.
     @FXML
     private void handleLoadingButtonAction(ActionEvent event) {
 
@@ -201,6 +203,7 @@ public class RapportageController implements Initializable {
         exportLabel.setText("");
     }
 
+    //This method changes the report label text depending on the selected comboboxes
     private void drawReportLabelText() {
         if (comboYear.getValue() != null && comboMonth.getValue() == null) {
             reportLabel.setText(REPORT_LABEL_TEXT + " " + comboYear.getValue() + "?");
@@ -209,6 +212,7 @@ public class RapportageController implements Initializable {
         }
     }
 
+    //This method creates the linechart and the piechart of gevonden bagage
     private void drawFoundLuggageCharts() {
         if (tabGevonden.isSelected()) {
             populatePieChart(gevondenPieChart);
@@ -227,6 +231,7 @@ public class RapportageController implements Initializable {
         }
     }
 
+    //This method creates the linechart and the piechart of verloren bagage
     private void drawLostLuggageCharts() {
         if (tabVerloren.isSelected()) {
             populatePieChart(verlorenPieChart);
@@ -245,6 +250,7 @@ public class RapportageController implements Initializable {
         }
     }
 
+    //This method creates the linechart and the piechart of beschadigde bagage
     private void drawDamagedLuggageCharts() {
         if (tabBeschadigde.isSelected()) {
             populatePieChart(beschadigdePieChart);
@@ -268,6 +274,7 @@ public class RapportageController implements Initializable {
         MainApp.setScene(this.getClass().getResource("/fxml/HomeScreenFXML.fxml"));
     }
 
+    //This button when pressed runs the two methods below handleExportPdfButtonAction and creates an alertbox
     @FXML
     private void handleExportPdfButtonAction(ActionEvent event) throws IOException {
 
@@ -291,6 +298,7 @@ public class RapportageController implements Initializable {
 
     }
 
+    //this method creates a screenshot of the selected tab's piechart
     private BufferedImage createPieChartImage() throws IOException {
         BufferedImage exportPieImage = null;
         if (tabGevonden.isSelected()) {
@@ -309,6 +317,7 @@ public class RapportageController implements Initializable {
         return exportPieImage;
     }
 
+    //This method creates a screenshot of the selected tab's linechart
     private BufferedImage createLineChartImage() throws IOException {
         BufferedImage exportLineImage = null;
         if (tabGevonden.isSelected()) {
@@ -329,6 +338,8 @@ public class RapportageController implements Initializable {
         return exportLineImage;
     }
 
+    // Method the put the combomonth invisible and to fill the comboYear combobox. ComboMonth is turned visible when
+    // the loading button is pressed
     private void setComboBoxController() {
 
         comboMonth.setVisible(false);
@@ -336,6 +347,7 @@ public class RapportageController implements Initializable {
         fillComboYear();
     }
 
+    //this method fills the combobox comboYear through an resultset query
     private void fillComboYear() {
         try {
             resultSet = DB.executeResultSetQuery(COMBO_YEAR_QUERY);
@@ -353,6 +365,7 @@ public class RapportageController implements Initializable {
 
     }
 
+    //this method fills the combobox comboMonth through an resultset query
     private void fillComboMonth() {
         try {
             Connection conn = DB.getConnection();
@@ -380,6 +393,7 @@ public class RapportageController implements Initializable {
 
     }
 
+//this method fills all piecharts with data
     private void populatePieChart(PieChart chart) {
         gevondenPieChart.setVisible(false);
         verlorenPieChart.setVisible(false);
@@ -424,13 +438,16 @@ public class RapportageController implements Initializable {
             if (comboYear.getValue() != null && comboMonth.getValue() != null) {
                 if (tabGevonden.isSelected()) {
                     resultSet = DB.executeResultSetQuery(GEVONDEN_MONTH_RESULT_QUERY
-                            + "(" + comboYear.getValue() + "," + comboMonth.getValue() + ")" + GROUP_RESULT_QUERY);
+                            + "(" + comboYear.getValue() + "," + "'" + comboMonth.getValue() + "'" + ")"
+                            + GROUP_RESULT_QUERY);
                 } else if (tabVerloren.isSelected()) {
                     resultSet = DB.executeResultSetQuery(VERLOREN_MONTH_RESULT_QUERY
-                            + "(" + comboYear.getValue() + "," + comboMonth.getValue() + ")" + GROUP_RESULT_QUERY);
+                            + "(" + comboYear.getValue() + "," + "'" + comboMonth.getValue() + "'" + ")"
+                            + GROUP_RESULT_QUERY);
                 } else if (tabBeschadigde.isSelected()) {
                     resultSet = DB.executeResultSetQuery(BESCHADIGDE_MONTH_RESULT_QUERY
-                            + "(" + comboYear.getValue() + "," + comboMonth.getValue() + ")" + GROUP_RESULT_QUERY);
+                            + "(" + comboYear.getValue() + "," + "'" + comboMonth.getValue() + "'" + ")"
+                            + GROUP_RESULT_QUERY);
                 }
             }
 
@@ -509,6 +526,7 @@ public class RapportageController implements Initializable {
 
     }
 
+    // this methods fills all linecharts with data
     private void populateLineChart(LineChart chart) {
         XYChart.Series gevondenSeries = new XYChart.Series<>();
         XYChart.Series verlorenSeries = new XYChart.Series<>();
@@ -517,7 +535,7 @@ public class RapportageController implements Initializable {
         try {
 
             if (tabGevonden.isSelected()) {
-                //data voor gevonden bagage linechart
+                //data for gevonden bagage linechart
                 if (comboYear.getValue() != null) {
                     resultSet = DB.executeResultSetQuery(GEVONDEN_YEAR_RESULT_QUERY + comboYear.getValue()
                             + GROUP_RESULT_QUERY);
@@ -525,7 +543,8 @@ public class RapportageController implements Initializable {
 
                 if (comboYear.getValue() != null && comboMonth.getValue() != null) {
                     resultSet = DB.executeResultSetQuery(GEVONDEN_MONTH_RESULT_QUERY
-                            + "(" + comboYear.getValue() + "," + comboMonth.getValue() + ")" + GROUP_RESULT_QUERY);
+                            + "(" + comboYear.getValue() + "," + "'" + comboMonth.getValue() + "'" + ")"
+                            + GROUP_RESULT_QUERY);
                 }
 
                 while (resultSet.next()) {
@@ -536,7 +555,7 @@ public class RapportageController implements Initializable {
                 }
             }
             if (tabVerloren.isSelected()) {
-                //data voor verloren bagage linechart
+                //data for verloren bagage linechart
                 if (comboYear.getValue() != null) {
                     resultSet = DB.executeResultSetQuery(VERLOREN_YEAR_RESULT_QUERY + comboYear.getValue()
                             + GROUP_RESULT_QUERY);
@@ -545,7 +564,8 @@ public class RapportageController implements Initializable {
 
                 if (comboYear.getValue() != null && comboMonth.getValue() != null) {
                     resultSet = DB.executeResultSetQuery(VERLOREN_MONTH_RESULT_QUERY
-                            + "(" + comboYear.getValue() + "," + comboMonth.getValue() + ")" + GROUP_RESULT_QUERY);
+                            + "(" + comboYear.getValue() + "," + "'" + comboMonth.getValue() + "'" + ")"
+                            + GROUP_RESULT_QUERY);
                 }
                 while (resultSet.next()) {
                     String naam = resultSet.getString("name");
@@ -556,7 +576,7 @@ public class RapportageController implements Initializable {
                 }
             }
             if (tabBeschadigde.isSelected()) {
-                //data voor beschadigde bagage linechart
+                //data for beschadigde bagage linechart
                 if (comboYear.getValue() != null) {
                     resultSet = DB.executeResultSetQuery(BESCHADIGDE_YEAR_RESULT_QUERY + comboYear.getValue()
                             + GROUP_RESULT_QUERY);
@@ -564,7 +584,8 @@ public class RapportageController implements Initializable {
                 }
                 if (comboYear.getValue() != null && comboMonth.getValue() != null) {
                     resultSet = DB.executeResultSetQuery(BESCHADIGDE_MONTH_RESULT_QUERY
-                            + "(" + comboYear.getValue() + "," + comboMonth.getValue() + ")" + GROUP_RESULT_QUERY);
+                            + "(" + comboYear.getValue() + "," + "'" + comboMonth.getValue() + "'" + ")"
+                            + GROUP_RESULT_QUERY);
                 }
                 while (resultSet.next()) {
                     String naam = resultSet.getString("name");
@@ -595,9 +616,9 @@ public class RapportageController implements Initializable {
 
     }
 
+    // This method clears the comboMonth and refills each it time another item is selected from comboYear
     @FXML
     private void comboYearChange(ActionEvent event) {
-        // ISSUE OP GITHUB VOOR DEFECTS 4 & 5 VAN TESTRAPPORT
         comboMonth.getItems().clear();
         fillComboMonth();
     }
@@ -606,11 +627,11 @@ public class RapportageController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setComboBoxController();
 
-        //Booleanbinding laat loadingButton weer werken als er data uit de combobox is geselecteerd.
+        //Booleanbinding enables loadingbutton when an item from the combobox is selected
         BooleanBinding chartLoadBinding = comboYear.valueProperty().isNull();
         loadingButton.disableProperty().bind(chartLoadBinding);
 
-        //Booleanbinding laat exportButton weer werken wanneer de rapportage getoond wordt.
+        //Booleanbinding enables the export button and the table when the report label is shown
         BooleanBinding exportBinding = reportLabel.textProperty().isEmpty();
         exportPdfButton.disableProperty().bind(exportBinding);
         tabel.disableProperty().bind(exportBinding);
