@@ -68,7 +68,7 @@
                                 <Insets top="15.0" />
                             </VBox.margin>
                         </Text>
-                        <ComboBox fx:id="airports" prefHeight="25.0" prefWidth="282.0" promptText="Choose Airport" />
+                        <ComboBox fx:id="airports" prefHeight="25.0" prefWidth="282.0" promptText="%damagedSelectAirport" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%notes" wrappingWidth="261.20998191833496">
                             <font>
                                 <Font size="16.0" />

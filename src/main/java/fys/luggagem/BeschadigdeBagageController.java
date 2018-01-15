@@ -84,7 +84,7 @@ public class BeschadigdeBagageController implements Initializable {
 
     @FXML
     private Button selectImage3;
-    
+
     @FXML
     private Label customerSelected;
 
@@ -292,27 +292,25 @@ public class BeschadigdeBagageController implements Initializable {
         }
     }
 
+    private void changesLogToDatabase() {
+        String changesLogToDatabase2 = "INSERT INTO changes (changeid, Employee_code, Luggage_registrationnr) "
+                + "VALUES (0, " + data.getEmployeeNr() + ", " + db.getRegNrDamaged() + ");";
+        db.executeUpdateQuery(changesLogToDatabase2);
+    }
+
     @FXML
     public void saveToDatabase(ActionEvent event) {
-        if (customer == null) {
-            System.out.println("Select a customer");
-        }
-
         // Image inside alert dialog resized to 65x50
         imageURL = this.getClass().getResource("/images/upload_button02.png").toString();
         Image image = new Image(imageURL, 64, 64, false, true);
 
-        System.out.println("CUSTOMER NR: " + customer.getCustomerNr());
-
         //Create new alert dialog
         Alert alert = new Alert(AlertType.CONFIRMATION);
-
         // Alert dialog setup
         alert.initOwner(data.getStage());
         alert.setGraphic(new ImageView(image));
-        alert.setTitle("Damaged luggage");
-        alert.setHeaderText("Save and upload to database");
-        alert.setContentText("Are you sure?");
+        alert.setTitle(data.getResourceBundle().getString("dmgAlertConfirmationTitle"));
+        alert.setHeaderText(data.getResourceBundle().getString("dmgAlertConfirmationHeader"));
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
@@ -323,10 +321,12 @@ public class BeschadigdeBagageController implements Initializable {
             try {
                 // create new registrationnr
                 db.newRegnrDamagedLuggage();
+
             } catch (SQLException ex) {
                 System.out.println("\nnewRegnrDamagedLuggage (MyJDBC): " + ex);
             }
             setFields();
+            changesLogToDatabase();
             try {
                 // upload selected images
                 uploadImageQuery(event);
@@ -399,10 +399,13 @@ public class BeschadigdeBagageController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == buttonTypeOne) {
             Email.sendEmail(customer.getEmailAdres(), "Lost Luggage", email);
+            customerSelected.setVisible(false);
+
         } else if (result.get() == buttonTypeTwo) {
             data.getStage().setIconified(true);
             Print.printPdf();
             data.getStage().setIconified(false);
+            customerSelected.setVisible(false);
         } else {
 
         }
