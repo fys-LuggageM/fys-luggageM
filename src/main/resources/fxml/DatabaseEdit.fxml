@@ -42,23 +42,39 @@
                   <RowConstraints maxHeight="350.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
+                  <Label text="  " GridPane.rowIndex="10" />
+                  <Label text="%registrationNumber" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="%arrivedWithFlight" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="%tag" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label text="%destination" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label text="%luggageType" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label text="%brand" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Label text="%locationFound" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Label text="%colors" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <Label text="%luggageSizeInCm" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <Label text="%weightInKg" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  <Label text="%airport" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                  <Label text="%passengerName" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                  <Label text="%customerNr" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                  <Label text="%notes" GridPane.columnIndex="1" GridPane.rowIndex="14" />
                   <Label text="Aanpassen Gevonden Bagage" GridPane.columnIndex="2">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label text="%registrationNumber" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="%airport" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                  <Label text="%brand" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Label text="%destination" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label text="%colors" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <TextField fx:id="registrationNumberField" disable="true" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="flightNrField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <TextField fx:id="labelNrField" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <TextField fx:id="destinationField" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <TextField fx:id="luggageTypeField" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <TextField fx:id="brandField" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <TextField fx:id="locationFoundField" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="8">
                      <children>
                         <TextField fx:id="color1Field" prefHeight="25.0" prefWidth="294.0" promptText="%colorsPrompt1" />
                         <TextField fx:id="colorField2" prefHeight="25.0" prefWidth="304.0" promptText="%colorsPrompt2" />
                      </children>
                   </HBox>
-                  <Label text="%luggageSizeInCm" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="9">
                      <children>
                         <TextField fx:id="luggageHeightField" prefHeight="25.0" prefWidth="164.0" promptText="%luggageSizeInCmPromptHeight" />
@@ -68,18 +84,8 @@
                         <TextField fx:id="luggageDepthField" prefHeight="25.0" prefWidth="149.0" promptText="%luggageSizeInCmPromptDepth" />
                      </children>
                   </HBox>
-                  <Label text="%weightInKg" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                   <TextField fx:id="weightField" GridPane.columnIndex="2" GridPane.rowIndex="10" />
-                  <TextField fx:id="registrationNumberField" disable="true" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <TextField fx:id="brandField" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                  <TextField fx:id="destinationField" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                  <Label text="%notes" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-                  <TextArea fx:id="notesField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="14" />
-                  <Label text="  " GridPane.rowIndex="10" />
-                  <Button fx:id="closeButton" mnemonicParsing="false" onAction="#commitChanges" text="Bevestigen" GridPane.columnIndex="2" GridPane.rowIndex="15" />
-                  <Label text="%locationFound" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <TextField fx:id="locationFoundField" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                  <Label text="%passengerName" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                  <ComboBox fx:id="airportField" prefWidth="150.0" promptText="%airport" GridPane.columnIndex="2" GridPane.rowIndex="11" />
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="12">
                      <children>
                         <TextField fx:id="firstNameField" promptText="%firstName" />
@@ -87,15 +93,9 @@
                         <TextField fx:id="lastNameField" promptText="%lastName" />
                      </children>
                   </HBox>
-                  <Label text="%arrivedWithFlight" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="flightNrField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <TextField fx:id="luggageTypeField" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                  <Label text="%luggageType" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <ComboBox fx:id="airportField" prefWidth="150.0" promptText="%airport" GridPane.columnIndex="2" GridPane.rowIndex="11" />
                   <TextField fx:id="customerIDField" disable="true" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="13" />
-                  <Label text="%customerNr" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-                  <Label text="%tag" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField fx:id="labelNrField" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <TextArea fx:id="notesField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="14" />
+                  <Button fx:id="closeButton" mnemonicParsing="false" onAction="#commitChanges" text="Bevestigen" GridPane.columnIndex="2" GridPane.rowIndex="15" />
                </children>
             </GridPane>
          </center>
