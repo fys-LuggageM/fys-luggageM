@@ -31,6 +31,7 @@ public class MatchingController implements Initializable {
     private final MyJDBC db = MainApp.myJDBC;
     private final ObservableList<Luggage> luggageList = FXCollections.observableArrayList();
     private final Matching matching = new Matching();
+    private Luggage selectedLuggage = new Luggage();
     private final Luggage luggage = new Luggage();
 
     @FXML
@@ -84,12 +85,19 @@ public class MatchingController implements Initializable {
     }
 
     private void handleSelectionAction() {
-        Luggage selectedMatch = getSelectedMatch();
-        matching.setLabelNr(selectedMatch.getLabelNr());
-        matching.setLuggageType(selectedMatch.getLuggageType());
-        matching.setPrimaryColor(selectedMatch.getPrimaryColor());
-        matching.setSecondaryColor(selectedMatch.getSecondaryColor());
+        selectedLuggage = getSelectedMatch();
+        matching.setLabelNr(selectedLuggage.getLabelNr());
+        matching.setLuggageType(selectedLuggage.getLuggageType());
+        matching.setPrimaryColor(selectedLuggage.getPrimaryColor());
+        matching.setSecondaryColor(selectedLuggage.getSecondaryColor());
+
         confirmButton.setDisable(false);
+
+        System.out.print(selectedLuggage.getBrand() + "\n");
+        System.out.print(luggage.getBrand());
+
+        System.out.print(selectedLuggage.getLabelNr() + "\n");
+        System.out.print(luggage.getLabelNr());
     }
 
     @FXML
@@ -98,6 +106,7 @@ public class MatchingController implements Initializable {
         alert.initOwner(data.getStage());
         alert.setTitle(data.getResourceBundle().getString("matchingTitle"));
         alert.setContentText(data.getResourceBundle().getString("confirmMatch"));
+      
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             uploadMatch();
@@ -118,6 +127,16 @@ public class MatchingController implements Initializable {
             conn.setAutoCommit(false);
             ps = conn.prepareStatement(updateCaseStatus);
             ps.setInt(1, db.getLuggageRegistrationNr());
+            ps.executeUpdate();
+            conn.commit();
+        } catch (SQLException e) {
+            System.err.println("SQL ex in uploadMatch->updateCaseStatus: " + e);
+        }
+
+        try {
+            conn.setAutoCommit(false);
+            ps = conn.prepareStatement(updateCaseStatus);
+            ps.setInt(1, selectedLuggage.getRegistrationNr());
             ps.executeUpdate();
             conn.commit();
         } catch (SQLException e) {

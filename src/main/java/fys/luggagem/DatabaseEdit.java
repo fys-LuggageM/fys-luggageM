@@ -20,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -76,6 +77,8 @@ public class DatabaseEdit implements Initializable {
     private ObservableList<String> Airports = FXCollections.observableArrayList();
     @FXML
     private TextField labelNrField;
+    @FXML
+    private Label titleField;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -89,12 +92,18 @@ public class DatabaseEdit implements Initializable {
         String luggageType = MainApp.myJDBC.executeStringQuery("SELECT case_type "
                 + "FROM luggage "
                 + "WHERE registrationnr=" + registrationNumber);
-        if (luggageType.equals("2")) {
-            locationFoundField.setDisable(true);
-            luggageDepthField.setDisable(true);
-            luggageHeightField.setDisable(true);
-            luggageWidthField.setDisable(true);
-            weightField.setDisable(true);
+        switch (luggageType) {
+            case "1":
+                titleField.setText(MainApp.data.getResourceBundle().getString("editing") + " " +
+                        MainApp.data.getResourceBundle().getString("luggageFound"));
+            case "2":
+                locationFoundField.setDisable(true);
+                luggageDepthField.setDisable(true);
+                luggageHeightField.setDisable(true);
+                luggageWidthField.setDisable(true);
+                weightField.setDisable(true);
+                titleField.setText(MainApp.data.getResourceBundle().getString("editing") + " " +
+                        MainApp.data.getResourceBundle().getString("luggageLost"));
         }
     }
 

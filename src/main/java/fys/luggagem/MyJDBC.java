@@ -1,6 +1,9 @@
 package fys.luggagem;
 
 import fys.luggagem.models.Data;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.Reader;
 import java.sql.*;
 import java.util.Enumeration;
 
@@ -88,9 +91,8 @@ public class MyJDBC {
 
     /**
      * *
-     * elects proper loading of the named driver for database connections. This
-     * is relevant if there are multiple drivers installed that match the JDBC
-     * type
+     * elects proper loading of the named driver for database connections. This is relevant if there are multiple
+     * drivers installed that match the JDBC type
      *
      * @param driverName the name of the driver to be activated.
      * @return indicates whether a suitable driver is available
@@ -137,9 +139,8 @@ public class MyJDBC {
 
     /**
      * *
-     * Executes an SQL query that yields a ResultSet with the outcome of the
-     * query. This outcome may be a single row with a single column in case of a
-     * scalar outcome.
+     * Executes an SQL query that yields a ResultSet with the outcome of the query. This outcome may be a single row
+     * with a single column in case of a scalar outcome.
      *
      * @param sql the full sql text of the query.
      * @return a ResultSet object that can iterate along all rows
@@ -217,9 +218,8 @@ public class MyJDBC {
 
     /**
      * *
-     * echoes an exception and its stack trace on the system console. remembers
-     * the message of the first error that occurs for later reference. closes
-     * the connection such that no further operations are possible.
+     * echoes an exception and its stack trace on the system console. remembers the message of the first error that
+     * occurs for later reference. closes the connection such that no further operations are possible.
      *
      * @param e
      */
@@ -235,69 +235,6 @@ public class MyJDBC {
 
         // if an error occurred, close the connection to prevent further operations
         this.close();
-    }
-
-    /**
-     * *
-     * builds a sample database with sample content
-     *
-     * @param dbName name of the sample database.
-     */
-    public static void createTestDatabase(String dbName) {
-
-        System.out.println("Creating the " + dbName + " database...");
-
-        // use the sys schema for creating another db
-        MyJDBC sysJDBC = new MyJDBC("sys");
-        sysJDBC.executeUpdateQuery("CREATE DATABASE IF NOT EXISTS " + dbName);
-        sysJDBC.close();
-
-        // create or truncate Airport table in the Airline database
-        System.out.println("Creating the Airport table...");
-        MyJDBC myJDBC = new MyJDBC(dbName);
-        myJDBC.executeUpdateQuery("CREATE TABLE IF NOT EXISTS Airport ("
-                + " IATACode VARCHAR(3) NOT NULL PRIMARY KEY,"
-                + " Name VARCHAR(45),"
-                + " TimeZone INT(3) )");
-
-        // truncate Airport, in case some data was already there
-        myJDBC.executeUpdateQuery("TRUNCATE TABLE Airport");
-
-        // Populate the Airport table in the Airline database        
-        System.out.println("Populating with Airport information...");
-        myJDBC.executeUpdateQuery("INSERT INTO Airport VALUES ("
-                + "'AMS', 'Schiphol Amsterdam', 1 )");
-        myJDBC.executeUpdateQuery("INSERT INTO Airport VALUES ("
-                + "'LHR', 'London Heathrow', 0 )");
-        myJDBC.executeUpdateQuery("INSERT INTO Airport VALUES ("
-                + "'BRU', 'Brussels Airport', 1 )");
-        myJDBC.executeUpdateQuery("INSERT INTO Airport VALUES ("
-                + "'ESB', 'Ankara Esenboğa Airport', 2 )");
-        myJDBC.executeUpdateQuery("INSERT INTO Airport VALUES ("
-                + "'SUF', 'Sant\\'Eufemia Lamezia International Airport', 1 )");
-        myJDBC.executeUpdateQuery("INSERT INTO Airport VALUES ("
-                + "'HKG', 'Hong Kong International', 8 )");
-
-        // echo all airports in timezone 1
-        System.out.println("Known Airports in time zone 1:");
-        try {
-            ResultSet rs = myJDBC.executeResultSetQuery(
-                    "SELECT IATACode, Name FROM AirPort WHERE TimeZone=1");
-            while (rs.next()) {
-                // echo the info of the next airport found
-                System.out.println(
-                        rs.getString("IATACode")
-                        + " " + rs.getString("Name"));
-            }
-            // close and release the resources
-            rs.close();
-
-        } catch (SQLException ex) {
-            myJDBC.error(ex);
-        }
-
-        // close the connection with the database
-        myJDBC.close();
     }
 
     public static void createDatabase(String dbName) {
@@ -498,7 +435,7 @@ public class MyJDBC {
                     ps02.setInt(1, registrationNr);
                     ps02.executeUpdate();
                     conn.commit();
-                    
+
                     PreparedStatement ps03 = null;
                     ps03 = conn.prepareStatement(insertNewRegNR2);
                     ps03.setInt(1, registrationNr);
