@@ -221,7 +221,17 @@ public class DatabaseController implements Initializable {
                             parent = FXMLLoader.load(getClass().getResource("/fxml/DatabaseEdit.fxml"), data.getResourceBundle());
                         }
                         Stage stage = new Stage(StageStyle.DECORATED);
-                        stage.setTitle("Edit " + currentlyActiveTable);
+                        switch (currentlyActiveTable) {
+                            case "lostLuggage":
+                                stage.setTitle(MainApp.data.getResourceBundle().getString("editing") + " "
+                                        + MainApp.data.getResourceBundle().getString("luggageLost"));
+                            case "foundLuggage":
+                                stage.setTitle(MainApp.data.getResourceBundle().getString("editing") + " "
+                                        + MainApp.data.getResourceBundle().getString("luggageLost"));
+                            default:
+                                stage.setTitle(MainApp.data.getResourceBundle().getString("editing") + " "
+                                        + MainApp.data.getResourceBundle().getString("luggageDamaged"));
+                        }
                         stage.setScene(new Scene(parent));
                         stage.setAlwaysOnTop(true);
                         stage.initOwner(data.getStage());
@@ -257,9 +267,9 @@ public class DatabaseController implements Initializable {
                     return true;
                 } else if (luggage.getLuggageType() != null && luggage.getLuggageType().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (luggage.getFlightNr()!= null && luggage.getFlightNr().toLowerCase().contains(lowerCaseFilter)) {
+                } else if (luggage.getFlightNr() != null && luggage.getFlightNr().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (luggage.getLabelNr()!= null && luggage.getLabelNr().toLowerCase().contains(lowerCaseFilter)) {
+                } else if (luggage.getLabelNr() != null && luggage.getLabelNr().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 }
                 return false; // Does not match.
@@ -278,7 +288,7 @@ public class DatabaseController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        setupFoundLuggageTable();
+        handleBeschadigdeButtonAction(null);
         loadpopupFXML();
     }
 }
