@@ -229,7 +229,7 @@ public class RapportageController implements Initializable {
             if (comboYear.getValue() != null && comboMonth.getValue() == null) {
                 gevondenLineChart.setTitle(GEVONDEN_CHART_TITLE + " " + comboYear.getValue());
             } else {
-                gevondenLineChart.setTitle(GEVONDEN_CHART_TITLE + " " + comboMonth.getValue() + " "
+                gevondenLineChart.setTitle(GEVONDEN_CHART_TITLE + " " + comboMonth.getValue() + "/"
                         + comboYear.getValue());
 
             }
@@ -248,7 +248,7 @@ public class RapportageController implements Initializable {
             if (comboYear.getValue() != null && comboMonth.getValue() == null) {
                 verlorenLineChart.setTitle(VERLOREN_CHART_TITLE + " " + comboYear.getValue());
             } else {
-                verlorenLineChart.setTitle(VERLOREN_CHART_TITLE + " " + comboMonth.getValue() + " "
+                verlorenLineChart.setTitle(VERLOREN_CHART_TITLE + " " + comboMonth.getValue() + "/"
                         + comboYear.getValue());
 
             }
@@ -267,7 +267,7 @@ public class RapportageController implements Initializable {
             if (comboYear.getValue() != null && comboMonth.getValue() == null) {
                 beschadigdeLineChart.setTitle(BESCHADIGDE_CHART_TITLE + " " + comboYear.getValue());
             } else {
-                beschadigdeLineChart.setTitle(BESCHADIGDE_CHART_TITLE + " " + comboMonth.getValue() + " "
+                beschadigdeLineChart.setTitle(BESCHADIGDE_CHART_TITLE + " " + comboMonth.getValue() + "/"
                         + comboYear.getValue());
 
             }
@@ -309,7 +309,7 @@ public class RapportageController implements Initializable {
                 System.out.println("Save cancelled");
                 exportLabel.setText(EXPORT_CANCEL);
             }
-            
+
         } else {
             System.out.println("Cancel Alertbox button pressed");
             exportLabel.setText(EXPORT_CANCEL);
@@ -484,7 +484,7 @@ public class RapportageController implements Initializable {
                     if (comboYear.getValue() != null && comboMonth.getValue() == null) {
                         gevondenPieChart.setTitle(GEVONDEN_CHART_TITLE + " " + comboYear.getValue());
                     } else if (comboYear.getValue() != null) {
-                        gevondenPieChart.setTitle(GEVONDEN_CHART_TITLE + " " + comboMonth.getValue() + " "
+                        gevondenPieChart.setTitle(GEVONDEN_CHART_TITLE + " " + comboMonth.getValue() + "/"
                                 + comboYear.getValue());
                     }
 
@@ -498,7 +498,8 @@ public class RapportageController implements Initializable {
                     String name = resultSet.getString("name");
                     int verlorenBagage = resultSet.getInt("SUM(case_type = 2)");
 
-                    verlorenPieChartData.add(new PieChart.Data(name + " - " + verlorenBagage + " " + LUGGAGE_CHART_LEGEND,
+                    verlorenPieChartData.add(new PieChart.Data(name + " - " + verlorenBagage + " "
+                            + LUGGAGE_CHART_LEGEND,
                             verlorenBagage));
                     verlorenPieChart.setAnimated(true);
                     verlorenPieChart.setLegendSide(Side.LEFT);
@@ -506,7 +507,8 @@ public class RapportageController implements Initializable {
                     if (comboYear.getValue() != null && comboMonth.getValue() == null) {
                         verlorenPieChart.setTitle(VERLOREN_CHART_TITLE + " " + comboYear.getValue());
                     } else if (comboYear.getValue() != null) {
-                        verlorenPieChart.setTitle(VERLOREN_CHART_TITLE + " " + comboMonth.getValue() + " " + comboYear.getValue());
+                        verlorenPieChart.setTitle(VERLOREN_CHART_TITLE + " " + comboMonth.getValue() + "/"
+                                + comboYear.getValue());
                     }
 
                     verlorenPieChart.setData(verlorenPieChartData);
@@ -528,7 +530,7 @@ public class RapportageController implements Initializable {
                     if (comboYear.getValue() != null && comboMonth.getValue() == null) {
                         beschadigdePieChart.setTitle(BESCHADIGDE_CHART_TITLE + " " + comboYear.getValue());
                     } else if (comboYear.getValue() != null) {
-                        beschadigdePieChart.setTitle(BESCHADIGDE_CHART_TITLE + " " + comboMonth.getValue() + " "
+                        beschadigdePieChart.setTitle(BESCHADIGDE_CHART_TITLE + " " + comboMonth.getValue() + "/"
                                 + comboYear.getValue());
                     }
 
