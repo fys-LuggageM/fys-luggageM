@@ -82,7 +82,7 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button fx:id="loadingButton" alignment="CENTER" maxWidth="1.7976931348623157E308" onAction="#handleLoadingButtonAction" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: black; -fx-background-color: d81e05;" text="%loadingButtonText" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                <Button fx:id="loadingButton" alignment="CENTER" maxWidth="1.7976931348623157E308" onAction="#handleLoadingButtonAction" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: d81e05; -fx-text-fill: white;" text="%loadingButtonText" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                     <font>
                                         <Font size="18.0" />
                                     </font>
@@ -93,7 +93,7 @@
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </Button>
-                                <ComboBox fx:id="comboYear" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="200.0" promptText="%comboYearPrompt" style="-fx-border-color: black;" GridPane.halignment="CENTER">
+                                <ComboBox fx:id="comboYear" maxWidth="1.7976931348623157E308" onAction="#comboYearChange" prefHeight="40.0" prefWidth="200.0" promptText="%comboYearPrompt" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
@@ -101,7 +101,7 @@
                                         <Insets />
                                     </GridPane.margin>
                                 </ComboBox>
-                                <ComboBox fx:id="comboMonth" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="200.0" promptText="%comboMonthPrompt" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                                <ComboBox fx:id="comboMonth" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="200.0" promptText="%comboMonthPrompt" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
@@ -127,7 +127,7 @@
                                                     </rowConstraints>
                                        <children>
                                           <PieChart fx:id="gevondenPieChart" />
-                                          <LineChart fx:id="gevondenLineChart" GridPane.columnIndex="1">
+                                          <LineChart fx:id="gevondenLineChart" visible="false" GridPane.columnIndex="1">
                                              <xAxis>
                                                 <CategoryAxis fx:id="gevondenLineChartXAxis" side="BOTTOM" />
                                              </xAxis>
@@ -155,7 +155,7 @@
                                                     </rowConstraints>
                                        <children>
                                           <PieChart fx:id="verlorenPieChart" />
-                                          <LineChart fx:id="verlorenLineChart" title="-" GridPane.columnIndex="1">
+                                          <LineChart fx:id="verlorenLineChart" title="-" visible="false" GridPane.columnIndex="1">
                                             <xAxis>
                                               <CategoryAxis fx:id="verlorenLineChartXAxis" side="BOTTOM" />
                                             </xAxis>
@@ -183,7 +183,7 @@
                                                     </rowConstraints>
                                        <children>
                                           <PieChart fx:id="beschadigdePieChart" />
-                                          <LineChart fx:id="beschadigdeLineChart" title="-" GridPane.columnIndex="1">
+                                          <LineChart fx:id="beschadigdeLineChart" title="-" visible="false" GridPane.columnIndex="1">
                                              <xAxis>
                                                 <CategoryAxis fx:id="beschadigdeLineChartXAxis" side="BOTTOM" />
                                              </xAxis>
@@ -252,7 +252,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Button fx:id="exportPdfButton" maxWidth="200.0" minWidth="200.0" mnemonicParsing="false" onAction="#handleExportPdfButtonAction" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: black; -fx-background-color: d81e05;" text="%exportPdfButtonText" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+                        <Button fx:id="exportPdfButton" maxWidth="200.0" minWidth="200.0" mnemonicParsing="false" onAction="#handleExportPdfButtonAction" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: d81e05;" text="%exportPdfButtonText" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
                             <font>
                                 <Font size="18.0" />
                             </font>
