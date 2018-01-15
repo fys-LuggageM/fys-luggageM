@@ -205,7 +205,7 @@ public class Luggage {
         luggageList.clear();
         Connection conn = myJDBC.getConnection();
         PreparedStatement ps = null;
-        String matchingLuggage = "SELECT labelnr, luggage_type, brand, primary_color, secondary_color, case_status FROM luggage\n"
+        String matchingLuggage = "SELECT registrationnr, labelnr, luggage_type, brand, primary_color, secondary_color, case_status FROM luggage\n"
                 + "    WHERE (labelnr = ? AND case_status = 1 AND registrationnr != ?) OR (luggage_type = ? AND brand = ? AND primary_color = ? AND secondary_color = ? AND case_status = 1 AND registrationnr != ?)";
         try {
 
@@ -219,15 +219,17 @@ public class Luggage {
             ps.setInt(7, myJDBC.getLuggageRegistrationNr());
 
             ResultSet rs = ps.executeQuery();
+            System.out.println(rs);
 
             while (rs.next()) {
                 Luggage luggage = new Luggage();
-//                luggage.setRegistrationNr(rs.getInt(1));
-                luggage.setLabelNr(rs.getString(1));
-                luggage.setLuggageType(rs.getString(2));
-                luggage.setBrand(rs.getString(3));
-                luggage.setPrimaryColor(rs.getString(4));
-                luggage.setSecondaryColor(rs.getString(5));
+                luggage.setRegistrationNr(rs.getInt(1));
+                luggage.setLabelNr(rs.getString(2));
+                luggage.setLuggageType(rs.getString(3));
+                luggage.setBrand(rs.getString(4));
+                luggage.setPrimaryColor(rs.getString(5));
+                luggage.setSecondaryColor(rs.getString(6));
+                System.out.println(luggage);
                 luggageList.add(luggage);
             }
         } catch (SQLException sq) {
