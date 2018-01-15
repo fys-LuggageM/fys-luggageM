@@ -57,7 +57,7 @@
                   <Label text="%passengerName" GridPane.columnIndex="1" GridPane.rowIndex="12" />
                   <Label text="%customerNr" GridPane.columnIndex="1" GridPane.rowIndex="13" />
                   <Label text="%notes" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-                  <Label text="Aanpassen Gevonden Bagage" GridPane.columnIndex="2">
+                  <Label fx:id="titleField" text="Aanpassen Gevonden Bagage" GridPane.columnIndex="2">
                      <font>
                         <Font size="18.0" />
                      </font>

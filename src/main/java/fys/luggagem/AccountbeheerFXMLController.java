@@ -108,8 +108,8 @@ public class AccountbeheerFXMLController implements Initializable {
             Image image = new Image(imageURL, 64, 64, false, true);
             Alert resetPasswordAlert = new Alert(AlertType.CONFIRMATION);
             resetPasswordAlert.initOwner(data.getStage());
-            resetPasswordAlert.setTitle("Reset Password");
-            resetPasswordAlert.setContentText("Are you sure you want to reset the password for user " + userToReset);
+            resetPasswordAlert.setTitle(data.getResourceBundle().getString("resetPassword"));
+            resetPasswordAlert.setContentText(data.getResourceBundle().getString("confirmationResetPassword") + userToReset);
             resetPasswordAlert.setGraphic(new ImageView(image));
 
             Optional<ButtonType> resetPasswordAnswer = resetPasswordAlert.showAndWait();
@@ -187,12 +187,12 @@ public class AccountbeheerFXMLController implements Initializable {
             Image image = new Image(imageURL, 64, 64, false, true);
 
             createUserAlert.initOwner(data.getStage());
-            createUserAlert.setTitle("Account creation");
-            createUserAlert.setHeaderText("A new user will be created");
-            createUserAlert.setContentText("A new user will be created with the following information:\n"
-                    + "Please confirm the following information is correct\n"
-                    + "Email: " + createUserStringEmail + "\n"
-                            + "Airport: " + createUserStringAirport);
+            createUserAlert.setTitle(data.getResourceBundle().getString("createAccount"));
+            createUserAlert.setHeaderText(data.getResourceBundle().getString("accountCreatedInfo"));
+            createUserAlert.setContentText(data.getResourceBundle().getString("newUserInformation") + ":\n"
+                    + data.getResourceBundle().getString("confirmInformation") +"\n"
+                    + data.getResourceBundle().getString("email") + ": " + createUserStringEmail + "\n"
+                    + data.getResourceBundle().getString("airport") + ": " + createUserStringAirport);
             createUserAlert.setGraphic(new ImageView(image));
 
             Optional<ButtonType> createUserAnswer = createUserAlert.showAndWait();
@@ -231,10 +231,10 @@ public class AccountbeheerFXMLController implements Initializable {
 
                     createUserAlert = new Alert(AlertType.INFORMATION);
                     createUserAlert.initOwner(data.getStage());
-                    createUserAlert.setTitle("Account creation");
-                    createUserAlert.setHeaderText("Account succesfully created.");
-                    createUserAlert.setContentText("A new user has been created with the following information:\n"
-                            + "Username: " + createUserStringName + "\n");
+                    createUserAlert.setTitle(data.getResourceBundle().getString("createAccount"));
+                    createUserAlert.setHeaderText(data.getResourceBundle().getString("accountCreatedInfo"));
+                    createUserAlert.setContentText(data.getResourceBundle().getString("newUserInformation") + ":\n"
+                            + data.getResourceBundle().getString("username") + ": " + createUserStringName + "\n");
                     createUserAlert.showAndWait();
 
                     // Empty everything
@@ -307,8 +307,8 @@ public class AccountbeheerFXMLController implements Initializable {
                         Image image = new Image(imageURL, 64, 64, false, true);
 
                         deactivateUserAlert.initOwner(data.getStage());
-                        deactivateUserAlert.setTitle("Deactivate user!");
-                        deactivateUserAlert.setContentText("Are you sure you want to deactivate user " + userToDeactivate);
+                        deactivateUserAlert.setTitle(data.getResourceBundle().getString("deactivateUser"));
+                        deactivateUserAlert.setContentText(data.getResourceBundle().getString("deactivateConfirmation") + userToDeactivate);
                         deactivateUserAlert.setGraphic(new ImageView(image));
 
                         Optional<ButtonType> deactivateUserAnswer = deactivateUserAlert.showAndWait();
@@ -322,8 +322,8 @@ public class AccountbeheerFXMLController implements Initializable {
                         Image image = new Image(imageURL, 64, 64, false, true);
 
                         deactivateUserAlert.initOwner(data.getStage());
-                        deactivateUserAlert.setTitle("Deactivate user!");
-                        deactivateUserAlert.setContentText("Are you sure you want to activate user " + userToDeactivate);
+                        deactivateUserAlert.setTitle(data.getResourceBundle().getString("deactivateUser"));
+                        deactivateUserAlert.setContentText(data.getResourceBundle().getString("activateConfirmation") + userToDeactivate);
                         deactivateUserAlert.setGraphic(new ImageView(image));
 
                         Optional<ButtonType> deactivateUserAnswer = deactivateUserAlert.showAndWait();
@@ -341,8 +341,8 @@ public class AccountbeheerFXMLController implements Initializable {
                 }
             } else {
                 Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Trying to deactivate yourself!");
-                alert.setContentText("It is not possible to disable the currently logged in user.");
+                alert.setTitle(data.getResourceBundle().getString("selfDeactivationTitle"));
+                alert.setContentText(data.getResourceBundle().getString("selfDeactivationDescription"));
                 alert.initOwner(data.getStage());
                 alert.showAndWait();
             }
