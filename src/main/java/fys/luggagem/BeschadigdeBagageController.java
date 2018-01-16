@@ -357,6 +357,7 @@ public class BeschadigdeBagageController implements Initializable {
             image03.setImage(placeholder);
             notes.clear();
             customer.clear();
+            MainApp.loadFXMLFile(this.getClass().getResource("/fxml/BeschadigdeBagageFXML.fxml"));
         } else {
             // ... user chose CANCEL or closed the dialog
         }
@@ -403,7 +404,7 @@ public class BeschadigdeBagageController implements Initializable {
 
         } else if (result.get() == buttonTypeTwo) {
             data.getStage().setIconified(true);
-            Print.printPdf();
+            Print.printDamagedLuggagePdf(notes.getText());
             data.getStage().setIconified(false);
             customerSelected.setVisible(false);
         } else {
