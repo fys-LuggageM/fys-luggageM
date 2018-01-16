@@ -5,6 +5,12 @@ import fys.luggagem.models.Data;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +31,7 @@ public class MainApp extends Application {
     public void start(Stage stage) throws Exception {
         String[] temp = Encryptor.encrypt("test");
         System.out.println(temp[0] + " " + temp[1]);
+        createDatabase();
         myJDBC = new MyJDBC("luggagem");
         data.setStage(stage);
         setScene(this.getClass().getResource("/fxml/FXMLDocument.fxml"));
@@ -42,7 +49,7 @@ public class MainApp extends Application {
         if (selectedFile != null) {
             return selectedFile;
         }
-      
+
         return null;
     }
 
@@ -101,5 +108,24 @@ public class MainApp extends Application {
             return false;
         }
         return true;
+    }
+
+    public static void createDatabase() {
+        try {
+            ArrayList<String> listOfDatabases = new ArrayList<>();
+            MyJDBC myJDBC = new MyJDBC("sys");
+            myJDBC.getConnection().createStatement();
+            DatabaseMetaData meta = myJDBC.getConnection().getMetaData();
+            ResultSet rs = meta.getCatalogs();
+            while (rs.next()) {
+                String database = rs.getString(1);
+                listOfDatabases.add(database);
+            }
+            if (!listOfDatabases.contains("luggagem")) {
+                myJDBC.createDatabase("luggagem");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

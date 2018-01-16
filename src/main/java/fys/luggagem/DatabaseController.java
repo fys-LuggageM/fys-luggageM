@@ -293,10 +293,13 @@ public class DatabaseController implements Initializable {
 
     @FXML
     private void matchingEvent(ActionEvent event) throws IOException {
-        handleCloseAction(event);
         Luggage luggage = getSelectedMatch();
-        db.setLuggageRegistrationNr(luggage.getRegistrationNr());
-        goToMatching();
+        if (luggage != null) {
+            handleCloseAction(event);
+
+            db.setLuggageRegistrationNr(luggage.getRegistrationNr());
+            goToMatching();
+        }
     }
 
     private Luggage getSelectedMatch() {
