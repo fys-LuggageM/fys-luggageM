@@ -140,6 +140,10 @@ public class RapportageController implements Initializable {
 
     private final String BESCHADIGDE_CHART_LABEL = data.getResourceBundle().getString("damagedChartLabel");
 
+    private final String EXPORT_ALERT_YES_BUTTON = data.getResourceBundle().getString("exportAlertYesButton");
+
+    private final String EXPORT_ALERT_NO_BUTTON = data.getResourceBundle().getString("exportAlertNoButton");
+
     // SQL Queries  
     private final String COMBO_YEAR_QUERY = "SELECT YEAR(luggage.date), "
             + "COUNT(*) c "
@@ -190,6 +194,7 @@ public class RapportageController implements Initializable {
     //when an item of the combobox comboYear has been selected.
     @FXML
     private void handleLoadingButtonAction(ActionEvent event) {
+        System.out.println("Loading button pressed");
 
         if (comboYear.getValue() != null) {
             comboMonth.setVisible(true);
@@ -208,7 +213,7 @@ public class RapportageController implements Initializable {
         if (comboYear.getValue() != null && comboMonth.getValue() == null) {
             reportLabel.setText(REPORT_LABEL_TEXT + " " + comboYear.getValue() + "?");
         } else if (comboYear.getValue() != null) {
-            reportLabel.setText(REPORT_LABEL_TEXT + " " + comboMonth.getValue() + " " + comboYear.getValue() + "?");
+            reportLabel.setText(REPORT_LABEL_TEXT + " " + comboMonth.getValue() + "/" + comboYear.getValue() + "?");
         }
     }
 
@@ -224,7 +229,7 @@ public class RapportageController implements Initializable {
             if (comboYear.getValue() != null && comboMonth.getValue() == null) {
                 gevondenLineChart.setTitle(GEVONDEN_CHART_TITLE + " " + comboYear.getValue());
             } else {
-                gevondenLineChart.setTitle(GEVONDEN_CHART_TITLE + " " + comboMonth.getValue() + " "
+                gevondenLineChart.setTitle(GEVONDEN_CHART_TITLE + " " + comboMonth.getValue() + "/"
                         + comboYear.getValue());
 
             }
@@ -243,7 +248,7 @@ public class RapportageController implements Initializable {
             if (comboYear.getValue() != null && comboMonth.getValue() == null) {
                 verlorenLineChart.setTitle(VERLOREN_CHART_TITLE + " " + comboYear.getValue());
             } else {
-                verlorenLineChart.setTitle(VERLOREN_CHART_TITLE + " " + comboMonth.getValue() + " "
+                verlorenLineChart.setTitle(VERLOREN_CHART_TITLE + " " + comboMonth.getValue() + "/"
                         + comboYear.getValue());
 
             }
@@ -262,7 +267,7 @@ public class RapportageController implements Initializable {
             if (comboYear.getValue() != null && comboMonth.getValue() == null) {
                 beschadigdeLineChart.setTitle(BESCHADIGDE_CHART_TITLE + " " + comboYear.getValue());
             } else {
-                beschadigdeLineChart.setTitle(BESCHADIGDE_CHART_TITLE + " " + comboMonth.getValue() + " "
+                beschadigdeLineChart.setTitle(BESCHADIGDE_CHART_TITLE + " " + comboMonth.getValue() + "/"
                         + comboYear.getValue());
 
             }
@@ -277,22 +282,36 @@ public class RapportageController implements Initializable {
     //This button when pressed runs the two methods below handleExportPdfButtonAction and creates an alertbox
     @FXML
     private void handleExportPdfButtonAction(ActionEvent event) throws IOException {
+        System.out.println("Export Button Pressed");
 
         Alert alertPdf = new Alert(Alert.AlertType.CONFIRMATION);
         alertPdf.initOwner(data.getStage());
         alertPdf.setTitle(EXPORT_ALERT_TITLE);
         alertPdf.setHeaderText(EXPORT_ALERT_TITLE);
         alertPdf.setContentText(EXPORT_ALERT_CONTENT);
-        Optional<ButtonType> result = alertPdf.showAndWait();
 
-        if (result.get() == ButtonType.OK) {
+        ButtonType yesButton = new ButtonType(EXPORT_ALERT_YES_BUTTON);
+        ButtonType noButton = new ButtonType(EXPORT_ALERT_NO_BUTTON);
+
+        alertPdf.getButtonTypes().setAll(yesButton, noButton);
+
+        Optional<ButtonType> result = alertPdf.showAndWait();
+        if (result.get() == yesButton) {
+            System.out.println("Export alertbox button pressed");
             File file = MainApp.selectFileToSave("*.pdf");
 
-            String filename = file.getAbsolutePath();
-            PDFExport.makePdfTwoImage(filename, SCREEN_TITLE, createPieChartImage(), createLineChartImage());
+            if (file != null) {
+                String filename = file.getAbsolutePath();
+                PDFExport.makePdfTwoImage(filename, SCREEN_TITLE, createPieChartImage(), createLineChartImage());
 
-            exportLabel.setText(EXPORT_SAVE + " " + "'" + filename + "'");
+                exportLabel.setText(EXPORT_SAVE + " " + "'" + filename + "'");
+            } else {
+                System.out.println("Save cancelled");
+                exportLabel.setText(EXPORT_CANCEL);
+            }
+
         } else {
+            System.out.println("Cancel Alertbox button pressed");
             exportLabel.setText(EXPORT_CANCEL);
         }
 
@@ -465,7 +484,7 @@ public class RapportageController implements Initializable {
                     if (comboYear.getValue() != null && comboMonth.getValue() == null) {
                         gevondenPieChart.setTitle(GEVONDEN_CHART_TITLE + " " + comboYear.getValue());
                     } else if (comboYear.getValue() != null) {
-                        gevondenPieChart.setTitle(GEVONDEN_CHART_TITLE + " " + comboMonth.getValue() + " "
+                        gevondenPieChart.setTitle(GEVONDEN_CHART_TITLE + " " + comboMonth.getValue() + "/"
                                 + comboYear.getValue());
                     }
 
@@ -479,7 +498,8 @@ public class RapportageController implements Initializable {
                     String name = resultSet.getString("name");
                     int verlorenBagage = resultSet.getInt("SUM(case_type = 2)");
 
-                    verlorenPieChartData.add(new PieChart.Data(name + " - " + verlorenBagage + " " + LUGGAGE_CHART_LEGEND,
+                    verlorenPieChartData.add(new PieChart.Data(name + " - " + verlorenBagage + " "
+                            + LUGGAGE_CHART_LEGEND,
                             verlorenBagage));
                     verlorenPieChart.setAnimated(true);
                     verlorenPieChart.setLegendSide(Side.LEFT);
@@ -487,7 +507,8 @@ public class RapportageController implements Initializable {
                     if (comboYear.getValue() != null && comboMonth.getValue() == null) {
                         verlorenPieChart.setTitle(VERLOREN_CHART_TITLE + " " + comboYear.getValue());
                     } else if (comboYear.getValue() != null) {
-                        verlorenPieChart.setTitle(VERLOREN_CHART_TITLE + " " + comboMonth.getValue() + " " + comboYear.getValue());
+                        verlorenPieChart.setTitle(VERLOREN_CHART_TITLE + " " + comboMonth.getValue() + "/"
+                                + comboYear.getValue());
                     }
 
                     verlorenPieChart.setData(verlorenPieChartData);
@@ -509,7 +530,7 @@ public class RapportageController implements Initializable {
                     if (comboYear.getValue() != null && comboMonth.getValue() == null) {
                         beschadigdePieChart.setTitle(BESCHADIGDE_CHART_TITLE + " " + comboYear.getValue());
                     } else if (comboYear.getValue() != null) {
-                        beschadigdePieChart.setTitle(BESCHADIGDE_CHART_TITLE + " " + comboMonth.getValue() + " "
+                        beschadigdePieChart.setTitle(BESCHADIGDE_CHART_TITLE + " " + comboMonth.getValue() + "/"
                                 + comboYear.getValue());
                     }
 
