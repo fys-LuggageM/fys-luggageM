@@ -96,6 +96,7 @@ public class DatabaseEdit implements Initializable {
             case "1":
                 titleField.setText(MainApp.data.getResourceBundle().getString("editing") + " " +
                         MainApp.data.getResourceBundle().getString("luggageFound"));
+                break;
             case "2":
                 locationFoundField.setDisable(true);
                 luggageDepthField.setDisable(true);
@@ -104,6 +105,7 @@ public class DatabaseEdit implements Initializable {
                 weightField.setDisable(true);
                 titleField.setText(MainApp.data.getResourceBundle().getString("editing") + " " +
                         MainApp.data.getResourceBundle().getString("luggageLost"));
+                break;
         }
     }
 

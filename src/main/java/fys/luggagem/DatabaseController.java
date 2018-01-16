@@ -227,12 +227,15 @@ public class DatabaseController implements Initializable {
                             case "lostLuggage":
                                 stage.setTitle(MainApp.data.getResourceBundle().getString("editing") + " "
                                         + MainApp.data.getResourceBundle().getString("luggageLost"));
+                                break;
                             case "foundLuggage":
                                 stage.setTitle(MainApp.data.getResourceBundle().getString("editing") + " "
-                                        + MainApp.data.getResourceBundle().getString("luggageLost"));
+                                        + MainApp.data.getResourceBundle().getString("luggageFound"));
+                                break;
                             default:
                                 stage.setTitle(MainApp.data.getResourceBundle().getString("editing") + " "
                                         + MainApp.data.getResourceBundle().getString("luggageDamaged"));
+                                break;
                         }
                         stage.setScene(new Scene(parent));
                         stage.setAlwaysOnTop(true);
@@ -287,9 +290,9 @@ public class DatabaseController implements Initializable {
         // 5. Add sorted (and filtered) data to the table.
         TableViewLuggage.setItems(sortedData);
     }
-    
+
     @FXML
-    private void matchingEvent(ActionEvent event) throws IOException{
+    private void matchingEvent(ActionEvent event) throws IOException {
         handleCloseAction(event);
         Luggage luggage = getSelectedMatch();
         db.setLuggageRegistrationNr(luggage.getRegistrationNr());
@@ -299,7 +302,7 @@ public class DatabaseController implements Initializable {
     private Luggage getSelectedMatch() {
         return (Luggage) TableViewLuggage.getSelectionModel().getSelectedItem();
     }
-    
+
     private void goToMatching() {
         MainApp.loadFXMLFile(this.getClass().getResource("/fxml/MatchingFXML.fxml"));
     }
