@@ -15,16 +15,16 @@ import java.util.Enumeration;
  */
 public class MyJDBC {
 
+    private static Data data = MainApp.getData();
     private static final String DB_DEFAULT_DATABASE = "sys";
-    private static final String DB_DEFAULT_SERVER_URL = "localhost:3306";
-    private static final String DB_DEFAULT_ACCOUNT = "root";
-    private static final String DB_DEFAULT_PASSWORD = ""; //insert password
+    private static final String DB_DEFAULT_SERVER_URL = data.getProperties().getProperty("DB_DEFAULT_SERVER_URL");
+    private static final String DB_DEFAULT_ACCOUNT = data.getProperties().getProperty("DB_DEFAULT_ACCOUNT");
+    private static final String DB_DEFAULT_PASSWORD = data.getProperties().getProperty("DB_DEFAULT_PASSWORD");
 
     private final static String DB_DRIVER_URL = "com.mysql.jdbc.Driver";
     private final static String DB_DRIVER_PREFIX = "jdbc:mysql://";
     private final static String DB_DRIVER_PARAMETERS = "?useSSL=false";
 
-    private Data data = MainApp.getData();
     private Connection connection = null;
     private int registrationNr;
     private int registrationNrDamaged;

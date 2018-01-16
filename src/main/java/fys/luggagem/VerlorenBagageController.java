@@ -110,7 +110,7 @@ public class VerlorenBagageController implements Initializable {
         Luggage luggage = createNewLostLuggage();
         luggage.foundLuggageToDatabase(customer);
         setEmailContent(luggage);
-        createChoiceAlert();
+        createChoiceAlert(luggage);
         customer.clear();
     }
 
@@ -291,7 +291,7 @@ public class VerlorenBagageController implements Initializable {
         luggageTypeBox.setItems(luggageTypeList);
     }
 
-    private void createChoiceAlert() {
+    private void createChoiceAlert(Luggage luggage) {
 
         String imageURL = this.getClass().getResource("/images/share-option.png").toString();
         Image image = new Image("/images/share-option.png", 64, 64, false, true);
@@ -315,7 +315,7 @@ public class VerlorenBagageController implements Initializable {
             goToMatching();
         } else if (result.get() == buttonTypeTwo) {
             data.getStage().setIconified(true);
-            Print.printPdf();
+            Print.printLostLuggagePdf(luggage);
             data.getStage().setIconified(false);
             goToMatching();
         } else {

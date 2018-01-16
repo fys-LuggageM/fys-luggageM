@@ -1,5 +1,8 @@
 package fys.luggagem;
 
+import fys.luggagem.models.Customer;
+import fys.luggagem.models.Luggage;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -81,10 +84,151 @@ public class PDFExport {
             doc.save(filename);
         }
     }
-    
-    public static PDDocument pdf() {
-        PDDocument pdf = new PDDocument();
-        return pdf;
-    }
 
+    public static PDDocument lostLuggagePDF(Luggage luggage) throws IOException {
+        Customer customer = MainApp.getCustomer();
+        PDDocument testDocument = new PDDocument();
+        PDImageXObject pdImage = PDImageXObject.createFromFile("src/main/resources/images/Naamloos-2.png", testDocument);
+        PDPage page01 = new PDPage();
+        testDocument.addPage(page01);
+ 
+        PDPageContentStream contents = new PDPageContentStream(testDocument, page01);
+ 
+        contents.drawImage(pdImage, 50, 718);
+ 
+        contents.setStrokingColor(Color.black);
+        contents.addRect(50, 50, (page01.getMediaBox().getWidth()) - 100, 600);
+        contents.stroke();
+        
+        contents.beginText();
+        contents.setFont(PDType1Font.HELVETICA_BOLD, 28);
+        contents.newLineAtOffset(50, 675);
+        String text = "Lost Lugage Registration";
+        contents.showText(text);
+        contents.endText();
+        
+        contents.beginText();
+        contents.setFont(PDType1Font.HELVETICA, 11);
+        contents.newLineAtOffset(60, 630);
+        text = "Registration number: " + luggage.getRegistrationNr();
+        contents.showText(text);
+        contents.endText();
+        
+        contents.beginText();
+        contents.setFont(PDType1Font.HELVETICA, 11);
+        contents.newLineAtOffset(60, 615);
+        text = "Airport: " + luggage.getIATA();
+        contents.showText(text);
+        contents.endText();
+        
+        contents.beginText();
+        contents.setFont(PDType1Font.HELVETICA, 11);
+        contents.newLineAtOffset(60, 600);
+        text = "Luggage Type: " + luggage.getLuggageType();
+        contents.showText(text);
+        contents.endText();
+        
+        contents.beginText();
+        contents.setFont(PDType1Font.HELVETICA, 11);
+        contents.newLineAtOffset(60, 585);
+        text = "Brand: " + luggage.getBrand();
+        contents.showText(text);
+        contents.endText();
+        
+        contents.beginText();
+        contents.setFont(PDType1Font.HELVETICA, 11);
+        contents.newLineAtOffset(60, 570);
+        text = "Destination: " + luggage.getDestination();
+        contents.showText(text);
+        contents.endText();
+        
+        contents.beginText();
+        contents.setFont(PDType1Font.HELVETICA, 11);
+        contents.newLineAtOffset(60, 555);
+        text = "Flight number: " + luggage.getFlightNr();
+        contents.showText(text);
+        contents.endText();
+        
+        contents.beginText();
+        contents.setFont(PDType1Font.HELVETICA, 11);
+        contents.newLineAtOffset(60, 540);
+        text = "Label number: " + luggage.getLabelNr();
+        contents.showText(text);
+        contents.endText();
+        
+        contents.beginText();
+        contents.setFont(PDType1Font.HELVETICA, 11);
+        contents.newLineAtOffset(60, 525);
+        text = "Color: " + luggage.getPrimaryColor()
+                + (luggage.getSecondaryColor() != null ? " and " + luggage.getSecondaryColor() : "");
+        contents.showText(text);
+        contents.endText();
+        
+        contents.beginText();
+        contents.setFont(PDType1Font.HELVETICA, 11);
+        contents.newLineAtOffset(60, 510);
+        text = "Your name: " + customer.getFirstName()
+                + (customer.getPreposition() != null && !customer.getPreposition().isEmpty()
+                ? " " + customer.getPreposition() + " " : " ")
+                + customer.getLastName();
+        contents.showText(text);
+        contents.endText();
+        
+        contents.beginText();
+        contents.setFont(PDType1Font.HELVETICA, 11);
+        contents.newLineAtOffset(60, 495);
+        text = "Extra notes: " + luggage.getNotes();
+        text = text.replace("\n", " ").replace("\r", " ");
+        contents.showText(text);
+        contents.endText();
+ 
+        contents.close();
+
+        return testDocument;
+    }
+    
+    public static PDDocument damagedLuggagePDF(String notes) throws IOException {
+        Customer customer = MainApp.getCustomer();
+        PDDocument testDocument = new PDDocument();
+        PDImageXObject pdImage = PDImageXObject.createFromFile("src/main/resources/images/Naamloos-2.png", testDocument);
+        PDPage page01 = new PDPage();
+        testDocument.addPage(page01);
+ 
+        PDPageContentStream contents = new PDPageContentStream(testDocument, page01);
+ 
+        contents.drawImage(pdImage, 50, 718);
+ 
+        contents.setStrokingColor(Color.black);
+        contents.addRect(50, 50, (page01.getMediaBox().getWidth()) - 100, 600);
+        contents.stroke();
+        
+        contents.beginText();
+        contents.setFont(PDType1Font.HELVETICA_BOLD, 28);
+        contents.newLineAtOffset(50, 675);
+        String text = "Damaged Lugage Registration";
+        contents.showText(text);
+        contents.endText();
+        
+        contents.beginText();
+        contents.setFont(PDType1Font.HELVETICA, 11);
+        contents.newLineAtOffset(60, 630);
+        text = "Your name: " + customer.getFirstName()
+                + (customer.getPreposition() != null && !customer.getPreposition().isEmpty()
+                ? " " + customer.getPreposition() + " " : " ")
+                + customer.getLastName();
+        contents.showText(text);
+        contents.endText();
+        
+        contents.beginText();
+        contents.setFont(PDType1Font.HELVETICA, 11);
+        contents.newLineAtOffset(60, 615);
+        text = "Notes: " + notes;
+        text = text.replace("\n", " ").replace("\r", " ");
+        contents.showText(text);
+        contents.endText();
+ 
+        contents.close();
+
+        return testDocument;
+    }
 }
