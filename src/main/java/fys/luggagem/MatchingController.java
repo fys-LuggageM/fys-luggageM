@@ -131,6 +131,16 @@ public class MatchingController implements Initializable {
         } catch (SQLException e) {
             System.err.println("SQL ex in uploadMatch->updateCaseStatus: " + e);
         }
+        
+        try {
+            conn.setAutoCommit(false);
+            ps = conn.prepareStatement(updateCaseStatus);
+            ps.setInt(1, selectedLuggage.getRegistrationNr());
+            ps.executeUpdate();
+            conn.commit();
+        } catch (SQLException e) {
+            System.err.println("SQL ex in uploadMatch->updateCaseStatus: " + e);
+        }
 
         try {
             conn.setAutoCommit(false);
