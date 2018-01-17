@@ -296,7 +296,9 @@ public class MyJDBC {
                 + "('2018-01-16 00:05:49', 500500, 9, 0),\n"
                 + "('2018-01-16 00:07:29', 500500, 10, 0),\n"
                 + "('2018-01-16 00:08:28', 500500, 11, 0),\n"
-                + "('2018-01-16 00:09:27', 500500, 12, 0)");
+                + "('2018-01-16 00:08:50', 500500, 12, 0),\n"
+                + "('2018-01-17 13:50:00', 500500, 13, 0),\n"
+                + "('2018-01-17 13:50:50', 500500, 14, 0)");
 
         myJDBC.executeUpdateQuery("CREATE TABLE `customer` (\n"
                 + "  `customernr` int(11) NOT NULL,\n"
@@ -360,7 +362,9 @@ public class MyJDBC {
                 + "(9, '2018-01-16 00:05:49', '', '', 'Belt-01', '', 'Bagpack', 'eastpack', 'Black', 'Darkblue', '', '100x50x20', '20', 1, '', '', '', 1, 'RTM', NULL),\n"
                 + "(10, '2018-01-16 00:07:29', '12345', '12345678', 'Belt-01', '', 'Bag', 'samsonite', 'Darkbrown', 'Darkbrown', '', '10x10x10', '10', 1, '', '', '', 1, 'AMS', NULL),\n"
                 + "(11, '2018-01-16 00:08:28', '12345', '12345678', 'Belt-01', '', 'Suitcase', 'samsonite', 'Darkbrown', 'Darkbrown', '', '10x10x10', '10', 1, '', '', '', 1, 'AMS', NULL),\n"
-                + "(12, '2018-01-16 00:09:27', '12345', '8674325', NULL, 'Portugal', 'Bagpack', 'samsonite', 'Blue', 'Blue', NULL, NULL, NULL, 2, 'Jan', 'van', 'Test', 1, 'RTM', NULL)");
+                + "(12, '2018-01-16 00:09:27', '12345', '8674325', NULL, 'Portugal', 'Bagpack', 'samsonite', 'Blue', 'Blue', NULL, NULL, NULL, 2, 'Jan', 'van', 'Test', 1, 'RTM', NULL), \n"
+                + "(13, '2018-01-17 13:50:00', 'KLM231', 'test123', 'Belt-01', 'test', 'Box', 'test_brand', 'Brown', 'Brown', 'test', '10x10x10', '10', 1, 'Joris', '', 'Ebbelaar', 1, 'AMS', NULL),\n"
+                + "(14, '2018-01-17 13:50:50', 'KLM231', 'test123', 'Null', 'test', 'Box', 'test_brand', 'Brown', 'Brown', 'test', '10x10x10', '10', 2, 'Joris', '', 'Ebbelaar', 1, 'AMS', NULL)");
 
         myJDBC.executeUpdateQuery("CREATE TABLE `luggage_damaged` (\n"
                 + "  `image01` longblob,\n"
