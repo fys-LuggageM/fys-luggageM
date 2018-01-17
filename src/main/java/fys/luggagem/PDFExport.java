@@ -4,13 +4,21 @@ import fys.luggagem.models.Customer;
 import fys.luggagem.models.Luggage;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.image.Image;
+import javax.imageio.ImageIO;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.image.CCITTFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.apache.pdfbox.pdmodel.graphics.image.PDInlineImage;
 
 /**
  *
@@ -28,7 +36,8 @@ public class PDFExport {
             throws IOException {
 
         try (PDDocument doc = new PDDocument()) {
-            PDImageXObject logoImg = PDImageXObject.createFromFile("src/main/resources/images/Naamloos-2.png", doc);
+            BufferedImage img = ImageIO.read(MainApp.class.getResource("/images/Naamloos-2.png"));
+            PDImageXObject logoImg = LosslessFactory.createFromImage(doc, img);
             PDImageXObject pdfScreenshotImage = LosslessFactory.createFromImage(doc, image);
 
             PDPage page = new PDPage();
@@ -58,7 +67,8 @@ public class PDFExport {
             throws IOException {
 
         try (PDDocument doc = new PDDocument()) {
-            PDImageXObject logoImg = PDImageXObject.createFromFile("src/main/resources/images/Naamloos-2.png", doc);
+            BufferedImage img = ImageIO.read(MainApp.class.getResource("/images/Naamloos-2.png"));
+            PDImageXObject logoImg = LosslessFactory.createFromImage(doc, img);
             PDImageXObject pdfScreenshotImage = LosslessFactory.createFromImage(doc, image);
             PDImageXObject pdfScreenshotImage2 = LosslessFactory.createFromImage(doc, image2);
 
@@ -88,74 +98,75 @@ public class PDFExport {
     public static PDDocument lostLuggagePDF(Luggage luggage) throws IOException {
         Customer customer = MainApp.getCustomer();
         PDDocument testDocument = new PDDocument();
-        PDImageXObject pdImage = PDImageXObject.createFromFile("src/main/resources/images/Naamloos-2.png", testDocument);
+        BufferedImage img = ImageIO.read(MainApp.class.getResource("/images/Naamloos-2.png"));
+        PDImageXObject pdImage = LosslessFactory.createFromImage(testDocument, img);
         PDPage page01 = new PDPage();
         testDocument.addPage(page01);
- 
+
         PDPageContentStream contents = new PDPageContentStream(testDocument, page01);
- 
+
         contents.drawImage(pdImage, 50, 718);
- 
+
         contents.setStrokingColor(Color.black);
         contents.addRect(50, 50, (page01.getMediaBox().getWidth()) - 100, 600);
         contents.stroke();
-        
+
         contents.beginText();
         contents.setFont(PDType1Font.HELVETICA_BOLD, 28);
         contents.newLineAtOffset(50, 675);
         String text = "Lost Lugage Registration";
         contents.showText(text);
         contents.endText();
-        
+
         contents.beginText();
         contents.setFont(PDType1Font.HELVETICA, 11);
         contents.newLineAtOffset(60, 630);
         text = "Registration number: " + luggage.getRegistrationNr();
         contents.showText(text);
         contents.endText();
-        
+
         contents.beginText();
         contents.setFont(PDType1Font.HELVETICA, 11);
         contents.newLineAtOffset(60, 615);
         text = "Airport: " + luggage.getIATA();
         contents.showText(text);
         contents.endText();
-        
+
         contents.beginText();
         contents.setFont(PDType1Font.HELVETICA, 11);
         contents.newLineAtOffset(60, 600);
         text = "Luggage Type: " + luggage.getLuggageType();
         contents.showText(text);
         contents.endText();
-        
+
         contents.beginText();
         contents.setFont(PDType1Font.HELVETICA, 11);
         contents.newLineAtOffset(60, 585);
         text = "Brand: " + luggage.getBrand();
         contents.showText(text);
         contents.endText();
-        
+
         contents.beginText();
         contents.setFont(PDType1Font.HELVETICA, 11);
         contents.newLineAtOffset(60, 570);
         text = "Destination: " + luggage.getDestination();
         contents.showText(text);
         contents.endText();
-        
+
         contents.beginText();
         contents.setFont(PDType1Font.HELVETICA, 11);
         contents.newLineAtOffset(60, 555);
         text = "Flight number: " + luggage.getFlightNr();
         contents.showText(text);
         contents.endText();
-        
+
         contents.beginText();
         contents.setFont(PDType1Font.HELVETICA, 11);
         contents.newLineAtOffset(60, 540);
         text = "Label number: " + luggage.getLabelNr();
         contents.showText(text);
         contents.endText();
-        
+
         contents.beginText();
         contents.setFont(PDType1Font.HELVETICA, 11);
         contents.newLineAtOffset(60, 525);
@@ -163,7 +174,7 @@ public class PDFExport {
                 + (luggage.getSecondaryColor() != null ? " and " + luggage.getSecondaryColor() : "");
         contents.showText(text);
         contents.endText();
-        
+
         contents.beginText();
         contents.setFont(PDType1Font.HELVETICA, 11);
         contents.newLineAtOffset(60, 510);
@@ -173,7 +184,7 @@ public class PDFExport {
                 + customer.getLastName();
         contents.showText(text);
         contents.endText();
-        
+
         contents.beginText();
         contents.setFont(PDType1Font.HELVETICA, 11);
         contents.newLineAtOffset(60, 495);
@@ -181,34 +192,35 @@ public class PDFExport {
         text = text.replace("\n", " ").replace("\r", " ");
         contents.showText(text);
         contents.endText();
- 
+
         contents.close();
 
         return testDocument;
     }
-    
+
     public static PDDocument damagedLuggagePDF(String notes) throws IOException {
         Customer customer = MainApp.getCustomer();
         PDDocument testDocument = new PDDocument();
-        PDImageXObject pdImage = PDImageXObject.createFromFile("src/main/resources/images/Naamloos-2.png", testDocument);
+        BufferedImage img = ImageIO.read(MainApp.class.getResource("/images/Naamloos-2.png"));
+        PDImageXObject pdImage = LosslessFactory.createFromImage(testDocument, img);
         PDPage page01 = new PDPage();
         testDocument.addPage(page01);
- 
+
         PDPageContentStream contents = new PDPageContentStream(testDocument, page01);
- 
+
         contents.drawImage(pdImage, 50, 718);
- 
+
         contents.setStrokingColor(Color.black);
         contents.addRect(50, 50, (page01.getMediaBox().getWidth()) - 100, 600);
         contents.stroke();
-        
+
         contents.beginText();
         contents.setFont(PDType1Font.HELVETICA_BOLD, 28);
         contents.newLineAtOffset(50, 675);
         String text = "Damaged Lugage Registration";
         contents.showText(text);
         contents.endText();
-        
+
         contents.beginText();
         contents.setFont(PDType1Font.HELVETICA, 11);
         contents.newLineAtOffset(60, 630);
@@ -218,7 +230,7 @@ public class PDFExport {
                 + customer.getLastName();
         contents.showText(text);
         contents.endText();
-        
+
         contents.beginText();
         contents.setFont(PDType1Font.HELVETICA, 11);
         contents.newLineAtOffset(60, 615);
@@ -226,7 +238,7 @@ public class PDFExport {
         text = text.replace("\n", " ").replace("\r", " ");
         contents.showText(text);
         contents.endText();
- 
+
         contents.close();
 
         return testDocument;
